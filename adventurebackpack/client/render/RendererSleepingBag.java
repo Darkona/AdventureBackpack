@@ -12,19 +12,26 @@ import adventurebackpack.blocks.tileentities.TileSleepingBag;
 import adventurebackpack.client.models.ModelSleepingBag;
 import adventurebackpack.common.Textures;
 
-public class RendererSleepingBag extends TileEntitySpecialRenderer {
+public class RendererSleepingBag extends TileEntitySpecialRenderer
+{
 
 	private final ModelSleepingBag model;
-	private final ResourceLocation modelTexture = Textures.resourceRL("/textures/backpack/sleepingBag.png");
+	private final ResourceLocation modelTexture = Textures
+		.resourceRL("/textures/backpack/sleepingBag.png");
 
-	public RendererSleepingBag() {
+	public RendererSleepingBag()
+	{
 		model = new ModelSleepingBag();
 	}
 
 	@SuppressWarnings("unused")
 	@Override
-	public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
-		int dir = tileentity.getWorldObj().getBlockMetadata(tileentity.xCoord, tileentity.yCoord, tileentity.zCoord);
+	public void renderTileEntityAt(TileEntity tileentity, double x, double y,
+		double z, float f)
+	{
+		int dir =
+			tileentity.getWorldObj().getBlockMetadata(tileentity.xCoord,
+				tileentity.yCoord, tileentity.zCoord);
 
 		TileSleepingBag sb = (TileSleepingBag) tileentity;
 		GL11.glPushMatrix();

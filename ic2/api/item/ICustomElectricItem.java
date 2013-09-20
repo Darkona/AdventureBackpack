@@ -21,7 +21,8 @@ import net.minecraft.item.ItemStack;
  * @deprecated Use ISpecialElectricItem instead.
  */
 @Deprecated
-public interface ICustomElectricItem extends IElectricItem {
+public interface ICustomElectricItem extends IElectricItem
+{
 	/**
 	 * Charge an item with a specified amount of energy
 	 * 
@@ -39,7 +40,8 @@ public interface ICustomElectricItem extends IElectricItem {
 	 *            value
 	 * @return Energy transferred into the electric item
 	 */
-	public int charge(ItemStack itemStack, int amount, int tier, boolean ignoreTransferLimit, boolean simulate);
+	public int charge(ItemStack itemStack, int amount, int tier,
+		boolean ignoreTransferLimit, boolean simulate);
 
 	/**
 	 * Discharge an item by a specified amount of energy
@@ -58,7 +60,8 @@ public interface ICustomElectricItem extends IElectricItem {
 	 *            value
 	 * @return Energy retrieved from the electric item
 	 */
-	public int discharge(ItemStack itemStack, int amount, int tier, boolean ignoreTransferLimit, boolean simulate);
+	public int discharge(ItemStack itemStack, int amount, int tier,
+		boolean ignoreTransferLimit, boolean simulate);
 
 	/**
 	 * Determine if the specified electric item has at least a specific amount

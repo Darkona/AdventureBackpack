@@ -12,7 +12,8 @@ import net.minecraftforge.fluids.FluidRegistry;
  * @author Darkona
  * 
  */
-public class FluidEffect {
+public class FluidEffect
+{
 
 	public Fluid fluid;
 	public int time;
@@ -20,23 +21,28 @@ public class FluidEffect {
 	public int effectID;
 	public String msg = "You drank something";
 
-	public FluidEffect() {
+	public FluidEffect()
+	{
 		this.effectID = -1;
 		this.time = 0;
 		this.msg = "";
 		this.timeInTicks = 0;
 	}
 
-	public FluidEffect(Fluid fluid) {
+	public FluidEffect(Fluid fluid)
+	{
 		this(fluid, 5);
 	}
 
-	public FluidEffect(Fluid fluid, int time) {
+	public FluidEffect(Fluid fluid, int time)
+	{
 		this(fluid, time, "");
 	}
 
-	public FluidEffect(Fluid fluid, int time, String msg) {
-		if (!FluidRegistry.isFluidRegistered(fluid)) {
+	public FluidEffect(Fluid fluid, int time, String msg)
+	{
+		if (!FluidRegistry.isFluidRegistered(fluid))
+		{
 			FluidRegistry.registerFluid(fluid);
 		}
 		this.time = time;
@@ -45,9 +51,11 @@ public class FluidEffect {
 		this.timeInTicks = this.time * 20;
 	}
 
-	public FluidEffect(String fluidName, int time, String msg) {
+	public FluidEffect(String fluidName, int time, String msg)
+	{
 		Fluid fluid = FluidRegistry.getFluid(fluidName);
-		if (!FluidRegistry.isFluidRegistered(fluid)) {
+		if (!FluidRegistry.isFluidRegistered(fluid))
+		{
 			FluidRegistry.registerFluid(fluid);
 		}
 		this.time = time;
@@ -68,7 +76,8 @@ public class FluidEffect {
 	 * @param player
 	 *            The Player.
 	 */
-	public void affectDrinker(World world, EntityPlayer player) {
+	public void affectDrinker(World world, EntityPlayer player)
+	{
 	}
 
 }

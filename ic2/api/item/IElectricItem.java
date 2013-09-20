@@ -7,7 +7,8 @@ import net.minecraft.item.ItemStack;
  * 
  * The item should have a maximum damage of 13.
  */
-public interface IElectricItem {
+public interface IElectricItem
+{
 	/**
 	 * Determine if the item can be used in a machine or as an armor part to
 	 * supply energy.

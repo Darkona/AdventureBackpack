@@ -19,7 +19,8 @@ import net.minecraft.item.ItemStack;
  *       minimize its dependency on its own constraints/structure and delegates
  *       most work back to the more atomic features in the gateway manager.
  */
-public interface IElectricItemManager {
+public interface IElectricItemManager
+{
 	/**
 	 * Charge an item with a specified amount of energy
 	 * 
@@ -37,7 +38,8 @@ public interface IElectricItemManager {
 	 *            value
 	 * @return Energy transferred into the electric item
 	 */
-	int charge(ItemStack itemStack, int amount, int tier, boolean ignoreTransferLimit, boolean simulate);
+	int charge(ItemStack itemStack, int amount, int tier,
+		boolean ignoreTransferLimit, boolean simulate);
 
 	/**
 	 * Discharge an item by a specified amount of energy
@@ -56,7 +58,8 @@ public interface IElectricItemManager {
 	 *            value
 	 * @return Energy retrieved from the electric item
 	 */
-	int discharge(ItemStack itemStack, int amount, int tier, boolean ignoreTransferLimit, boolean simulate);
+	int discharge(ItemStack itemStack, int amount, int tier,
+		boolean ignoreTransferLimit, boolean simulate);
 
 	/**
 	 * Determine the charge level for the specified item

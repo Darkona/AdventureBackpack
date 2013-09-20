@@ -2,7 +2,8 @@ package forestry.api.fuels;
 
 import net.minecraft.item.ItemStack;
 
-public class MoistenerFuel {
+public class MoistenerFuel
+{
 	/**
 	 * The item to use
 	 */
@@ -23,7 +24,9 @@ public class MoistenerFuel {
 	 */
 	public final int stage;
 
-	public MoistenerFuel(ItemStack item, ItemStack product, int stage, int moistenerValue) {
+	public MoistenerFuel(ItemStack item, ItemStack product, int stage,
+		int moistenerValue)
+	{
 		this.item = item;
 		this.product = product;
 		this.stage = stage;

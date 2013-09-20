@@ -1,6 +1,7 @@
 package adventurebackpack;
 
-public class ModInformation {
+public class ModInformation
+{
 
 	public static final String ID = "adventurebackpack";
 	public static final String NAME = "Adventure Backpack";

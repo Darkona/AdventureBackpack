@@ -4,7 +4,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidTank;
 
-public interface IAdvBackpack extends IInventory {
+public interface IAdvBackpack extends IInventory
+{
 
 	FluidTank getRightTank();
 

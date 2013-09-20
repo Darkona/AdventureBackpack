@@ -1,6 +1,7 @@
 package adventurebackpack.config;
 
-public class ItemInfo {
+public class ItemInfo
+{
 
 	public static int AB_ID;
 	public static final String AB_KEY = "Adventure Backpack";
@@ -37,7 +38,8 @@ public class ItemInfo {
 	public static int BACKPACKCOMPONENT_ID;
 	public static final String BP_COMPONENT_KEY = "Backpack Component";
 	public static final int BP_COMPONENT_DEFAULT = 25535;
-	public static final String BP_COMPONENT_UNLOCALIZED_NAME = "backpackComponent";
+	public static final String BP_COMPONENT_UNLOCALIZED_NAME =
+		"backpackComponent";
 	public static final String BP_COMPONENT_NAME = "Backpack Component";
 
 }
