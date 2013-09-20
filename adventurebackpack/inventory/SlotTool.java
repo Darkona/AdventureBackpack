@@ -15,7 +15,7 @@ import buildcraft.api.tools.IToolPipette;
 import buildcraft.api.tools.IToolWrench;
 
 @SuppressWarnings("deprecation")
-public class SlotTool extends Slot{
+public class SlotTool extends Slot {
 
 	public SlotTool(IInventory inventory, int id, int x, int y) {
 		super(inventory, id, x, y);
@@ -25,54 +25,51 @@ public class SlotTool extends Slot{
 	public boolean isItemValid(ItemStack stack) {
 		return isValidTool(stack);
 	}
-	
-	@SuppressWarnings("deprecation")
-	public static boolean isValidTool(ItemStack stack){
-		
+
+	public static boolean isValidTool(ItemStack stack) {
+
 		boolean valid = false;
-		
-		if(stack!=null && stack.stackSize == 1){
-			
+
+		if (stack != null && stack.stackSize == 1) {
+
 			Item item = stack.getItem();
 			String name = item.getUnlocalizedName().toLowerCase();
-			//Vanilla
-			if (item instanceof ItemTool || item instanceof ItemHoe){
+			// Vanilla
+			if (item instanceof ItemTool || item instanceof ItemHoe) {
 				valid = true;
 			}
-			//BuildCraft
-			if(item instanceof IToolWrench || item instanceof IToolPipette){
+			// BuildCraft
+			if (item instanceof IToolWrench || item instanceof IToolPipette) {
 				valid = true;
 			}
-			//IndustrialCraft
-			if (item instanceof ISpecialElectricItem || item instanceof ICustomElectricItem){
+			// IndustrialCraft
+			if (item instanceof ISpecialElectricItem || item instanceof ICustomElectricItem) {
 				valid = true;
 			}
-			//Tinker's Construct
+			// Tinker's Construct
 			try {
-				if (java.lang.Class.forName("tconstruct.library.tools.ToolCore").isInstance(item) ){
+				if (java.lang.Class.forName("tconstruct.library.tools.ToolCore").isInstance(item)) {
 					valid = true;
 				}
 			} catch (ClassNotFoundException e) {
-					
-			}
-			//Railcraft
-			if(item instanceof IToolCrowbar){
-				valid = true;
-			}
-			//Forestry
-			if(item instanceof IToolScoop){
-				valid = true;
-			}
-			//Just for extra compatibility 
-			if ( name.contains("wrench") || name.contains("hammer") || 
-					name.contains("axe") || name.contains("shovel")){
-				valid = true;
-			}
-			
-		}
-		
-		return valid;	
-	}
-	
-}
 
+			}
+			// Railcraft
+			if (item instanceof IToolCrowbar) {
+				valid = true;
+			}
+			// Forestry
+			if (item instanceof IToolScoop) {
+				valid = true;
+			}
+			// Just for extra compatibility
+			if (name.contains("wrench") || name.contains("hammer") || name.contains("axe") || name.contains("shovel")) {
+				valid = true;
+			}
+
+		}
+
+		return valid;
+	}
+
+}

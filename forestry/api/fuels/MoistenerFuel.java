@@ -8,15 +8,18 @@ public class MoistenerFuel {
 	 */
 	public final ItemStack item;
 	/**
-	 * The item that leaves the moistener's working slot (i.e. mouldy wheat, decayed wheat, mulch)
+	 * The item that leaves the moistener's working slot (i.e. mouldy wheat,
+	 * decayed wheat, mulch)
 	 */
 	public final ItemStack product;
 	/**
-	 * How much this item contributes to the final product of the moistener (i.e. mycelium)
+	 * How much this item contributes to the final product of the moistener
+	 * (i.e. mycelium)
 	 */
 	public final int moistenerValue;
 	/**
-	 * What stage this product represents. Resources with lower stage value will be consumed first.
+	 * What stage this product represents. Resources with lower stage value will
+	 * be consumed first.
 	 */
 	public final int stage;
 

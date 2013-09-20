@@ -16,10 +16,11 @@ import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-public class ClientProxy extends CommonProxy{
-	
+public class ClientProxy extends CommonProxy {
+
 	private static ClientTickHandler clientTickHandler;
 	private static KeyBindHandler keybindhandler;
+
 	@Override
 	public void initSounds() {
 	}
@@ -27,26 +28,25 @@ public class ClientProxy extends CommonProxy{
 	@Override
 	public void registerStuff() {
 		clientTickHandler = new ClientTickHandler();
-        TickRegistry.registerTickHandler(clientTickHandler, Side.CLIENT);
-        
+		TickRegistry.registerTickHandler(clientTickHandler, Side.CLIENT);
 
 		keybindhandler = new KeyBindHandler();
 		KeyBindingRegistry.registerKeyBinding(keybindhandler);
-	
-		super.registerStuff();	
+
+		super.registerStuff();
 	}
-	
-	public void registerKeyBinding(){
+
+	public void registerKeyBinding() {
 	}
-	
+
 	@Override
 	public void initRenderers() {
-		 
-		 ClientRegistry.bindTileEntitySpecialRenderer(TileSleepingBag.class, new RendererSleepingBag());
-		 ClientRegistry.bindTileEntitySpecialRenderer(TileAdvBackpack.class, new RendererAdvBackpack());
-		 MinecraftForgeClient.registerItemRenderer(Items.hose.itemID, new RendererHose());
-		 MinecraftForgeClient.registerItemRenderer(Items.advBackpack.itemID, new RendererItemAdvBackpack());
-		 MinecraftForgeClient.registerItemRenderer(Blocks.advbackpack.blockID, new RendererItemAdvBackpack());
+
+		ClientRegistry.bindTileEntitySpecialRenderer(TileSleepingBag.class, new RendererSleepingBag());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileAdvBackpack.class, new RendererAdvBackpack());
+		MinecraftForgeClient.registerItemRenderer(Items.hose.itemID, new RendererHose());
+		MinecraftForgeClient.registerItemRenderer(Items.advBackpack.itemID, new RendererItemAdvBackpack());
+		MinecraftForgeClient.registerItemRenderer(Blocks.advbackpack.blockID, new RendererItemAdvBackpack());
 	}
 
 }

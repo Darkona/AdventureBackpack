@@ -13,14 +13,21 @@ public class ConfigHandler {
 
 	public static void init(File file) {
 		Configuration config = new Configuration(file);
-		
+
 		config.load();
-		/* ======================================= ITEMS  ======================================= */
+		/*
+		 * ======================================= ITEMS
+		 * =======================================
+		 */
 		{
 			config.addCustomCategoryComment(Configuration.CATEGORY_BLOCK, BLOCK_COMMENT);
-			BlockInfo.ADVBACKPACK_ID = config.getBlock(BlockInfo.ADVBACKPACK_KEY, BlockInfo.ADVBACKPACK_DEFAULT).getInt();
+			BlockInfo.ADVBACKPACK_ID = config.getBlock(BlockInfo.ADVBACKPACK_KEY, BlockInfo.ADVBACKPACK_DEFAULT)
+					.getInt();
 		}
-		/* ======================================= BLOCKS ======================================= */
+		/*
+		 * ======================================= BLOCKS
+		 * =======================================
+		 */
 		{
 			config.addCustomCategoryComment(Configuration.CATEGORY_ITEM, ITEM_COMMENT);
 			ItemInfo.AB_ID = config.getItem(ItemInfo.AB_KEY, ItemInfo.AB_DEFAULT).getInt() - 256;
@@ -28,7 +35,7 @@ public class ConfigHandler {
 			ItemInfo.MACHETE_ID = config.getItem(ItemInfo.MACHETE_KEY, ItemInfo.MACHETE_DEFAULT).getInt() - 256;
 		}
 		config.save();
-		
+
 	}
 
 }

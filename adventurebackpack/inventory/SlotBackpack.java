@@ -1,15 +1,12 @@
 package adventurebackpack.inventory;
 
-import adventurebackpack.blocks.Blocks;
-import adventurebackpack.items.ItemAdvBackpack;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemTool;
+import adventurebackpack.blocks.Blocks;
+import adventurebackpack.items.ItemAdvBackpack;
 
-public class SlotBackpack extends Slot{
+public class SlotBackpack extends Slot {
 
 	public SlotBackpack(IInventory inventory, int id, int x, int y) {
 		super(inventory, id, x, y);
@@ -17,6 +14,6 @@ public class SlotBackpack extends Slot{
 
 	@Override
 	public boolean isItemValid(ItemStack stack) {
-		return (!(stack.getItem() instanceof ItemAdvBackpack)&& !(stack.getItem().itemID == Blocks.advbackpack.blockID));
+		return (!(stack.getItem() instanceof ItemAdvBackpack) && !(stack.getItem().itemID == Blocks.advbackpack.blockID));
 	}
 }

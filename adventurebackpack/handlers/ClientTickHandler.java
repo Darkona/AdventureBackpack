@@ -23,27 +23,27 @@ public class ClientTickHandler implements ITickHandler {
 
 	@Override
 	public void tickStart(EnumSet<TickType> type, Object... tickData) {
-		dWheel = Mouse.getDWheel() / 120;		
-        EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
-        if (player != null && player.isSneaking()) {
-            ItemStack backpack = player.getCurrentArmor(2);
-        	if (backpack != null && backpack.getItem() instanceof ItemAdvBackpack){
-        		
-        		Minecraft.getMinecraft().playerController.updateController();  		
-        		if(player.getCurrentEquippedItem() != null){
-    				if( SlotTool.isValidTool(player.getCurrentEquippedItem()) ){
-    					isTool = true;
-    					theSlot = player.inventory.currentItem;
-    	    		} 
-    	    		if( player.getCurrentEquippedItem().getItem() instanceof Hose){
-    	    			isHose = true;
-    	    			theSlot = player.inventory.currentItem;
-    	            }
-    			}
-    		} 
-        }else{
-        	theSlot = -1;
-        }
+		dWheel = Mouse.getDWheel() / 120;
+		EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
+		if (player != null && player.isSneaking()) {
+			ItemStack backpack = player.getCurrentArmor(2);
+			if (backpack != null && backpack.getItem() instanceof ItemAdvBackpack) {
+
+				Minecraft.getMinecraft().playerController.updateController();
+				if (player.getCurrentEquippedItem() != null) {
+					if (SlotTool.isValidTool(player.getCurrentEquippedItem())) {
+						isTool = true;
+						theSlot = player.inventory.currentItem;
+					}
+					if (player.getCurrentEquippedItem().getItem() instanceof Hose) {
+						isHose = true;
+						theSlot = player.inventory.currentItem;
+					}
+				}
+			}
+		} else {
+			theSlot = -1;
+		}
 	}
 
 	@Override
@@ -52,12 +52,12 @@ public class ClientTickHandler implements ITickHandler {
 		if (player != null) {
 			if (theSlot > -1 && dWheel != Mouse.getDWheel()) {
 
-				if (isHose) {	
+				if (isHose) {
 					player.inventory.currentItem = theSlot;
-					player.sendQueue.addToSendQueue(PacketHandler.makePacket(3, dWheel - Mouse.getDWheel(), theSlot));	
-				}	
-				
-				if (isTool) {		
+					player.sendQueue.addToSendQueue(PacketHandler.makePacket(3, dWheel - Mouse.getDWheel(), theSlot));
+				}
+
+				if (isTool) {
 					player.sendQueue.addToSendQueue(PacketHandler.makePacket(4, dWheel - Mouse.getDWheel(), theSlot));
 					player.inventory.currentItem = theSlot;
 				}
@@ -66,7 +66,7 @@ public class ClientTickHandler implements ITickHandler {
 			theSlot = -1;
 			isHose = false;
 			isTool = false;
-			
+
 		}
 
 	}

@@ -8,7 +8,8 @@ public class RainSubstrate {
 	 */
 	public ItemStack item;
 	/**
-	 * Duration of the rain shower triggered by this substrate in Minecraft ticks.
+	 * Duration of the rain shower triggered by this substrate in Minecraft
+	 * ticks.
 	 */
 	public int duration;
 	/**

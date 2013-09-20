@@ -7,7 +7,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidRegistry;
 
-public class LavaEffect extends FluidEffect{
+public class LavaEffect extends FluidEffect {
 
 	public LavaEffect() {
 		super(FluidRegistry.LAVA, 15);
@@ -17,9 +17,9 @@ public class LavaEffect extends FluidEffect{
 	@Override
 	public void affectDrinker(World world, EntityPlayer player) {
 		player.setFire(time);
-		player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id,time*20*6,2,false));
-		player.addPotionEffect(new PotionEffect(Potion.jump.id,time*20*6,0,false));
-		player.addPotionEffect(new PotionEffect(Potion.digSlowdown.id, time*20*6, 3, false));
+		player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, time * 20 * 6, 2, false));
+		player.addPotionEffect(new PotionEffect(Potion.jump.id, time * 20 * 6, 0, false));
+		player.addPotionEffect(new PotionEffect(Potion.digSlowdown.id, time * 20 * 6, 3, false));
 	}
 
 }

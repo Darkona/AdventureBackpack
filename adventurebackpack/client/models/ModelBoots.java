@@ -4,94 +4,84 @@
 // Keep in mind that you still need to fill in some blanks
 // - ZeuX
 
-
-
-
-
-
 package adventurebackpack.client.models;
 
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class ModelBoots extends ModelBiped
-{
-  //fields
-    ModelRenderer rightlegboot;
-    ModelRenderer leftlegboot;
-    ModelRenderer rightlegbootfront;
-    ModelRenderer leftlegbootfront;
-    ModelRenderer leftlegboottopfront;
-    ModelRenderer rightlegboottopfront;
-  
-  public ModelBoots()
-  {
-    textureWidth = 128;
-    textureHeight = 32;
-    
-      rightlegboot = new ModelRenderer(this, 0, 0);
-      rightlegboot.addBox(-2F, 0F, -2F, 5, 8, 5);
-      rightlegboot.setRotationPoint(3.5F, 16F, -0.5F);
-      rightlegboot.setTextureSize(128, 32);
-      rightlegboot.mirror = true;
-      setRotation(rightlegboot, 0F, 0F, 0F);
-      leftlegboot = new ModelRenderer(this, 0, 0);
-      leftlegboot.addBox(-2F, 0F, -2F, 5, 8, 5);
-      leftlegboot.setRotationPoint(-3.5F, 16F, -0.5F);
-      leftlegboot.setTextureSize(128, 32);
-      leftlegboot.mirror = true;
-      setRotation(leftlegboot, 0F, 0F, 0F);
-      rightlegbootfront = new ModelRenderer(this, 0, 13);
-      rightlegbootfront.addBox(-2F, 0F, -2F, 5, 2, 3);
-      rightlegbootfront.setRotationPoint(3.5F, 22F, -3.5F);
-      rightlegbootfront.setTextureSize(128, 32);
-      rightlegbootfront.mirror = true;
-      setRotation(rightlegbootfront, 0F, 0F, 0F);
-      
-      
-      leftlegbootfront = new ModelRenderer(this, 0, 13);
-      leftlegbootfront.addBox(-2F, 0F, -2F, 5, 2, 3);
-      leftlegbootfront.setRotationPoint(-3.5F, 22F, -3.5F);
-      leftlegbootfront.setTextureSize(128, 32);
-      leftlegbootfront.mirror = true;
-      setRotation(leftlegbootfront, 0F, 0F, 0F);
-      leftlegboottopfront = new ModelRenderer(this, 0, 18);
-      leftlegboottopfront.addBox(-2F, 0F, -2F, 5, 1, 4);
-      leftlegboottopfront.setRotationPoint(-3.5F, 21.4F, -3.6F);
-      leftlegboottopfront.setTextureSize(128, 32);
-      leftlegboottopfront.mirror = true;
-      setRotation(leftlegboottopfront, 0.3839724F, 0F, 0F);
-      rightlegboottopfront = new ModelRenderer(this, 0, 18);
-      rightlegboottopfront.addBox(-2F, 0F, -2F, 5, 1, 4);
-      rightlegboottopfront.setRotationPoint(3.5F, 21.4F, -3.6F);
-      rightlegboottopfront.setTextureSize(128, 32);
-      rightlegboottopfront.mirror = true;
-      setRotation(rightlegboottopfront, 0.3839724F, 0F, 0F);
-  }
-  
-  public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
-  {
-    super.render(entity, f, f1, f2, f3, f4, f5);
-    setRotationAngles(entity, f, f1, f2, f3, f4, f5);
-    rightlegboot.render(f5);
-    leftlegboot.render(f5);
-    rightlegbootfront.render(f5);
-    leftlegbootfront.render(f5);
-    leftlegboottopfront.render(f5);
-    rightlegboottopfront.render(f5);
-  }
-  
-  private void setRotation(ModelRenderer model, float x, float y, float z)
-  {
-    model.rotateAngleX = x;
-    model.rotateAngleY = y;
-    model.rotateAngleZ = z;
-  }
-  
-  public void setRotationAngles(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
-  {
-    super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-  }
+public class ModelBoots extends ModelBiped {
+	// fields
+	ModelRenderer rightlegboot;
+	ModelRenderer leftlegboot;
+	ModelRenderer rightlegbootfront;
+	ModelRenderer leftlegbootfront;
+	ModelRenderer leftlegboottopfront;
+	ModelRenderer rightlegboottopfront;
+
+	public ModelBoots() {
+		textureWidth = 128;
+		textureHeight = 32;
+
+		rightlegboot = new ModelRenderer(this, 0, 0);
+		rightlegboot.addBox(-2F, 0F, -2F, 5, 8, 5);
+		rightlegboot.setRotationPoint(3.5F, 16F, -0.5F);
+		rightlegboot.setTextureSize(128, 32);
+		rightlegboot.mirror = true;
+		setRotation(rightlegboot, 0F, 0F, 0F);
+		leftlegboot = new ModelRenderer(this, 0, 0);
+		leftlegboot.addBox(-2F, 0F, -2F, 5, 8, 5);
+		leftlegboot.setRotationPoint(-3.5F, 16F, -0.5F);
+		leftlegboot.setTextureSize(128, 32);
+		leftlegboot.mirror = true;
+		setRotation(leftlegboot, 0F, 0F, 0F);
+		rightlegbootfront = new ModelRenderer(this, 0, 13);
+		rightlegbootfront.addBox(-2F, 0F, -2F, 5, 2, 3);
+		rightlegbootfront.setRotationPoint(3.5F, 22F, -3.5F);
+		rightlegbootfront.setTextureSize(128, 32);
+		rightlegbootfront.mirror = true;
+		setRotation(rightlegbootfront, 0F, 0F, 0F);
+
+		leftlegbootfront = new ModelRenderer(this, 0, 13);
+		leftlegbootfront.addBox(-2F, 0F, -2F, 5, 2, 3);
+		leftlegbootfront.setRotationPoint(-3.5F, 22F, -3.5F);
+		leftlegbootfront.setTextureSize(128, 32);
+		leftlegbootfront.mirror = true;
+		setRotation(leftlegbootfront, 0F, 0F, 0F);
+		leftlegboottopfront = new ModelRenderer(this, 0, 18);
+		leftlegboottopfront.addBox(-2F, 0F, -2F, 5, 1, 4);
+		leftlegboottopfront.setRotationPoint(-3.5F, 21.4F, -3.6F);
+		leftlegboottopfront.setTextureSize(128, 32);
+		leftlegboottopfront.mirror = true;
+		setRotation(leftlegboottopfront, 0.3839724F, 0F, 0F);
+		rightlegboottopfront = new ModelRenderer(this, 0, 18);
+		rightlegboottopfront.addBox(-2F, 0F, -2F, 5, 1, 4);
+		rightlegboottopfront.setRotationPoint(3.5F, 21.4F, -3.6F);
+		rightlegboottopfront.setTextureSize(128, 32);
+		rightlegboottopfront.mirror = true;
+		setRotation(rightlegboottopfront, 0.3839724F, 0F, 0F);
+	}
+
+	@Override
+	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+		super.render(entity, f, f1, f2, f3, f4, f5);
+		setRotationAngles(entity, f, f1, f2, f3, f4, f5);
+		rightlegboot.render(f5);
+		leftlegboot.render(f5);
+		rightlegbootfront.render(f5);
+		leftlegbootfront.render(f5);
+		leftlegboottopfront.render(f5);
+		rightlegboottopfront.render(f5);
+	}
+
+	private void setRotation(ModelRenderer model, float x, float y, float z) {
+		model.rotateAngleX = x;
+		model.rotateAngleY = y;
+		model.rotateAngleZ = z;
+	}
+
+	public void setRotationAngles(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+		super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+	}
 
 }

@@ -6,7 +6,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import adventurebackpack.blocks.Blocks;
 import adventurebackpack.common.Constants;
@@ -14,7 +13,7 @@ import adventurebackpack.common.IAdvBackpack;
 import adventurebackpack.common.Utils;
 import adventurebackpack.items.ItemAdvBackpack;
 
-public class InventoryItem implements IAdvBackpack{
+public class InventoryItem implements IAdvBackpack {
 
 	public ItemStack[] inventory;
 	public FluidTank leftTank;
@@ -24,9 +23,9 @@ public class InventoryItem implements IAdvBackpack{
 	private String color;
 	private String colorName;
 	private int lastTime = 0;
-	
+
 	public InventoryItem(ItemStack stack) {
-		containerStack = stack;	
+		containerStack = stack;
 		rightTank = new FluidTank(Constants.tankCapacity);
 		leftTank = new FluidTank(Constants.tankCapacity);
 		inventory = new ItemStack[Constants.inventorySize];
@@ -47,27 +46,25 @@ public class InventoryItem implements IAdvBackpack{
 	@Override
 	public ItemStack decrStackSize(int slot, int amount) {
 		ItemStack stack = getStackInSlot(slot);
-		
-		if(stack!=null){
-			if (stack.stackSize <= amount){
+
+		if (stack != null) {
+			if (stack.stackSize <= amount) {
 				setInventorySlotContents(slot, null);
-			}
-			else{
+			} else {
 				stack = stack.splitStack(amount);
 			}
 		}
 		onInventoryChanged();
 		return stack;
 	}
-	
+
 	private ItemStack decrStackSizeSafe(int slot, int amount) {
 		ItemStack stack = getStackInSlot(slot);
-		
-		if(stack!=null){
-			if (stack.stackSize <= amount){
+
+		if (stack != null) {
+			if (stack.stackSize <= amount) {
 				setInventorySlotContents(slot, null);
-			}
-			else{
+			} else {
 				stack = stack.splitStack(amount);
 			}
 		}
@@ -81,55 +78,60 @@ public class InventoryItem implements IAdvBackpack{
 
 	@Override
 	public void setInventorySlotContents(int slot, ItemStack itemstack) {
-		inventory[slot] = itemstack;	
-		if (itemstack != null && itemstack.stackSize > getInventoryStackLimit()) {	
+		inventory[slot] = itemstack;
+		if (itemstack != null && itemstack.stackSize > getInventoryStackLimit()) {
 			itemstack.stackSize = getInventoryStackLimit();
-		}	
+		}
 		onInventoryChanged();
 	}
 
 	@Override
 	public boolean updateTankSlots(FluidTank tank, int slotIn) {
-		
+
 		int slotOut = slotIn + 1;
 		ItemStack stackIn = getStackInSlot(slotIn);
 		ItemStack stackOut = getStackInSlot(slotOut);
-	
-		if(tank.getFluid() != null){
-			for(FluidContainerData data : FluidContainerRegistry.getRegisteredFluidContainerData()){
-				if(data.fluid.isFluidEqual(tank.getFluid())){
-					
-					if(stackIn.isItemEqual(data.emptyContainer) && tank.drain(data.fluid.amount,false).amount >= data.fluid.amount){
-						
-						if(stackOut != null && stackOut.isItemEqual(data.filledContainer) && stackOut.stackSize < stackOut.getMaxStackSize()){
-							ItemStack newCont =  FluidContainerRegistry.fillFluidContainer(data.fluid, stackIn);
-							newCont.stackSize = stackOut.stackSize+1;
-							setInventorySlotContentsSafe(slotOut,newCont);					
+
+		if (tank.getFluid() != null) {
+			for (FluidContainerData data : FluidContainerRegistry.getRegisteredFluidContainerData()) {
+				if (data.fluid.isFluidEqual(tank.getFluid())) {
+
+					if (stackIn.isItemEqual(data.emptyContainer)
+							&& tank.drain(data.fluid.amount, false).amount >= data.fluid.amount) {
+
+						if (stackOut != null && stackOut.isItemEqual(data.filledContainer)
+								&& stackOut.stackSize < stackOut.getMaxStackSize()) {
+							ItemStack newCont = FluidContainerRegistry.fillFluidContainer(data.fluid, stackIn);
+							newCont.stackSize = stackOut.stackSize + 1;
+							setInventorySlotContentsSafe(slotOut, newCont);
 							decrStackSizeSafe(slotIn, 1);
-							tank.drain(data.fluid.amount,true);
+							tank.drain(data.fluid.amount, true);
 							saveChanges();
-						
-						}else if(stackOut == null){
-							ItemStack newCont =  FluidContainerRegistry.fillFluidContainer(data.fluid, stackIn);
+
+						} else if (stackOut == null) {
+							ItemStack newCont = FluidContainerRegistry.fillFluidContainer(data.fluid, stackIn);
 							newCont.stackSize = 1;
-							setInventorySlotContentsSafe(slotOut,newCont);
+							setInventorySlotContentsSafe(slotOut, newCont);
 							decrStackSizeSafe(slotIn, 1);
-							tank.drain(data.fluid.amount,true);
+							tank.drain(data.fluid.amount, true);
 							saveChanges();
-							
+
 						}
-					}else if(stackIn.isItemEqual(data.filledContainer) && tank.fill(data.fluid, false) >= data.fluid.amount) {
-						
-						if(stackOut != null && stackOut.isItemEqual(data.emptyContainer) && stackOut.stackSize < stackOut.getMaxStackSize()){
-							if(Utils.shouldGiveEmpty(data.emptyContainer)){
-								setInventorySlotContentsSafe(slotOut, new ItemStack(data.emptyContainer.getItem(), stackOut.stackSize +1));
+					} else if (stackIn.isItemEqual(data.filledContainer)
+							&& tank.fill(data.fluid, false) >= data.fluid.amount) {
+
+						if (stackOut != null && stackOut.isItemEqual(data.emptyContainer)
+								&& stackOut.stackSize < stackOut.getMaxStackSize()) {
+							if (Utils.shouldGiveEmpty(data.emptyContainer)) {
+								setInventorySlotContentsSafe(slotOut, new ItemStack(data.emptyContainer.getItem(),
+										stackOut.stackSize + 1));
 							}
 							decrStackSizeSafe(slotIn, 1);
 							tank.fill(data.fluid, true);
 							saveChanges();
-							
-						}else if(stackOut == null){
-							if(Utils.shouldGiveEmpty(data.emptyContainer)){
+
+						} else if (stackOut == null) {
+							if (Utils.shouldGiveEmpty(data.emptyContainer)) {
 								setInventorySlotContentsSafe(slotOut, new ItemStack(data.emptyContainer.getItem(), 1));
 							}
 							decrStackSizeSafe(slotIn, 1);
@@ -139,40 +141,42 @@ public class InventoryItem implements IAdvBackpack{
 					}
 				}
 			}
-		}else if(tank.getFluid() == null){
-			for(FluidContainerData data : FluidContainerRegistry.getRegisteredFluidContainerData()){
-				if(stackIn.isItemEqual(data.filledContainer) && tank.fill(data.fluid, false) >= data.fluid.amount) {
-					
-					if(stackOut != null && stackOut.isItemEqual(data.emptyContainer) && stackOut.stackSize < stackOut.getMaxStackSize()){
-						if(Utils.shouldGiveEmpty(data.emptyContainer)){
-							setInventorySlotContentsSafe(slotOut, new ItemStack(data.emptyContainer.getItem(), stackOut.stackSize +1));
+		} else if (tank.getFluid() == null) {
+			for (FluidContainerData data : FluidContainerRegistry.getRegisteredFluidContainerData()) {
+				if (stackIn.isItemEqual(data.filledContainer) && tank.fill(data.fluid, false) >= data.fluid.amount) {
+
+					if (stackOut != null && stackOut.isItemEqual(data.emptyContainer)
+							&& stackOut.stackSize < stackOut.getMaxStackSize()) {
+						if (Utils.shouldGiveEmpty(data.emptyContainer)) {
+							setInventorySlotContentsSafe(slotOut, new ItemStack(data.emptyContainer.getItem(),
+									stackOut.stackSize + 1));
 						}
 						decrStackSizeSafe(slotIn, 1);
 						tank.fill(data.fluid, true);
 						saveChanges();
-						
-					}else if(stackOut == null){
-						if(Utils.shouldGiveEmpty(data.emptyContainer)){
+
+					} else if (stackOut == null) {
+						if (Utils.shouldGiveEmpty(data.emptyContainer)) {
 							setInventorySlotContentsSafe(slotOut, new ItemStack(data.emptyContainer.getItem(), 1));
 						}
 						decrStackSizeSafe(slotIn, 1);
 						tank.fill(data.fluid, true);
 						saveChanges();
 					}
-				}		
+				}
 			}
 		}
-		
+
 		return false;
 	}
 
 	public void setInventorySlotContentsSafe(int slot, ItemStack itemstack) {
-		inventory[slot] = itemstack;	
+		inventory[slot] = itemstack;
 		if (itemstack != null && itemstack.stackSize > getInventoryStackLimit()) {
 			itemstack.stackSize = getInventoryStackLimit();
-		}		
+		}
 	}
-	
+
 	@Override
 	public String getInvName() {
 		return name;
@@ -187,17 +191,17 @@ public class InventoryItem implements IAdvBackpack{
 	public int getInventoryStackLimit() {
 		return 64;
 	}
-	
+
 	@Override
 	public void onInventoryChanged() {
-		for(int i = 0; i < inventory.length; i++){
-			if(i == 6 && inventory[i] != null ){
+		for (int i = 0; i < inventory.length; i++) {
+			if (i == 6 && inventory[i] != null) {
 				updateTankSlots(getLeftTank(), i);
-				
+
 			}
-			
-			if(i == 8 && inventory[i] != null){
-				if(updateTankSlots(getRightTank(), i)){
+
+			if (i == 8 && inventory[i] != null) {
+				if (updateTankSlots(getRightTank(), i)) {
 					containerStack.stackTagCompound = writeToNBT();
 				}
 			}
@@ -226,80 +230,85 @@ public class InventoryItem implements IAdvBackpack{
 	}
 
 	public void readFromNBT() {
-			 if(containerStack != null){
-			 NBTTagCompound compound = containerStack.hasTagCompound() ? containerStack.getTagCompound() : new NBTTagCompound();
-	         NBTTagList items = compound.getTagList("Items");
-	         for (int i = 0; i < items.tagCount(); i++) {
-	                 NBTTagCompound item = (NBTTagCompound) items.tagAt(i);
-	                 byte slot = item.getByte("Slot");
-	                 if (slot >= 0 && slot < inventory.length) {
-	                         inventory[slot] = ItemStack.loadItemStackFromNBT(item);
-	                 }
-	         }
-	         leftTank.readFromNBT(compound.getCompoundTag("leftTank"));
-	         rightTank.readFromNBT(compound.getCompoundTag("rightTank"));
-	         color = compound.getString("color");
-	         colorName = compound.getString("colorName");
-	         lastTime = compound.getInteger("lastTime");
-		 }
-	 }
+		if (containerStack != null) {
+			NBTTagCompound compound = containerStack.hasTagCompound() ? containerStack.getTagCompound()
+					: new NBTTagCompound();
+			NBTTagList items = compound.getTagList("Items");
+			for (int i = 0; i < items.tagCount(); i++) {
+				NBTTagCompound item = (NBTTagCompound) items.tagAt(i);
+				byte slot = item.getByte("Slot");
+				if (slot >= 0 && slot < inventory.length) {
+					inventory[slot] = ItemStack.loadItemStackFromNBT(item);
+				}
+			}
+			leftTank.readFromNBT(compound.getCompoundTag("leftTank"));
+			rightTank.readFromNBT(compound.getCompoundTag("rightTank"));
+			color = compound.getString("color");
+			colorName = compound.getString("colorName");
+			lastTime = compound.getInteger("lastTime");
+		}
+	}
 
+	@Override
 	public NBTTagCompound writeToNBT() {
 		NBTTagCompound compound = new NBTTagCompound();
-        NBTTagCompound tankLeft = new NBTTagCompound();
+		NBTTagCompound tankLeft = new NBTTagCompound();
 		NBTTagCompound tankRight = new NBTTagCompound();
-                        
-        NBTTagList items = new NBTTagList();
-        for (int i = 0; i < inventory.length; i++) {
-                ItemStack stack = inventory[i];
-                if (stack != null) {
-                        NBTTagCompound item = new NBTTagCompound();
-                        item.setByte("Slot", (byte) i);
-                        stack.writeToNBT(item);
-                        items.appendTag(item);
-                }
-        }
-        compound.setTag("Items", items);
-        compound.setCompoundTag("rightTank", rightTank.writeToNBT(tankRight));
-        compound.setCompoundTag("leftTank", leftTank.writeToNBT(tankLeft));  
-        compound.setString("color", color);
-        compound.setString("colorName",colorName);
-        compound.setInteger("lastTime", lastTime);
-        return compound;
-}
-	
+
+		NBTTagList items = new NBTTagList();
+		for (int i = 0; i < inventory.length; i++) {
+			ItemStack stack = inventory[i];
+			if (stack != null) {
+				NBTTagCompound item = new NBTTagCompound();
+				item.setByte("Slot", (byte) i);
+				stack.writeToNBT(item);
+				items.appendTag(item);
+			}
+		}
+		compound.setTag("Items", items);
+		compound.setCompoundTag("rightTank", rightTank.writeToNBT(tankRight));
+		compound.setCompoundTag("leftTank", leftTank.writeToNBT(tankLeft));
+		compound.setString("color", color);
+		compound.setString("colorName", colorName);
+		compound.setInteger("lastTime", lastTime);
+		return compound;
+	}
+
+	@Override
 	public FluidTank getLeftTank() {
 		leftTank.readFromNBT(containerStack.stackTagCompound.getCompoundTag("leftTank"));
 		return leftTank;
 	}
 
+	@Override
 	public void setLeftTank(FluidTank leftTank) {
 		this.leftTank = leftTank;
 		this.writeToNBT();
 	}
 
+	@Override
 	public FluidTank getRightTank() {
 		rightTank.readFromNBT(containerStack.stackTagCompound.getCompoundTag("rightTank"));
 		return rightTank;
 	}
 
+	@Override
 	public void setRightTank(FluidTank rightTank) {
 		this.rightTank = rightTank;
 		this.writeToNBT();
 	}
 
-	public void tellMeLeft(){
-		if(leftTank.getFluid() != null){
-			System.out.println("The left tank has"+ this.leftTank.getFluidAmount()+" "+this.leftTank.getFluid().getFluid().getName());
-		}else{
+	public void tellMeLeft() {
+		if (leftTank.getFluid() != null) {
+			System.out.println("The left tank has" + this.leftTank.getFluidAmount() + " "
+					+ this.leftTank.getFluid().getFluid().getName());
+		} else {
 			System.out.println("The left tank is empty");
 		}
 	}
 
-
-
-	private void saveChanges(){
+	private void saveChanges() {
 		this.containerStack.stackTagCompound = writeToNBT();
 	}
-	
+
 }

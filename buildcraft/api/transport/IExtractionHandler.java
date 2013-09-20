@@ -3,7 +3,8 @@ package buildcraft.api.transport;
 import net.minecraft.world.World;
 
 /**
- * Implement and register with the PipeManager if you want to suppress connections from wooden pipes.
+ * Implement and register with the PipeManager if you want to suppress
+ * connections from wooden pipes.
  */
 public interface IExtractionHandler {
 
@@ -14,8 +15,8 @@ public interface IExtractionHandler {
 	boolean canExtractItems(Object extractor, World world, int i, int j, int k);
 
 	/**
-	 * Can this pipe extract liquids from the block located at these coordinates?
-	 * param extractor can be null
+	 * Can this pipe extract liquids from the block located at these
+	 * coordinates? param extractor can be null
 	 */
 	boolean canExtractFluids(Object extractor, World world, int i, int j, int k);
 }

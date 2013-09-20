@@ -33,78 +33,73 @@ public class Actions {
 	public static boolean switching = false;
 	public static boolean bedActivated = false;
 
-	public static FluidStack attemptFill(World world,MovingObjectPosition mop, EntityPlayer player, FluidTank tank) {
-		try{
-			if (!world.canMineBlock(player, mop.blockX, mop.blockY, mop.blockZ)) return null;
-			if (!player.canPlayerEdit(mop.blockX, mop.blockY, mop.blockZ, mop.sideHit,null))return null;
+	public static FluidStack attemptFill(World world, MovingObjectPosition mop, EntityPlayer player, FluidTank tank) {
+		try {
+			if (!world.canMineBlock(player, mop.blockX, mop.blockY, mop.blockZ))
+				return null;
+			if (!player.canPlayerEdit(mop.blockX, mop.blockY, mop.blockZ, mop.sideHit, null))
+				return null;
 			int fluidID = Utils.isBlockRegisteredAsFluid(world.getBlockId(mop.blockX, mop.blockY, mop.blockZ));
 			FluidStack fluid = new FluidStack(fluidID, Constants.bucket);
-			//To-do make it dependent on tank name from the hose
-			if(fluidID > -1){		
+			// To-do make it dependent on tank name from the hose
+			if (fluidID > -1) {
 				if (tank.getFluid() == null || tank.getFluid().containsFluid(fluid)) {
 					int accepted = tank.fill(fluid, false);
-					if (accepted > 0 ) {
+					if (accepted > 0) {
 						world.setBlockToAir(mop.blockX, mop.blockY, mop.blockZ);
 						return fluid;
 					}
 				}
 			}
-		}
-		catch(Exception oops){
+		} catch (Exception oops) {
 			System.out.println("Something bad happened while filling the tank D:");
 			oops.printStackTrace();
 		}
 		return null;
 	}
 
-	public static FluidStack attemptPour(EntityPlayer player, World world, int x, int y, int z, FluidTank tank){	
-		try{
-			FluidStack fluid = tank.getFluid();	
-			if(fluid != null){
-				if(fluid.getFluid().canBePlacedInWorld()){
+	public static FluidStack attemptPour(EntityPlayer player, World world, int x, int y, int z, FluidTank tank) {
+		try {
+			FluidStack fluid = tank.getFluid();
+			if (fluid != null) {
+				if (fluid.getFluid().canBePlacedInWorld()) {
 					Material material = world.getBlockMaterial(x, y, z);
 					boolean flag = !material.isSolid();
 
-		            if (!world.isAirBlock(x, y, z) && !flag)
-		            {
-		                return null;
-		            }
-		            
-					if (world.provider.isHellWorld && fluid.getFluid() == FluidRegistry.WATER) { /*HELL*/
-						world.playSoundEffect( 	(double) ((float) x + 0.5F),
-												(double) ((float) y + 0.5F),
-												(double) ((float) z + 0.5F), 
-												"random.fizz", 0.5F, 2.6F + 
-												(world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+					if (!world.isAirBlock(x, y, z) && !flag) {
+						return null;
+					}
+
+					if (world.provider.isHellWorld && fluid.getFluid() == FluidRegistry.WATER) { /* HELL */
+						world.playSoundEffect(x + 0.5F, y + 0.5F, z + 0.5F, "random.fizz", 0.5F,
+								2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
 						for (int l = 0; l < 12; ++l) {
-							world.spawnParticle("largesmoke",
-									(double) x + Math.random(),
-									(double) y + Math.random(),
-									(double) z + Math.random(), 0.0D, 0.0D, 0.0D);
+							world.spawnParticle("largesmoke", x + Math.random(), y + Math.random(), z + Math.random(),
+									0.0D, 0.0D, 0.0D);
 						}
-					}else{
-					/*NOT HELL*/
+					} else {
+						/* NOT HELL */
 						FluidStack drainedFluid = tank.drain(Constants.bucket, false);
-						if(drainedFluid != null && drainedFluid.amount >= Constants.bucket ){
+						if (drainedFluid != null && drainedFluid.amount >= Constants.bucket) {
 							if (!world.isRemote && flag && !material.isLiquid()) {
 								world.destroyBlock(x, y, z, true);
 							}
-							if(fluid.getFluid() == FluidRegistry.WATER){
-								world.setBlock(x, y, z, fluid.getFluid().getBlockID() -1 , 0, 3);
-							}else{
-								if(fluid.getFluid() == FluidRegistry.LAVA){
-									world.setBlock(x, y, z, fluid.getFluid().getBlockID() -1 , 0, 3);
-								}else{
+							if (fluid.getFluid() == FluidRegistry.WATER) {
+								world.setBlock(x, y, z, fluid.getFluid().getBlockID() - 1, 0, 3);
+							} else {
+								if (fluid.getFluid() == FluidRegistry.LAVA) {
+									world.setBlock(x, y, z, fluid.getFluid().getBlockID() - 1, 0, 3);
+								} else {
 									world.setBlock(x, y, z, fluid.getFluid().getBlockID(), 0, 3);
 								}
 							}
 							return drainedFluid;
 						}
-					}	
-				}	
+					}
+				}
 			}
-			
-		}catch(Exception ex){
+
+		} catch (Exception ex) {
 			System.out.println("Something bad happened when spilling fluid into the world D:");
 			ex.printStackTrace();
 		}
@@ -114,55 +109,56 @@ public class Actions {
 	public static boolean setFluidEffect(World world, EntityPlayer player, FluidTank tank) {
 		FluidStack drained = tank.drain(Constants.bucket, false);
 		boolean done = false;
-		//Map<Integer, FluidEffect> lol = FluidEffectRegistry.getRegisteredFluidEffects();
-		if (drained != null && drained.amount >= Constants.bucket){
-			
-			for (FluidEffect effect : FluidEffectRegistry.getEffectsForFluid(drained.getFluid())){
-				if(effect != null){
+		// Map<Integer, FluidEffect> lol =
+		// FluidEffectRegistry.getRegisteredFluidEffects();
+		if (drained != null && drained.amount >= Constants.bucket) {
+
+			for (FluidEffect effect : FluidEffectRegistry.getEffectsForFluid(drained.getFluid())) {
+				if (effect != null) {
 					effect.affectDrinker(world, player);
-					if(world.isRemote){
+					if (world.isRemote) {
 						player.sendChatToPlayer(ChatMessageComponent.createFromText(effect.msg));
 					}
 					done = true;
 				}
-			}		
+			}
 		}
 		return done;
 	}
 
 	public static void switchHose(EntityPlayer player, int direction, int slot) {
-		//player.inventory.currentItem = slot;
-		if(!switching && !cycling){
+		// player.inventory.currentItem = slot;
+		if (!switching && !cycling) {
 			switching = true;
-			
+
 			ItemStack theHose = player.inventory.mainInventory[slot];
 			int newMode;
-			int currentMode = theHose.stackTagCompound.getInteger("mode");	
-			
-			if(direction < 0){
-				newMode =  (currentMode + 1) % 3;
-			}else{
-				newMode = currentMode == 0 ? 2 : currentMode-1; 
+			int currentMode = theHose.stackTagCompound.getInteger("mode");
+
+			if (direction < 0) {
+				newMode = (currentMode + 1) % 3;
+			} else {
+				newMode = currentMode == 0 ? 2 : currentMode - 1;
 			}
-			
+
 			theHose.stackTagCompound.setInteger("mode", newMode);
-	
+
 			switching = false;
 		}
-		
+
 	}
 
-	public static void cycleTool(EntityPlayer player, int direction, int slot){
-		if(!cycling && !switching ){		
-			cycling = true;	
+	public static void cycleTool(EntityPlayer player, int direction, int slot) {
+		if (!cycling && !switching) {
+			cycling = true;
 			InventoryItem backpack = getBackpackInv(player, true);
 			ItemStack current = player.getCurrentEquippedItem();
-			if(direction < 0){
+			if (direction < 0) {
 				player.inventory.setInventorySlotContents(slot, backpack.getStackInSlot(3));
 				backpack.setInventorySlotContents(3, backpack.getStackInSlot(0));
 				backpack.setInventorySlotContents(0, current);
-			}else{
-				if(direction > 0){
+			} else {
+				if (direction > 0) {
 					player.inventory.mainInventory[slot] = backpack.inventory[0];
 					backpack.setInventorySlotContents(0, backpack.getStackInSlot(3));
 					backpack.setInventorySlotContents(3, current);
@@ -171,51 +167,56 @@ public class Actions {
 		}
 		cycling = false;
 	}
-	
+
 	/**
-	 * Will return a backpack inventory from a backpack on the player's armor slot if true, or from his hand if false;
+	 * Will return a backpack inventory from a backpack on the player's armor
+	 * slot if true, or from his hand if false;
+	 * 
 	 * @param player
-	 * @param wearing wether to take the inventory from a backpack on back or on hand.
+	 * @param wearing
+	 *            wether to take the inventory from a backpack on back or on
+	 *            hand.
 	 * @return
 	 */
 	public static InventoryItem getBackpackInv(EntityPlayer player, boolean wearing) {
-        return new InventoryItem((wearing) ? player.inventory.armorItemInSlot(2) : player.inventory.getCurrentItem());
+		return new InventoryItem((wearing) ? player.inventory.armorItemInSlot(2) : player.inventory.getCurrentItem());
 	}
 
-	public static String whereTheHellAmI(){
+	public static String whereTheHellAmI() {
 		Side side = FMLCommonHandler.instance().getEffectiveSide();
 		if (side == Side.SERVER) {
 			return "Server";
 		} else if (side == Side.CLIENT) {
 			return "Client";
 		} else {
-		    return "I don't know";
+			return "I don't know";
 		}
 	}
 
 	/**
-	 * This is not being used. 
-	 * Looks for a open 2x1 spot on the ground, deploys a sleeping bag and sets the player to sleep on it.
+	 * This is not being used. Looks for a open 2x1 spot on the ground, deploys
+	 * a sleeping bag and sets the player to sleep on it.
+	 * 
 	 * @param player
 	 */
 	public static void deploySleepingBagFromPlayer(EntityPlayer player) {
 		World world = player.worldObj;
 		boolean foundSpot = false;
 		Block bed = Block.bed;
-		int playerX = (int)player.posX;
-		int playerY = (int)player.posY;
+		int playerX = (int) player.posX;
+		int playerY = (int) player.posY;
 		int playerZ = (int) player.posZ;
 		int coordX = 0;
 		int coordY = 0;
 		int coordZ = 0;
-		for (int i=playerX-1; i<playerX+2; i++){
-			for(int j = playerZ -1; j < playerZ+2; j++){
-				if(!foundSpot &&
-						world.isAirBlock(i, playerY, j) && 
-						world.isBlockSolidOnSide(i, playerY-1, j, ForgeDirection.UP) &&
-						bed.canPlaceBlockAt(world, i, playerY, j) &&
-						(bed.canPlaceBlockAt(world, i+1, playerY, j) || bed.canPlaceBlockAt(world, i, playerY, j+1) ))
-				{
+		for (int i = playerX - 1; i < playerX + 2; i++) {
+			for (int j = playerZ - 1; j < playerZ + 2; j++) {
+				if (!foundSpot
+						&& world.isAirBlock(i, playerY, j)
+						&& world.isBlockSolidOnSide(i, playerY - 1, j, ForgeDirection.UP)
+						&& bed.canPlaceBlockAt(world, i, playerY, j)
+						&& (bed.canPlaceBlockAt(world, i + 1, playerY, j) || bed.canPlaceBlockAt(world, i, playerY,
+								j + 1))) {
 					coordX = i;
 					coordZ = j;
 					coordY = playerY;
@@ -223,142 +224,154 @@ public class Actions {
 				}
 			}
 		}
-		
-		if(foundSpot && !world.getBlockMaterial(coordX, coordY, coordZ).isSolid()){
-			
-			if(world.setBlock(coordX, coordY, coordZ, BlockInfo.SLEEPINGBAG_ID,5,3)){
+
+		if (foundSpot && !world.getBlockMaterial(coordX, coordY, coordZ).isSolid()) {
+
+			if (world.setBlock(coordX, coordY, coordZ, BlockInfo.SLEEPINGBAG_ID, 5, 3)) {
 				bed.onBlockAdded(world, coordX, coordY, coordZ);
 				bed.onBlockPlacedBy(world, coordX, coordY, coordZ, player, new ItemStack(Block.bed, 1));
 				bed.onPostBlockPlaced(world, coordX, coordY, coordZ, 8);
 				EnumStatus enumstatus = player.sleepInBedAt(coordX, coordY, coordZ);
-		         if (enumstatus == EnumStatus.OK){
-		        	 player.closeScreen();
-		             bed.setBedOccupied(world, coordX, coordY, coordZ, player, true);
-		         }
-		         else {
-		             if (enumstatus == EnumStatus.NOT_POSSIBLE_NOW){
-		            	 player.closeScreen();
-		                 player.addChatMessage("tile.bed.noSleep");
-		                 world.setBlockToAir(coordX, coordY, coordZ);
-		             }
-		             else if (enumstatus == EnumStatus.NOT_SAFE){
-		            	 player.closeScreen();
-		                 player.addChatMessage("tile.bed.notSafe");
-		                 world.setBlockToAir(coordX, coordY, coordZ);
-		             }
-		         }
-		
+				if (enumstatus == EnumStatus.OK) {
+					player.closeScreen();
+					bed.setBedOccupied(world, coordX, coordY, coordZ, player, true);
+				} else {
+					if (enumstatus == EnumStatus.NOT_POSSIBLE_NOW) {
+						player.closeScreen();
+						player.addChatMessage("tile.bed.noSleep");
+						world.setBlockToAir(coordX, coordY, coordZ);
+					} else if (enumstatus == EnumStatus.NOT_SAFE) {
+						player.closeScreen();
+						player.addChatMessage("tile.bed.notSafe");
+						world.setBlockToAir(coordX, coordY, coordZ);
+					}
+				}
+
 			}
-			
-			//bed.onBlockActivated(world, bedx, bedy, bedz, player, 0, 0, 0, 0);
-			 
+
+			// bed.onBlockActivated(world, bedx, bedy, bedz, player, 0, 0, 0,
+			// 0);
+
 		}
 	}
 
-	public static int[] canDeploySleepingBag(int coordX, int coordY, int coordZ){
+	public static int[] canDeploySleepingBag(int coordX, int coordY, int coordZ) {
 		World world = Minecraft.getMinecraft().theWorld;
-		TileAdvBackpack te = (TileAdvBackpack)world.getBlockTileEntity(coordX, coordY, coordZ);
+		TileAdvBackpack te = (TileAdvBackpack) world.getBlockTileEntity(coordX, coordY, coordZ);
 		int newMeta = -1;
-		
-		if(te.isSBDeployed() == false){
+
+		if (te.isSBDeployed() == false) {
 			int meta = world.getBlockMetadata(coordX, coordY, coordZ);
-			switch(meta){
-			case 0: 
+			switch (meta) {
+			case 0:
 				--coordZ;
-				if(world.isAirBlock(coordX, coordY, coordZ) && world.getBlockMaterial(coordX, coordY-1, coordZ).isSolid()){
-					if(world.isAirBlock(coordX, coordY, coordZ-1) && world.getBlockMaterial(coordX, coordY-1, coordZ-1).isSolid()){
+				if (world.isAirBlock(coordX, coordY, coordZ)
+						&& world.getBlockMaterial(coordX, coordY - 1, coordZ).isSolid()) {
+					if (world.isAirBlock(coordX, coordY, coordZ - 1)
+							&& world.getBlockMaterial(coordX, coordY - 1, coordZ - 1).isSolid()) {
 						newMeta = 2;
 					}
 				}
 				break;
-			case 1: 
+			case 1:
 				++coordX;
-				if(world.isAirBlock(coordX, coordY, coordZ) && world.getBlockMaterial(coordX, coordY-1, coordZ).isSolid()){
-					if(world.isAirBlock(coordX+1, coordY, coordZ) && world.getBlockMaterial(coordX+1, coordY-1, coordZ).isSolid()){
+				if (world.isAirBlock(coordX, coordY, coordZ)
+						&& world.getBlockMaterial(coordX, coordY - 1, coordZ).isSolid()) {
+					if (world.isAirBlock(coordX + 1, coordY, coordZ)
+							&& world.getBlockMaterial(coordX + 1, coordY - 1, coordZ).isSolid()) {
 						newMeta = 3;
 					}
 				}
 				break;
-			case 2: 
+			case 2:
 				++coordZ;
-				if(world.isAirBlock(coordX, coordY, coordZ) && world.getBlockMaterial(coordX, coordY-1, coordZ).isSolid()){
-					if(world.isAirBlock(coordX, coordY, coordZ+1) && world.getBlockMaterial(coordX, coordY-1, coordZ+1).isSolid()){
+				if (world.isAirBlock(coordX, coordY, coordZ)
+						&& world.getBlockMaterial(coordX, coordY - 1, coordZ).isSolid()) {
+					if (world.isAirBlock(coordX, coordY, coordZ + 1)
+							&& world.getBlockMaterial(coordX, coordY - 1, coordZ + 1).isSolid()) {
 						newMeta = 0;
 					}
 				}
 				break;
-			case 3: 
+			case 3:
 				--coordX;
-				if(world.isAirBlock(coordX, coordY, coordZ) && world.getBlockMaterial(coordX, coordY-1, coordZ).isSolid()){
-					if(world.isAirBlock(coordX-1, coordY, coordZ) && world.getBlockMaterial(coordX-1, coordY-1, coordZ).isSolid()){
+				if (world.isAirBlock(coordX, coordY, coordZ)
+						&& world.getBlockMaterial(coordX, coordY - 1, coordZ).isSolid()) {
+					if (world.isAirBlock(coordX - 1, coordY, coordZ)
+							&& world.getBlockMaterial(coordX - 1, coordY - 1, coordZ).isSolid()) {
 						newMeta = 1;
 					}
 				}
 				break;
-			default: 
+			default:
 				break;
 			}
 		}
-		int result[] = {newMeta, coordX, coordY, coordZ};
+		int result[] = { newMeta, coordX, coordY, coordZ };
 		return result;
 	}
-	
+
 	/**
-	 * Looks for 2x1 space in front of the backpack, and if there's space, deploys a sleeping bag.
-	 * If there's a sleeping bag, it retrieves it instead.
-	 * @param player The player activating this. Used to get the world object.
-	 * @param coordX X coordinate of the backpack tile entity.
-	 * @param coordY Y coordinate of the backpack tile entity.
-	 * @param coordZ Z coordinate of the backpack tile entity.
+	 * Looks for 2x1 space in front of the backpack, and if there's space,
+	 * deploys a sleeping bag. If there's a sleeping bag, it retrieves it
+	 * instead.
+	 * 
+	 * @param player
+	 *            The player activating this. Used to get the world object.
+	 * @param coordX
+	 *            X coordinate of the backpack tile entity.
+	 * @param coordY
+	 *            Y coordinate of the backpack tile entity.
+	 * @param coordZ
+	 *            Z coordinate of the backpack tile entity.
 	 */
 	public static void deploySleepingBagFromBackpack(EntityPlayer player, int coordX, int coordY, int coordZ) {
 		World world = player.worldObj;
-		PacketDispatcher.sendPacketToPlayer(PacketHandler.makePacket(5,0,coordX,coordY,coordZ), (Player)player);	
-			TileAdvBackpack te = (TileAdvBackpack)world.getBlockTileEntity(coordX, coordY, coordZ);
-			if(!te.isSBDeployed()){
-				int can[] = canDeploySleepingBag(coordX, coordY, coordZ);
-				if(can[0] >-1){
-					if(te.deploySleepingbag(world, can[1], can[2], can[3], can[0])){
-						player.closeScreen();
-					}
-				}else if(!world.isRemote){
-					player.addChatMessage("Can't deploy the sleeping bag");
+		PacketDispatcher.sendPacketToPlayer(PacketHandler.makePacket(5, 0, coordX, coordY, coordZ), (Player) player);
+		TileAdvBackpack te = (TileAdvBackpack) world.getBlockTileEntity(coordX, coordY, coordZ);
+		if (!te.isSBDeployed()) {
+			int can[] = canDeploySleepingBag(coordX, coordY, coordZ);
+			if (can[0] > -1) {
+				if (te.deploySleepingbag(world, can[1], can[2], can[3], can[0])) {
+					player.closeScreen();
 				}
-			}else{
-				te.removeSleepingBag(world);
+			} else if (!world.isRemote) {
+				player.addChatMessage("Can't deploy the sleeping bag");
 			}
-			te.updateEntity();
-			player.closeScreen();
-			
-		
-	}
-	
-	public static void openCraftingGrid(EntityPlayer player) {
-		
+		} else {
+			te.removeSleepingBag(world);
+		}
+		te.updateEntity();
+		player.closeScreen();
+
 	}
 
-	
+	public static void openCraftingGrid(EntityPlayer player) {
+
+	}
+
 	public static boolean tryPlaceOnDeath(EntityPlayer player) {
-		if(Utils.isWearing(player)){
-			World world =  player.worldObj;
-			ChunkCoordinates spawn = getNearestEmptyChunkCoordinates(world, (int) player.posX, (int) player.posY, (int) player.posZ, 10);
-			if(spawn != null){
-				if(Items.advBackpack.placeBackpack(player.inventory.armorInventory[2], player,world, spawn.posX, spawn.posY, spawn.posZ, ForgeDirection.UP.ordinal(), false)){
+		if (Utils.isWearing(player)) {
+			World world = player.worldObj;
+			ChunkCoordinates spawn = getNearestEmptyChunkCoordinates(world, (int) player.posX, (int) player.posY,
+					(int) player.posZ, 10);
+			if (spawn != null) {
+				if (Items.advBackpack.placeBackpack(player.inventory.armorInventory[2], player, world, spawn.posX,
+						spawn.posY, spawn.posZ, ForgeDirection.UP.ordinal(), false)) {
 					return true;
 				}
 			}
 		}
 		return false;
 	}
-	
-	private static ChunkCoordinates getNearestEmptyChunkCoordinates(World world, int x, int y, int z, int radius){
-		for (int i = x; i <= x+radius; ++i){
-			for (int j = y; j <= y+(radius/2); ++j){
-				for(int k = z; k <= z+(radius);++k){
-					if (world.doesBlockHaveSolidTopSurface(i, j - 1, k) 
-			    		&& world.isAirBlock(i, j, k)){
-				        return new ChunkCoordinates(i, j, k);
-			    	}
+
+	private static ChunkCoordinates getNearestEmptyChunkCoordinates(World world, int x, int y, int z, int radius) {
+		for (int i = x; i <= x + radius; ++i) {
+			for (int j = y; j <= y + (radius / 2); ++j) {
+				for (int k = z; k <= z + (radius); ++k) {
+					if (world.doesBlockHaveSolidTopSurface(i, j - 1, k) && world.isAirBlock(i, j, k)) {
+						return new ChunkCoordinates(i, j, k);
+					}
 				}
 			}
 		}
@@ -367,18 +380,16 @@ public class Actions {
 
 	public static void electrify(EntityPlayer player, EntityLightningBolt lightning) {
 		ItemStack stack = player.inventory.armorInventory[2];
-		if(stack.stackTagCompound != null){
-			if(stack.stackTagCompound.hasKey("color") && stack.stackTagCompound.getString("color").contains("PorkchopRaw")){
+		if (stack.stackTagCompound != null) {
+			if (stack.stackTagCompound.hasKey("color")
+					&& stack.stackTagCompound.getString("color").contains("PorkchopRaw")) {
 				stack.stackTagCompound.setString("color", "Pigman");
 				stack.stackTagCompound.setString("colorName", "Zombie Pigman");
-			}else if(stack.stackTagCompound.hasKey("color") && !stack.stackTagCompound.getString("color").contains("Pigman")){
+			} else if (stack.stackTagCompound.hasKey("color")
+					&& !stack.stackTagCompound.getString("color").contains("Pigman")) {
 				player.inventory.armorInventory[2].stackTagCompound.setString("color", "Electric");
 			}
-		}	
+		}
 	}
 
-	
-	
-	
 }
-

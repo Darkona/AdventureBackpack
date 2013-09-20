@@ -8,7 +8,8 @@ public class FermenterFuel {
 	 */
 	public final ItemStack item;
 	/**
-	 * How much is fermeted per work cycle, i.e. how much biomass is produced per cycle.
+	 * How much is fermeted per work cycle, i.e. how much biomass is produced
+	 * per cycle.
 	 */
 	public final int fermentPerCycle;
 	/**

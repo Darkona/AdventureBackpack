@@ -16,7 +16,7 @@ import net.minecraft.nbt.NBTTagCompound;
 public class BackpackContainer extends Container {
 
 	public IAdvBackpack inventory;
-	
+
 	public boolean source;
 	public Boolean needsUpdate;
 
@@ -27,44 +27,48 @@ public class BackpackContainer extends Container {
 		source = true;
 	}
 
-	public BackpackContainer(InventoryPlayer invPlayer,InventoryItem inventoryItem) {
-		
+	public BackpackContainer(InventoryPlayer invPlayer, InventoryItem inventoryItem) {
+
 		needsUpdate = false;
 		inventory = inventoryItem;
 		source = false;
 		makeSlots(invPlayer);
 		inventory.openChest();
 	}
-	
+
 	private void makeSlots(InventoryPlayer invPlayer) {
 
 		IInventory sexy = inventory;
 
-		//Player's Hotbar
+		// Player's Hotbar
 		for (int x = 0; x < 9; x++) {
 			addSlotToContainer(new Slot(invPlayer, x, 8 + 18 * x, 142));
 		}
-		
-		//Player's Inventory
+
+		// Player's Inventory
 		for (int y = 0; y < 3; y++) {
 			for (int x = 0; x < 9; x++) {
-				addSlotToContainer(new Slot(invPlayer, (x + y * 9 + 9) , (8 + 18 * x) , (84 + y * 18) ));
+				addSlotToContainer(new Slot(invPlayer, (x + y * 9 + 9), (8 + 18 * x), (84 + y * 18)));
 			}
 		}
 		int thing = 0;
-		
-		//Backpack Inventory
-		addSlotToContainer(new SlotTool(sexy, thing++, 62, 37));//Upper Tool -0
+
+		// Backpack Inventory
+		addSlotToContainer(new SlotTool(sexy, thing++, 62, 37));// Upper Tool -0
 		addSlotToContainer(new SlotBackpack(sexy, thing++, 80, 37));// 1
 		addSlotToContainer(new SlotBackpack(sexy, thing++, 98, 37));// 2
-		addSlotToContainer(new SlotTool(sexy, thing++, 62, 55));//Lower Tool -3
-		addSlotToContainer(new SlotBackpack(sexy, thing++, 80, 55));//4
-		addSlotToContainer(new SlotBackpack(sexy, thing++, 98, 55));//5
+		addSlotToContainer(new SlotTool(sexy, thing++, 62, 55));// Lower Tool -3
+		addSlotToContainer(new SlotBackpack(sexy, thing++, 80, 55));// 4
+		addSlotToContainer(new SlotBackpack(sexy, thing++, 98, 55));// 5
 
-		addSlotToContainer(new SlotFluid(sexy, thing++, 7, 25));// bucket left -6
-		addSlotToContainer(new SlotFluid(sexy, thing++, 7, 55));// bucket out left -7
-		addSlotToContainer(new SlotFluid(sexy, thing++, 153, 25));// bucket right -8
-		addSlotToContainer(new SlotFluid(sexy, thing++, 153, 55));// bucket out right -9
+		addSlotToContainer(new SlotFluid(sexy, thing++, 7, 25));// bucket left
+																// -6
+		addSlotToContainer(new SlotFluid(sexy, thing++, 7, 55));// bucket out
+																// left -7
+		addSlotToContainer(new SlotFluid(sexy, thing++, 153, 25));// bucket
+																	// right -8
+		addSlotToContainer(new SlotFluid(sexy, thing++, 153, 55));// bucket out
+																	// right -9
 
 	}
 
@@ -74,38 +78,38 @@ public class BackpackContainer extends Container {
 	}
 
 	public TileAdvBackpack getTile() {
-		return (TileAdvBackpack)inventory;
+		return (TileAdvBackpack) inventory;
 	}
-	
+
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int i) {
-		//Todo: Fix the shit don't respecting slot accepting itemstack.
-			Slot slot = getSlot(i);
-			
-			if (slot != null && slot.getHasStack()) {
-				ItemStack stack = slot.getStack();
-				ItemStack result = stack.copy();
-				
-				if (i >= 36) {
-					if (!mergeItemStack(stack, 0, 36, false)) {
-						return null;
-					}
-				}else if(!mergeItemStack(stack, 36, 36 + inventory.getSizeInventory(), false)) {
+		// Todo: Fix the shit don't respecting slot accepting itemstack.
+		Slot slot = getSlot(i);
+
+		if (slot != null && slot.getHasStack()) {
+			ItemStack stack = slot.getStack();
+			ItemStack result = stack.copy();
+
+			if (i >= 36) {
+				if (!mergeItemStack(stack, 0, 36, false)) {
 					return null;
 				}
-				
-				if (stack.stackSize == 0) {
-					slot.putStack(null);
-				}else{
-					slot.onSlotChanged();
-				}
-				
-				slot.onPickupFromSlot(player, stack);
-				
-				return result;
+			} else if (!mergeItemStack(stack, 36, 36 + inventory.getSizeInventory(), false)) {
+				return null;
 			}
-			
-			return null;
+
+			if (stack.stackSize == 0) {
+				slot.putStack(null);
+			} else {
+				slot.onSlotChanged();
+			}
+
+			slot.onPickupFromSlot(player, stack);
+
+			return result;
+		}
+
+		return null;
 	}
 
 	@Override
@@ -118,16 +122,17 @@ public class BackpackContainer extends Container {
 	public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer par4EntityPlayer) {
 		return super.slotClick(par1, par2, par3, par4EntityPlayer);
 	}
-	
+
 	@Override
-	protected boolean mergeItemStack(ItemStack par1ItemStack, int par2,int par3, boolean par4) {
-		
+	protected boolean mergeItemStack(ItemStack par1ItemStack, int par2, int par3, boolean par4) {
+
 		return super.mergeItemStack(par1ItemStack, par2, par3, par4);
 	}
+
 	public NBTTagCompound getCompound() {
 		this.needsUpdate = false;
-		return ((InventoryItem)inventory).writeToNBT();
-		
+		return ((InventoryItem) inventory).writeToNBT();
+
 	}
 
 	@Override
@@ -135,5 +140,5 @@ public class BackpackContainer extends Container {
 		this.needsUpdate = true;
 		super.putStackInSlot(par1, par2ItemStack);
 	}
-	
+
 }

@@ -18,37 +18,41 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public final class RenderUtils {
-	
+
 	private static final ResourceLocation glint = new ResourceLocation("textures/misc/enchanted_item_glint.png");
-	
-	private RenderUtils() {  }
-	
+
+	private RenderUtils() {
+	}
+
 	public static void renderItemIn3d(ItemStack stack) {
-		
+
 		TextureManager textureManager = Minecraft.getMinecraft().getTextureManager();
 		// Not sure why but this can be null when the world loads.
-		if (textureManager == null) return;
+		if (textureManager == null)
+			return;
 		Item item = stack.getItem();
-		
+
 		GL11.glPushMatrix();
-		
+
 		Tessellator tessellator = Tessellator.instance;
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
 		GL11.glTranslatef(-0.5F, -0.5F, 1 / 32.0F);
-		
+
 		int passes = item.getRenderPasses(stack.getItemDamage());
 		for (int pass = 0; pass < passes; pass++) {
-			textureManager.bindTexture(((stack.getItemSpriteNumber() == 0) ? TextureMap.locationBlocksTexture : TextureMap.locationItemsTexture));
+			textureManager.bindTexture(((stack.getItemSpriteNumber() == 0) ? TextureMap.locationBlocksTexture
+					: TextureMap.locationItemsTexture));
 			Icon icon = item.getIcon(stack, pass);
 			float minU = icon.getMinU();
 			float maxU = icon.getMaxU();
 			float minV = icon.getMinV();
 			float maxV = icon.getMaxV();
 			RenderUtils.setColorFromInt(item.getColorFromItemStack(stack, pass));
-			ItemRenderer.renderItemIn2D(tessellator, maxU, minV, minU, maxV, icon.getIconWidth(), icon.getIconHeight(), 0.0625F);
+			ItemRenderer.renderItemIn2D(tessellator, maxU, minV, minU, maxV, icon.getIconWidth(), icon.getIconHeight(),
+					0.0625F);
 		}
-		
+
 		if (stack.hasEffect(0)) {
 			GL11.glDepthFunc(GL11.GL_EQUAL);
 			GL11.glDisable(GL11.GL_LIGHTING);
@@ -78,31 +82,31 @@ public final class RenderUtils {
 			GL11.glEnable(GL11.GL_LIGHTING);
 			GL11.glDepthFunc(GL11.GL_LEQUAL);
 		}
-		
+
 		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
-		
+
 		GL11.glPopMatrix();
-		
+
 	}
-	
+
 	public static void setColorFromInt(int color) {
 		float r = (color >> 16 & 255) / 255.0F;
 		float g = (color >> 8 & 255) / 255.0F;
 		float b = (color & 255) / 255.0F;
 		GL11.glColor4f(r, g, b, 1.0F);
 	}
-	
-	public static void drawTexturedModalRect(int x, int y, int u, int v, int width, int height,
-	                                         float zLevel, int textureWidth, int textureHeight) {
+
+	public static void drawTexturedModalRect(int x, int y, int u, int v, int width, int height, float zLevel,
+			int textureWidth, int textureHeight) {
 		float xScale = 1.0F / textureWidth;
 		float yScale = 1.0F / textureHeight;
 		Tessellator tess = Tessellator.instance;
 		tess.startDrawingQuads();
-		tess.addVertexWithUV(x +     0, y + height, zLevel, (u +     0) * xScale, (v + height) * yScale);
+		tess.addVertexWithUV(x + 0, y + height, zLevel, (u + 0) * xScale, (v + height) * yScale);
 		tess.addVertexWithUV(x + width, y + height, zLevel, (u + width) * xScale, (v + height) * yScale);
-		tess.addVertexWithUV(x + width, y +      0, zLevel, (u + width) * xScale, (v +      0) * yScale);
-		tess.addVertexWithUV(x +     0, y +      0, zLevel, (u +     0) * xScale, (v +      0) * yScale);
+		tess.addVertexWithUV(x + width, y + 0, zLevel, (u + width) * xScale, (v + 0) * yScale);
+		tess.addVertexWithUV(x + 0, y + 0, zLevel, (u + 0) * xScale, (v + 0) * yScale);
 		tess.draw();
 	}
-	
+
 }

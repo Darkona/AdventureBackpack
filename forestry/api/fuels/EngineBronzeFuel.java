@@ -16,7 +16,8 @@ public class EngineBronzeFuel {
 	 */
 	public final int burnDuration;
 	/**
-	 * By how much the normal heat dissipation rate of 1 is multiplied when using this fuel type.
+	 * By how much the normal heat dissipation rate of 1 is multiplied when
+	 * using this fuel type.
 	 */
 	public final int dissipationMultiplier;
 

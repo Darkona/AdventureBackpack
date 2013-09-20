@@ -10,18 +10,16 @@ public class FluidMilk extends Fluid {
 	public FluidMilk() {
 		super("milk");
 		setDensity(1200);
-		setViscosity(1200);	
+		setViscosity(1200);
 		setUnlocalizedName("milk");
 		setLuminosity(0);
-//		setIcons((Icon)Minecraft.getMinecraft().func_110434_K().func_110581_b(Textures.resourceRL(FluidInfo.MILK_TEXTURE)));
+		// setIcons((Icon)Minecraft.getMinecraft().func_110434_K().func_110581_b(Textures.resourceRL(FluidInfo.MILK_TEXTURE)));
 	}
 
-	
-	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Icon getIcon() {
 		return stillIcon;
 	}
-	
+
 }

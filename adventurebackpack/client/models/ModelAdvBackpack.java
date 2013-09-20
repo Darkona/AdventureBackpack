@@ -14,44 +14,43 @@ import codechicken.lib.render.RenderUtils;
 import codechicken.lib.vec.Cuboid6;
 import codechicken.lib.vec.Vector3;
 
-public class ModelAdvBackpack extends ModelBase
-{
-  //fields
-    ModelRenderer main;
-    ModelRenderer side;
-    ModelRenderer top;
-    ModelRenderer right;
-    ModelRenderer left;
-    ModelRenderer tankwallright;
-    ModelRenderer tankwallleft;
-    ModelRenderer tankwallright2;
-    ModelRenderer tankwallleft2;
-    ModelRenderer tankwallleft3;
-    ModelRenderer tankwallleft4;
-    ModelRenderer tankwallright3;
-    ModelRenderer tankwallright4;
-    ModelRenderer tankbottomright;
-    ModelRenderer tanktopright;
-    ModelRenderer tanktopleft;
-    ModelRenderer tankbottomleft;
-    ModelRenderer bed;
-    ModelRenderer bedstrapbottomright;
-    ModelRenderer bedstrapsideleft;
-    ModelRenderer bedstraptopleft;
-    ModelRenderer bedstrapbottomleft;
-    ModelRenderer bedstraptopright;
-    ModelRenderer bedstrapsideright;
-    ModelRenderer bedbuttonright;
-    ModelRenderer bedbuttonleft;
-    ModelRenderer bedstrapendleft;
-    ModelRenderer bedstrapendright;
-  public ModelAdvBackpack()
-  {
-	  textureWidth = 128;
+public class ModelAdvBackpack extends ModelBase {
+	// fields
+	ModelRenderer main;
+	ModelRenderer side;
+	ModelRenderer top;
+	ModelRenderer right;
+	ModelRenderer left;
+	ModelRenderer tankwallright;
+	ModelRenderer tankwallleft;
+	ModelRenderer tankwallright2;
+	ModelRenderer tankwallleft2;
+	ModelRenderer tankwallleft3;
+	ModelRenderer tankwallleft4;
+	ModelRenderer tankwallright3;
+	ModelRenderer tankwallright4;
+	ModelRenderer tankbottomright;
+	ModelRenderer tanktopright;
+	ModelRenderer tanktopleft;
+	ModelRenderer tankbottomleft;
+	ModelRenderer bed;
+	ModelRenderer bedstrapbottomright;
+	ModelRenderer bedstrapsideleft;
+	ModelRenderer bedstraptopleft;
+	ModelRenderer bedstrapbottomleft;
+	ModelRenderer bedstraptopright;
+	ModelRenderer bedstrapsideright;
+	ModelRenderer bedbuttonright;
+	ModelRenderer bedbuttonleft;
+	ModelRenderer bedstrapendleft;
+	ModelRenderer bedstrapendright;
+
+	public ModelAdvBackpack() {
+		textureWidth = 128;
 		textureHeight = 64;
 
-//		lowerTool = new RendererStack(this, true);
-//		upperTool = new RendererStack(this, false);
+		// lowerTool = new RendererStack(this, true);
+		// upperTool = new RendererStack(this, false);
 
 		main = new ModelRenderer(this, 0, 8);
 		main.addBox(-5F, 0F, -3F, 10, 9, 5);
@@ -165,14 +164,11 @@ public class ModelAdvBackpack extends ModelBase
 		bedstrapendright.addBox(0F, 0F, 0F, 2, 1, 1);
 		bedstrapendright.setRotationPoint(-5F, 20F, 1.3F);
 
-		ModelRenderer[] meh = { main, side, top, right, left, tankwallright,
-				tankwallleft, tankwallright2, tankwallleft2, tankwallleft3,
-				tankwallleft4, tankwallright3, tankwallright4, tankbottomright,
-				tanktopright, tanktopleft, tankbottomleft, bed,
-				bedstrapbottomright, bedstrapsideleft, bedstraptopleft,
-				bedstrapbottomleft, bedstraptopright, bedstrapsideright,
-				bedbuttonright, bedbuttonleft, bedstrapendleft,
-				bedstrapendright };
+		ModelRenderer[] meh = { main, side, top, right, left, tankwallright, tankwallleft, tankwallright2,
+				tankwallleft2, tankwallleft3, tankwallleft4, tankwallright3, tankwallright4, tankbottomright,
+				tanktopright, tanktopleft, tankbottomleft, bed, bedstrapbottomright, bedstrapsideleft, bedstraptopleft,
+				bedstrapbottomleft, bedstraptopright, bedstrapsideright, bedbuttonright, bedbuttonleft,
+				bedstrapendleft, bedstrapendright };
 
 		try {
 			for (ModelRenderer part : meh) {
@@ -182,92 +178,81 @@ public class ModelAdvBackpack extends ModelBase
 		} catch (Exception oops) {
 			oops.printStackTrace();
 		}
-  }
-  
-  
-  public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5,FluidTank tankLeft, FluidTank tankRight, boolean sleepingbag){
-    super.render(entity, f, f1, f2, f3, f4, f5);
-    setRotationAngles(f, f1, f2, f3, f4, f5,entity);
-   
-	main.render(f5);
-	side.render(f5);
-	top.render(f5);
-	right.render(f5);
-	left.render(f5);
-	tankwallright.render(f5);
-	tankwallleft.render(f5);
-	tankwallright2.render(f5);
-	tankwallleft2.render(f5);
-	tankwallleft3.render(f5);
-	tankwallleft4.render(f5);
-	tankwallright3.render(f5);
-	tankwallright4.render(f5);
-	tankbottomright.render(f5);
-	tanktopright.render(f5);
-	tanktopleft.render(f5);
-	tankbottomleft.render(f5);
-	if(sleepingbag == false){ 
-		bed.render(f5);
-	    bedstrapbottomright.render(f5);
-	    bedstrapsideleft.render(f5);
-	    bedstraptopleft.render(f5);
-	    bedstrapbottomleft.render(f5);
-	    bedstraptopright.render(f5);
-	    bedstrapsideright.render(f5);
-	    bedbuttonright.render(f5);
-	    bedbuttonleft.render(f5);
-	    bedstrapendleft.render(f5);
-	    bedstrapendright.render(f5);
-    }
-    
-   
-   
-    	if(tankLeft != null && tankLeft.getFluid()!=null && tankLeft.getFluid().getFluid().getIcon() != null){	
-	    	Vector3 victor = new Vector3(	(tankbottomleft.rotationPointX*0.1-0.21), 
-	    									(tankwallleft.rotationPointY*0.1), 
-	    									(tankbottomleft.rotationPointZ*0.1+0.125));
-	    	CCRenderState.reset();
-	        CCRenderState.pullLightmap();
-	        CCRenderState.useNormals(true);
-	    	RenderUtils.renderFluidCuboid(tankLeft.getFluid(), 
-	                new Cuboid6(0, -0.205, 0.18, 
-	                			0.15, -0.555, 0.02)
-	    						.add(victor),
-	                ((1.0F*tankLeft.getFluidAmount())/ (1.0F*tankLeft.getCapacity())), 
-	                0.8);
-    	
-    	}
-    	
-    	if( tankRight != null && tankRight.getFluid()!=null && tankRight.getFluid().getFluid().getIcon() != null){
-	    	Vector3 victor = new Vector3((tankbottomright.rotationPointX*0.1+0.5), (tankwallleft.rotationPointY*0.1), (tankbottomright.rotationPointZ*0.1+0.125));
-	    	CCRenderState.reset();
-	        CCRenderState.pullLightmap();
-	        CCRenderState.useNormals(true);
-	    	RenderUtils.renderFluidCuboid(tankRight.getFluid(), 
-	                new Cuboid6(-0.04, -0.205, 0.18,
-	                			0.15, -0.555, 0.02)
-	    						.add(victor),
-	                ((1.0F*tankRight.getFluidAmount())/ (1.0F*tankRight.getCapacity())), 
-	                1);
-    	}
-    	
-    	
-   
-  }
-  
-  public void setRotation(ModelRenderer model, float x, float y, float z)
-  {
-    model.rotateAngleX = x;
-    model.rotateAngleY = y;
-    model.rotateAngleZ = z;
-  }
-  
-  public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5,Entity entity)
-  {
-    super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-  }
+	}
 
-  public void setLidRotation(float angle) {
+	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, FluidTank tankLeft,
+			FluidTank tankRight, boolean sleepingbag) {
+		super.render(entity, f, f1, f2, f3, f4, f5);
+		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+
+		main.render(f5);
+		side.render(f5);
+		top.render(f5);
+		right.render(f5);
+		left.render(f5);
+		tankwallright.render(f5);
+		tankwallleft.render(f5);
+		tankwallright2.render(f5);
+		tankwallleft2.render(f5);
+		tankwallleft3.render(f5);
+		tankwallleft4.render(f5);
+		tankwallright3.render(f5);
+		tankwallright4.render(f5);
+		tankbottomright.render(f5);
+		tanktopright.render(f5);
+		tanktopleft.render(f5);
+		tankbottomleft.render(f5);
+		if (sleepingbag == false) {
+			bed.render(f5);
+			bedstrapbottomright.render(f5);
+			bedstrapsideleft.render(f5);
+			bedstraptopleft.render(f5);
+			bedstrapbottomleft.render(f5);
+			bedstraptopright.render(f5);
+			bedstrapsideright.render(f5);
+			bedbuttonright.render(f5);
+			bedbuttonleft.render(f5);
+			bedstrapendleft.render(f5);
+			bedstrapendright.render(f5);
+		}
+
+		if (tankLeft != null && tankLeft.getFluid() != null && tankLeft.getFluid().getFluid().getIcon() != null) {
+			Vector3 victor = new Vector3((tankbottomleft.rotationPointX * 0.1 - 0.21),
+					(tankwallleft.rotationPointY * 0.1), (tankbottomleft.rotationPointZ * 0.1 + 0.125));
+			CCRenderState.reset();
+			CCRenderState.pullLightmap();
+			CCRenderState.useNormals(true);
+			RenderUtils.renderFluidCuboid(tankLeft.getFluid(),
+					new Cuboid6(0, -0.205, 0.18, 0.15, -0.555, 0.02).add(victor),
+					((1.0F * tankLeft.getFluidAmount()) / (1.0F * tankLeft.getCapacity())), 0.8);
+
+		}
+
+		if (tankRight != null && tankRight.getFluid() != null && tankRight.getFluid().getFluid().getIcon() != null) {
+			Vector3 victor = new Vector3((tankbottomright.rotationPointX * 0.1 + 0.5),
+					(tankwallleft.rotationPointY * 0.1), (tankbottomright.rotationPointZ * 0.1 + 0.125));
+			CCRenderState.reset();
+			CCRenderState.pullLightmap();
+			CCRenderState.useNormals(true);
+			RenderUtils.renderFluidCuboid(tankRight.getFluid(),
+					new Cuboid6(-0.04, -0.205, 0.18, 0.15, -0.555, 0.02).add(victor),
+					((1.0F * tankRight.getFluidAmount()) / (1.0F * tankRight.getCapacity())), 1);
+		}
+
+	}
+
+	public void setRotation(ModelRenderer model, float x, float y, float z) {
+		model.rotateAngleX = x;
+		model.rotateAngleY = y;
+		model.rotateAngleZ = z;
+	}
+
+	@Override
+	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
+		super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+	}
+
+	public void setLidRotation(float angle) {
 		top.rotateAngleX = angle;
 	}
 }

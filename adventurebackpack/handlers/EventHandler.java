@@ -15,33 +15,33 @@ public class EventHandler {
 
 	@ForgeSubscribe(priority = EventPriority.NORMAL)
 	public void Suck(HoseSuckEvent event) {
-	FluidStack result = Actions.attemptFill(event.world, event.target, event.entityPlayer, event.currentTank);
+		FluidStack result = Actions.attemptFill(event.world, event.target, event.entityPlayer, event.currentTank);
 		if (result != null) {
 			event.fluidResult = result;
 			event.setResult(Result.ALLOW);
-		}else{
+		} else {
 			event.setResult(Result.DENY);
 		}
 	}
-	
+
 	@ForgeSubscribe(priority = EventPriority.NORMAL)
 	public void Spill(HoseSpillEvent event) {
-	FluidStack result = Actions.attemptPour(event.player, event.world, event.x,event.y,event.z,event.currentTank);
+		FluidStack result = Actions
+				.attemptPour(event.player, event.world, event.x, event.y, event.z, event.currentTank);
 		if (result != null) {
 			event.fluidResult = result;
 			event.setResult(Result.ALLOW);
-		}else{
+		} else {
 			event.setResult(Result.DENY);
 		}
 	}
-	
+
 	@ForgeSubscribe(priority = EventPriority.HIGH)
-	public void placeOnDeath(LivingDeathEvent event){
-		if(event.entity instanceof EntityPlayer && Utils.isWearing((EntityPlayer)event.entity)){
-			Actions.tryPlaceOnDeath((EntityPlayer)event.entity);
+	public void placeOnDeath(LivingDeathEvent event) {
+		if (event.entity instanceof EntityPlayer && Utils.isWearing((EntityPlayer) event.entity)) {
+			Actions.tryPlaceOnDeath((EntityPlayer) event.entity);
 		}
 		event.setResult(Result.ALLOW);
 	}
 
-	
 }

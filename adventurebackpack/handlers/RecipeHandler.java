@@ -1,6 +1,5 @@
 package adventurebackpack.handlers;
 
-
-public class RecipeHandler{
+public class RecipeHandler {
 
 }

@@ -66,30 +66,30 @@ public class RecipeBackpackDye implements IRecipe {
 		}
 		output.stackTagCompound.setInteger("lastTime", 0);
 		String color;
-		if(OreDictionary.getOreName(OreDictionary.getOreID(dyeItem)).contains("dye")){
-			color =  OreDictionary.getOreName(OreDictionary.getOreID(dyeItem)).substring(3);
+		if (OreDictionary.getOreName(OreDictionary.getOreID(dyeItem)).contains("dye")) {
+			color = OreDictionary.getOreName(OreDictionary.getOreID(dyeItem)).substring(3);
 			output.stackTagCompound.setString("color", color);
 			return output;
 		}
-		for(Item item : Utils.items){
-			if(dyeItem.getItem() == item){
+		for (Item item : Utils.items) {
+			if (dyeItem.getItem() == item) {
 				String itemName = item.getUnlocalizedName(dyeItem).substring(5);
 				color = Character.toUpperCase(itemName.charAt(0)) + itemName.substring(1);
-				
+
 				output.stackTagCompound.setString("color", color);
 				output.stackTagCompound.setString("colorName", Utils.getDisplayNameForColor(color));
 				return output;
-			}			
+			}
 		}
-		for(Block blocky : Utils.blockies){
-			if(dyeItem.itemID == blocky.blockID){
+		for (Block blocky : Utils.blockies) {
+			if (dyeItem.itemID == blocky.blockID) {
 				String blockName = blocky.getUnlocalizedName().substring(5);
 				color = Character.toUpperCase(blockName.charAt(0)) + blockName.substring(1);
-				if(blocky.blockID == Block.mushroomRed.blockID){
+				if (blocky.blockID == Block.mushroomRed.blockID) {
 					System.out.println("RedMushroom");
 					color = "MushroomRed";
 				}
-				if(blocky.blockID == Block.mushroomBrown.blockID){
+				if (blocky.blockID == Block.mushroomBrown.blockID) {
 					System.out.println("BrownMushroom");
 					color = "MushroomBrown";
 				}
@@ -98,7 +98,7 @@ public class RecipeBackpackDye implements IRecipe {
 				return output;
 			}
 		}
-		return null;	
+		return null;
 	}
 
 	@Override
