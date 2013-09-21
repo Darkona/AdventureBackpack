@@ -62,7 +62,7 @@ public class ItemAdvBackpack extends ItemArmor {
 
 	public boolean placeBackpack(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, boolean from) {
 		Block backpack = Blocks.advbackpack;
-		world.addWeatherEffect(new EntityLightningBolt(world, x, y, z));
+		
 		if (y <= 0 || y >= 255)
 			return false;
 		if (backpack.canPlaceBlockOnSide(world, x, y, z, side))

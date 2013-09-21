@@ -454,6 +454,7 @@ public class Actions {
 			} else if (stack.stackTagCompound.hasKey("color") && !stack.stackTagCompound.getString("color").contains("Pigman"))
 			{
 				player.inventory.armorInventory[2].stackTagCompound.setString("color", "Electric");
+				stack.stackTagCompound.setString("colorName", "Electric");
 			}
 		}
 	}
