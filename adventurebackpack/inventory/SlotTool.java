@@ -15,22 +15,18 @@ import buildcraft.api.tools.IToolPipette;
 import buildcraft.api.tools.IToolWrench;
 
 @SuppressWarnings("deprecation")
-public class SlotTool extends Slot
-{
+public class SlotTool extends Slot {
 
-	public SlotTool(IInventory inventory, int id, int x, int y)
-	{
+	public SlotTool(IInventory inventory, int id, int x, int y) {
 		super(inventory, id, x, y);
 	}
 
 	@Override
-	public boolean isItemValid(ItemStack stack)
-	{
+	public boolean isItemValid(ItemStack stack) {
 		return isValidTool(stack);
 	}
 
-	public static boolean isValidTool(ItemStack stack)
-	{
+	public static boolean isValidTool(ItemStack stack) {
 
 		boolean valid = false;
 
@@ -50,17 +46,14 @@ public class SlotTool extends Slot
 				valid = true;
 			}
 			// IndustrialCraft
-			if (item instanceof ISpecialElectricItem
-				|| item instanceof ICustomElectricItem)
+			if (item instanceof ISpecialElectricItem || item instanceof ICustomElectricItem)
 			{
 				valid = true;
 			}
 			// Tinker's Construct
 			try
 			{
-				if (java.lang.Class
-					.forName("tconstruct.library.tools.ToolCore").isInstance(
-						item))
+				if (java.lang.Class.forName("tconstruct.library.tools.ToolCore").isInstance(item))
 				{
 					valid = true;
 				}
@@ -79,8 +72,7 @@ public class SlotTool extends Slot
 				valid = true;
 			}
 			// Just for extra compatibility
-			if (name.contains("wrench") || name.contains("hammer")
-				|| name.contains("axe") || name.contains("shovel"))
+			if (name.contains("wrench") || name.contains("hammer") || name.contains("axe") || name.contains("shovel"))
 			{
 				valid = true;
 			}

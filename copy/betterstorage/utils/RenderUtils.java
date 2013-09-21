@@ -17,21 +17,16 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public final class RenderUtils
-{
+public final class RenderUtils {
 
-	private static final ResourceLocation glint = new ResourceLocation(
-		"textures/misc/enchanted_item_glint.png");
+	private static final ResourceLocation glint = new ResourceLocation("textures/misc/enchanted_item_glint.png");
 
-	private RenderUtils()
-	{
+	private RenderUtils() {
 	}
 
-	public static void renderItemIn3d(ItemStack stack)
-	{
+	public static void renderItemIn3d(ItemStack stack) {
 
-		TextureManager textureManager =
-			Minecraft.getMinecraft().getTextureManager();
+		TextureManager textureManager = Minecraft.getMinecraft().getTextureManager();
 		// Not sure why but this can be null when the world loads.
 		if (textureManager == null)
 			return;
@@ -47,18 +42,14 @@ public final class RenderUtils
 		int passes = item.getRenderPasses(stack.getItemDamage());
 		for (int pass = 0; pass < passes; pass++)
 		{
-			textureManager.bindTexture(((stack.getItemSpriteNumber() == 0)
-				? TextureMap.locationBlocksTexture
-				: TextureMap.locationItemsTexture));
+			textureManager.bindTexture(((stack.getItemSpriteNumber() == 0) ? TextureMap.locationBlocksTexture : TextureMap.locationItemsTexture));
 			Icon icon = item.getIcon(stack, pass);
 			float minU = icon.getMinU();
 			float maxU = icon.getMaxU();
 			float minV = icon.getMinV();
 			float maxV = icon.getMaxV();
-			RenderUtils
-				.setColorFromInt(item.getColorFromItemStack(stack, pass));
-			ItemRenderer.renderItemIn2D(tessellator, maxU, minV, minU, maxV,
-				icon.getIconWidth(), icon.getIconHeight(), 0.0625F);
+			RenderUtils.setColorFromInt(item.getColorFromItemStack(stack, pass));
+			ItemRenderer.renderItemIn2D(tessellator, maxU, minV, minU, maxV, icon.getIconWidth(), icon.getIconHeight(), 0.0625F);
 		}
 
 		if (stack.hasEffect(0))
@@ -77,16 +68,14 @@ public final class RenderUtils
 			float f9 = Minecraft.getSystemTime() % 3000L / 3000.0F * 8.0F;
 			GL11.glTranslatef(f9, 0.0F, 0.0F);
 			GL11.glRotatef(-50.0F, 0.0F, 0.0F, 1.0F);
-			ItemRenderer.renderItemIn2D(tessellator, 0.0F, 0.0F, 1.0F, 1.0F,
-				256, 256, 0.0625F);
+			ItemRenderer.renderItemIn2D(tessellator, 0.0F, 0.0F, 1.0F, 1.0F, 256, 256, 0.0625F);
 			GL11.glPopMatrix();
 			GL11.glPushMatrix();
 			GL11.glScalef(f8, f8, f8);
 			f9 = Minecraft.getSystemTime() % 4873L / 4873.0F * 8.0F;
 			GL11.glTranslatef(-f9, 0.0F, 0.0F);
 			GL11.glRotatef(10.0F, 0.0F, 0.0F, 1.0F);
-			ItemRenderer.renderItemIn2D(tessellator, 0.0F, 0.0F, 1.0F, 1.0F,
-				256, 256, 0.0625F);
+			ItemRenderer.renderItemIn2D(tessellator, 0.0F, 0.0F, 1.0F, 1.0F, 256, 256, 0.0625F);
 			GL11.glPopMatrix();
 			GL11.glMatrixMode(GL11.GL_MODELVIEW);
 			GL11.glDisable(GL11.GL_BLEND);
@@ -100,30 +89,22 @@ public final class RenderUtils
 
 	}
 
-	public static void setColorFromInt(int color)
-	{
+	public static void setColorFromInt(int color) {
 		float r = (color >> 16 & 255) / 255.0F;
 		float g = (color >> 8 & 255) / 255.0F;
 		float b = (color & 255) / 255.0F;
 		GL11.glColor4f(r, g, b, 1.0F);
 	}
 
-	public static void
-		drawTexturedModalRect(int x, int y, int u, int v, int width,
-			int height, float zLevel, int textureWidth, int textureHeight)
-	{
+	public static void drawTexturedModalRect(int x, int y, int u, int v, int width, int height, float zLevel, int textureWidth, int textureHeight) {
 		float xScale = 1.0F / textureWidth;
 		float yScale = 1.0F / textureHeight;
 		Tessellator tess = Tessellator.instance;
 		tess.startDrawingQuads();
-		tess.addVertexWithUV(x + 0, y + height, zLevel, (u + 0) * xScale,
-			(v + height) * yScale);
-		tess.addVertexWithUV(x + width, y + height, zLevel, (u + width)
-			* xScale, (v + height) * yScale);
-		tess.addVertexWithUV(x + width, y + 0, zLevel, (u + width) * xScale,
-			(v + 0) * yScale);
-		tess.addVertexWithUV(x + 0, y + 0, zLevel, (u + 0) * xScale, (v + 0)
-			* yScale);
+		tess.addVertexWithUV(x + 0, y + height, zLevel, (u + 0) * xScale, (v + height) * yScale);
+		tess.addVertexWithUV(x + width, y + height, zLevel, (u + width) * xScale, (v + height) * yScale);
+		tess.addVertexWithUV(x + width, y + 0, zLevel, (u + width) * xScale, (v + 0) * yScale);
+		tess.addVertexWithUV(x + 0, y + 0, zLevel, (u + 0) * xScale, (v + 0) * yScale);
 		tess.draw();
 	}
 

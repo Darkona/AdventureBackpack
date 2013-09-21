@@ -2,11 +2,9 @@ package adventurebackpack.fluids;
 
 import net.minecraftforge.fluids.Fluid;
 
-public class FluidMelonJuice extends Fluid
-{
+public class FluidMelonJuice extends Fluid {
 
-	public FluidMelonJuice()
-	{
+	public FluidMelonJuice() {
 		super("melonJuice");
 	}
 

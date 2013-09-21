@@ -3,8 +3,7 @@ package buildcraft.api.tools;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
-public interface IToolPipette
-{
+public interface IToolPipette {
 
 	/**
 	 * @param pipette

@@ -12,33 +12,27 @@ import adventurebackpack.items.recipes.RecipeBackpackDye;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-public class CommonProxy
-{
+public class CommonProxy {
 
 	public static PacketHandler packethandler;
 
-	public void initSounds()
-	{
+	public void initSounds() {
 
 	}
 
-	public void initRenderers()
-	{
+	public void initRenderers() {
 	}
 
-	public void registerStuff()
-	{
+	public void registerStuff() {
 
 		packethandler = new PacketHandler();
 	}
 
-	public void registerEvents()
-	{
+	public void registerEvents() {
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
 	}
 
-	public void initBlocks()
-	{
+	public void initBlocks() {
 		Blocks.init();
 		Blocks.registerBlocks();
 		Blocks.addNames();
@@ -47,25 +41,20 @@ public class CommonProxy
 
 	}
 
-	public void initFluids()
-	{
+	public void initFluids() {
 		Fluids.init();
 	}
 
-	public void registerItems()
-	{
+	public void registerItems() {
 		Items.init();
 		Items.addNames();
 	}
 
-	public void registerRecipes()
-	{
+	public void registerRecipes() {
 		GameRegistry.addRecipe(new RecipeBackpackDye());
 	}
 
-	public void interoperabilityWithOtherMods()
-	{
-		FMLInterModComms.sendMessage("AppliedEnergistics", "moveabletile",
-			TileAdvBackpack.class.getName());
+	public void interoperabilityWithOtherMods() {
+		FMLInterModComms.sendMessage("AppliedEnergistics", "moveabletile", TileAdvBackpack.class.getName());
 	}
 }

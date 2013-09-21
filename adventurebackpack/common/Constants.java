@@ -2,8 +2,7 @@ package adventurebackpack.common;
 
 import net.minecraftforge.fluids.FluidContainerRegistry;
 
-public class Constants
-{
+public class Constants {
 
 	public static final int inventorySize = 10;
 	public static final int bucket = FluidContainerRegistry.BUCKET_VOLUME;

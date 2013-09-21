@@ -13,17 +13,14 @@ import cpw.mods.fml.client.registry.KeyBindingRegistry.KeyHandler;
 import cpw.mods.fml.common.TickType;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
-public class KeyBindHandler extends KeyHandler
-{
+public class KeyBindHandler extends KeyHandler {
 
-	public static KeyBinding openBackpackGUI = new KeyBinding("Open Backpack",
-		Keyboard.KEY_B);
+	public static KeyBinding openBackpackGUI = new KeyBinding("Open Backpack", Keyboard.KEY_B);
 
-	public static KeyBinding[] keyBindArray = {openBackpackGUI};
+	public static KeyBinding[] keyBindArray = { openBackpackGUI };
 	public static boolean[] repeats = new boolean[keyBindArray.length];
 
-	public KeyBindHandler()
-	{
+	public KeyBindHandler() {
 		super(keyBindArray, repeats);
 	}
 
@@ -33,15 +30,12 @@ public class KeyBindHandler extends KeyHandler
 	public static boolean keyPressed = false;;
 
 	@Override
-	public String getLabel()
-	{
+	public String getLabel() {
 		return "ActionKey";
 	}
 
 	@Override
-	public void keyDown(EnumSet<TickType> types, KeyBinding kb,
-		boolean tickEnd, boolean isRepeat)
-	{
+	public void keyDown(EnumSet<TickType> types, KeyBinding kb, boolean tickEnd, boolean isRepeat) {
 		EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
 		if (player == null || tickEnd)
 			return;
@@ -61,29 +55,25 @@ public class KeyBindHandler extends KeyHandler
 	}
 
 	@Override
-	public void keyUp(EnumSet<TickType> types, KeyBinding kb, boolean tickEnd)
-	{
+	public void keyUp(EnumSet<TickType> types, KeyBinding kb, boolean tickEnd) {
 		if (keyHasBeenPressed)
 		{
 			keyHasBeenPressed = false;
 			if (Minecraft.getMinecraft().inGameHasFocus)
 			{
-				PacketDispatcher
-					.sendPacketToServer(PacketHandler.makePacket(1));
+				PacketDispatcher.sendPacketToServer(PacketHandler.makePacket(1));
 			}
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public EnumSet<TickType> ticks()
-	{
+	public EnumSet<TickType> ticks() {
 
 		return tickTypes;
 	}
 
-	public static void playerTick(EntityPlayer player)
-	{
+	public static void playerTick(EntityPlayer player) {
 
 	}
 

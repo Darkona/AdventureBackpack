@@ -1,5 +1,8 @@
 package adventurebackpack.client.gui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -10,6 +13,7 @@ import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.opengl.GL11;
 
 import adventurebackpack.common.Constants;
+import adventurebackpack.common.Utils;
 import adventurebackpack.config.GeneralInfo;
 
 /**
@@ -17,8 +21,7 @@ import adventurebackpack.config.GeneralInfo;
  * @author Darkona
  * 
  */
-public class GuiTank
-{
+public class GuiTank {
 
 	private int H;
 	private int W;
@@ -27,6 +30,7 @@ public class GuiTank
 	private int resolution;
 	private int liquidPerPixel;
 	private float zLevel;
+	private FluidStack fluid;
 
 	/**
 	 * Draws the fluid from a fluidstack in a GUI.
@@ -45,8 +49,7 @@ public class GuiTank
 	 *            8, 16. Other values are untested, but i guess they should
 	 *            always be integer divisors of the width, with modulus 0;
 	 */
-	public GuiTank(int X, int Y, int H, int W, int resolution)
-	{
+	public GuiTank(int X, int Y, int H, int W, int resolution) {
 		this.X = X;
 		this.Y = Y;
 		this.H = H;
@@ -55,28 +58,37 @@ public class GuiTank
 		liquidPerPixel = Constants.tankCapacity / this.H;
 	}
 
+	public List<String> getTankTooltip() {
+		String fluidName = (fluid != null) ? Utils.capitalize(fluid.getFluid().getName()) : "None";
+		String fluidAmount = (fluid != null) ? fluid.amount + "/" + Constants.tankCapacity : "Empty";
+		ArrayList<String> tankTips = new ArrayList<String>();
+		tankTips.add(fluidName);
+		tankTips.add(fluidAmount);
+		return tankTips;
+	}
+
 	/**
 	 * 
 	 * @param gui
 	 * @param theFluid
 	 */
-	public void draw(openGui gui, FluidStack theFluid)
-	{
+	public void draw(IBackpackGui gui, FluidStack theFluid) {
+		fluid = theFluid;
 		this.zLevel = gui.getZLevel();
 		switch (GeneralInfo.GUI_TANK_RENDER)
 		{
-			case 1 :
-				drawMethodOne(gui, theFluid);
-				break;
-			case 2 :
-				drawMethodTwo(gui, theFluid);
-				break;
-			case 3 :
-				drawMethodThree(gui, theFluid);
-				break;
-			default :
-				drawMethodThree(gui, theFluid);
-				break;
+		case 1:
+			drawMethodOne(gui);
+			break;
+		case 2:
+			drawMethodTwo(gui);
+			break;
+		case 3:
+			drawMethodThree(gui);
+			break;
+		default:
+			drawMethodThree(gui);
+			break;
 		}
 
 	}
@@ -86,24 +98,20 @@ public class GuiTank
 	 * @param gui
 	 * @param theFluid
 	 */
-	private void drawMethodOne(openGui gui, FluidStack theFluid)
-	{
-		if (theFluid != null)
+	private void drawMethodOne(IBackpackGui gui) {
+		if (fluid != null)
 		{
-			Icon icon = theFluid.getFluid().getStillIcon();
-			int pixelsY = theFluid.amount / liquidPerPixel;
-			Minecraft.getMinecraft().getTextureManager()
-				.bindTexture(TextureMap.locationBlocksTexture);
+			Icon icon = fluid.getFluid().getStillIcon();
+			int pixelsY = fluid.amount / liquidPerPixel;
+			Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
 
 			int maxY = Y + H;
 			for (int i = X; i < X + W; i += resolution)
 			{
-				for (int j = maxY - resolution; j >= maxY - pixelsY; j -=
-					resolution)
+				for (int j = maxY - resolution; j >= maxY - pixelsY; j -= resolution)
 				{
 					GL11.glColor4f(1, 1, 1, 128);
-					gui.drawTexturedModelRectFromIcon(i, j, icon, resolution,
-						resolution);
+					gui.drawTexturedModelRectFromIcon(i, j, icon, resolution, resolution);
 				}
 			}
 		}
@@ -114,14 +122,12 @@ public class GuiTank
 	 * @param gui
 	 * @param theFluid
 	 */
-	private void drawMethodTwo(openGui gui, FluidStack theFluid)
-	{
-		if (theFluid != null)
+	private void drawMethodTwo(IBackpackGui gui) {
+		if (fluid != null)
 		{
-			Icon icon = theFluid.getFluid().getStillIcon();
-			int pixelsY = theFluid.amount / liquidPerPixel;
-			Minecraft.getMinecraft().getTextureManager()
-				.bindTexture(TextureMap.locationBlocksTexture);
+			Icon icon = fluid.getFluid().getStillIcon();
+			int pixelsY = fluid.amount / liquidPerPixel;
+			Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
 			int top = Y + H - pixelsY;
 			int maxY = Y + H - 1;
 			for (int i = X; i < X + W; i += resolution)
@@ -130,8 +136,7 @@ public class GuiTank
 				for (int j = maxY; j >= top; j--)
 				{
 					GL11.glColor4f(1, 1, 1, 1);
-					drawFluidPixelFromIcon(i, j, icon, resolution, 1, 0, iconY,
-						resolution, 0);
+					drawFluidPixelFromIcon(i, j, icon, resolution, 1, 0, iconY, resolution, 0);
 					iconY = (iconY == 0) ? 7 : iconY - 1;
 				}
 			}
@@ -141,29 +146,24 @@ public class GuiTank
 	/**
 	 * 
 	 * @param gui
-	 * @param theFluid
+	 * @param fluid
 	 */
-	private void drawMethodThree(openGui gui, FluidStack theFluid)
-	{
-		if (theFluid != null)
+	private void drawMethodThree(IBackpackGui gui) {
+		if (fluid != null)
 		{
-			Icon icon = theFluid.getFluid().getStillIcon();
+			Icon icon = fluid.getFluid().getStillIcon();
 			String name = icon.getIconName();
 			ResourceLocation iconplace;
 			if (name.lastIndexOf(":") > -1)
 			{
-				String fixedName =
-					name.substring(0, name.lastIndexOf(":"))
-						+ ":textures/blocks/"
-						+ name.substring(name.lastIndexOf(":") + 1) + ".png";
+				String fixedName = name.substring(0, name.lastIndexOf(":")) + ":textures/blocks/" + name.substring(name.lastIndexOf(":") + 1) + ".png";
 				iconplace = new ResourceLocation(fixedName);
 			} else
 			{
-				iconplace =
-					new ResourceLocation("textures/blocks/" + name + ".png");
+				iconplace = new ResourceLocation("textures/blocks/" + name + ".png");
 			}
 			Minecraft.getMinecraft().getTextureManager().bindTexture(iconplace);
-			int top = Y + H - (theFluid.amount / liquidPerPixel);
+			int top = Y + H - (fluid.amount / liquidPerPixel);
 			for (int j = Y + H - 1; j >= top; j--)
 			{
 				for (int i = X; i <= X + W - 1; i++)
@@ -190,8 +190,7 @@ public class GuiTank
 	 * @param mouseY
 	 * @return
 	 */
-	public boolean inTank(GuiAdvBackpack gui, int mouseX, int mouseY)
-	{
+	public boolean inTank(GuiAdvBackpack gui, int mouseX, int mouseY) {
 		mouseX -= gui.getLeft();
 		mouseY -= gui.getTop();
 		return X <= mouseX && mouseX <= X + W && Y <= mouseY && mouseY <= Y + H;
@@ -223,9 +222,7 @@ public class GuiTank
 	 *            The height of the selection in the icon to draw from. Starts
 	 *            at 0.
 	 */
-	public void drawFluidPixelFromIcon(int x, int y, Icon icon, int w, int h,
-		int srcX, int srcY, int srcW, int srcH)
-	{
+	public void drawFluidPixelFromIcon(int x, int y, Icon icon, int w, int h, int srcX, int srcY, int srcW, int srcH) {
 		double minU = icon.getMinU();
 		double maxU = icon.getMaxU();
 		double minV = icon.getMinV();

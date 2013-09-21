@@ -10,12 +10,10 @@ import net.minecraftforge.oredict.OreDictionary;
 import adventurebackpack.common.Utils;
 import adventurebackpack.items.ItemAdvBackpack;
 
-public class RecipeBackpackDye implements IRecipe
-{
+public class RecipeBackpackDye implements IRecipe {
 
 	@Override
-	public boolean matches(InventoryCrafting inventorycrafting, World world)
-	{
+	public boolean matches(InventoryCrafting inventorycrafting, World world) {
 		ItemStack backpack = null;
 		ItemStack dyeItem = null;
 
@@ -49,8 +47,7 @@ public class RecipeBackpackDye implements IRecipe
 	}
 
 	@Override
-	public ItemStack getCraftingResult(InventoryCrafting inventorycrafting)
-	{
+	public ItemStack getCraftingResult(InventoryCrafting inventorycrafting) {
 		ItemStack backpack = null;
 		ItemStack dyeItem = null;
 		ItemStack output = null;
@@ -81,12 +78,9 @@ public class RecipeBackpackDye implements IRecipe
 		}
 		output.stackTagCompound.setInteger("lastTime", 0);
 		String color;
-		if (OreDictionary.getOreName(OreDictionary.getOreID(dyeItem)).contains(
-			"dye"))
+		if (OreDictionary.getOreName(OreDictionary.getOreID(dyeItem)).contains("dye"))
 		{
-			color =
-				OreDictionary.getOreName(OreDictionary.getOreID(dyeItem))
-					.substring(3);
+			color = OreDictionary.getOreName(OreDictionary.getOreID(dyeItem)).substring(3);
 			output.stackTagCompound.setString("color", color);
 			return output;
 		}
@@ -95,13 +89,13 @@ public class RecipeBackpackDye implements IRecipe
 			if (dyeItem.getItem() == item)
 			{
 				String itemName = item.getUnlocalizedName(dyeItem).substring(5);
-				color =
-					Character.toUpperCase(itemName.charAt(0))
-						+ itemName.substring(1);
-
+				color = Utils.capitalize(itemName);
+				if (item == Item.recordCat)
+				{
+					color = "Rainbow";
+				}
 				output.stackTagCompound.setString("color", color);
-				output.stackTagCompound.setString("colorName",
-					Utils.getDisplayNameForColor(color));
+				output.stackTagCompound.setString("colorName", Utils.getDisplayNameForColor(color));
 				return output;
 			}
 		}
@@ -110,22 +104,17 @@ public class RecipeBackpackDye implements IRecipe
 			if (dyeItem.itemID == blocky.blockID)
 			{
 				String blockName = blocky.getUnlocalizedName().substring(5);
-				color =
-					Character.toUpperCase(blockName.charAt(0))
-						+ blockName.substring(1);
+				color = Utils.capitalize(blockName);
 				if (blocky.blockID == Block.mushroomRed.blockID)
 				{
-					System.out.println("RedMushroom");
 					color = "MushroomRed";
 				}
 				if (blocky.blockID == Block.mushroomBrown.blockID)
 				{
-					System.out.println("BrownMushroom");
 					color = "MushroomBrown";
 				}
 				output.stackTagCompound.setString("color", color);
-				output.stackTagCompound.setString("colorName",
-					Utils.getDisplayNameForColor(color));
+				output.stackTagCompound.setString("colorName", Utils.getDisplayNameForColor(color));
 				return output;
 			}
 		}
@@ -133,15 +122,12 @@ public class RecipeBackpackDye implements IRecipe
 	}
 
 	@Override
-	public int getRecipeSize()
-	{
+	public int getRecipeSize() {
 		return 10;
 	}
 
 	@Override
-	public ItemStack getRecipeOutput()
-	{
-		// TODO Auto-generated method stub
+	public ItemStack getRecipeOutput() {
 		return null;
 	}
 

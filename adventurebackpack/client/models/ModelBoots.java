@@ -10,8 +10,7 @@ import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class ModelBoots extends ModelBiped
-{
+public class ModelBoots extends ModelBiped {
 	// fields
 	ModelRenderer rightlegboot;
 	ModelRenderer leftlegboot;
@@ -20,8 +19,7 @@ public class ModelBoots extends ModelBiped
 	ModelRenderer leftlegboottopfront;
 	ModelRenderer rightlegboottopfront;
 
-	public ModelBoots()
-	{
+	public ModelBoots() {
 		textureWidth = 128;
 		textureHeight = 32;
 
@@ -65,9 +63,7 @@ public class ModelBoots extends ModelBiped
 	}
 
 	@Override
-	public void render(Entity entity, float f, float f1, float f2, float f3,
-		float f4, float f5)
-	{
+	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		setRotationAngles(entity, f, f1, f2, f3, f4, f5);
 		rightlegboot.render(f5);
@@ -78,16 +74,13 @@ public class ModelBoots extends ModelBiped
 		rightlegboottopfront.render(f5);
 	}
 
-	private void setRotation(ModelRenderer model, float x, float y, float z)
-	{
+	private void setRotation(ModelRenderer model, float x, float y, float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
 	}
 
-	public void setRotationAngles(Entity entity, float f, float f1, float f2,
-		float f3, float f4, float f5)
-	{
+	public void setRotationAngles(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
 	}
 

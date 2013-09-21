@@ -14,8 +14,7 @@ import net.minecraft.item.ItemStack;
  * 
  * @author CovertJaguar <http://www.railcraft.info>
  */
-public interface IToolCrowbar
-{
+public interface IToolCrowbar {
 
 	/**
 	 * Controls non-rotational interactions with blocks. Crowbar specific stuff.
@@ -30,8 +29,7 @@ public interface IToolCrowbar
 	 * @param z
 	 * @return
 	 */
-	public boolean canWhack(EntityPlayer player, ItemStack crowbar, int x,
-		int y, int z);
+	public boolean canWhack(EntityPlayer player, ItemStack crowbar, int x, int y, int z);
 
 	/**
 	 * Callback to do damage to the item.
@@ -42,8 +40,7 @@ public interface IToolCrowbar
 	 * @param y
 	 * @param z
 	 */
-	public void onWhack(EntityPlayer player, ItemStack crowbar, int x, int y,
-		int z);
+	public void onWhack(EntityPlayer player, ItemStack crowbar, int x, int y, int z);
 
 	/**
 	 * Controls whether you can link a cart.
@@ -53,8 +50,7 @@ public interface IToolCrowbar
 	 * @param cart
 	 * @return
 	 */
-	public boolean canLink(EntityPlayer player, ItemStack crowbar,
-		EntityMinecart cart);
+	public boolean canLink(EntityPlayer player, ItemStack crowbar, EntityMinecart cart);
 
 	/**
 	 * Callback to do damage.
@@ -63,8 +59,7 @@ public interface IToolCrowbar
 	 * @param crowbar
 	 * @param cart
 	 */
-	public void onLink(EntityPlayer player, ItemStack crowbar,
-		EntityMinecart cart);
+	public void onLink(EntityPlayer player, ItemStack crowbar, EntityMinecart cart);
 
 	/**
 	 * Controls whether you can boost a cart.
@@ -74,8 +69,7 @@ public interface IToolCrowbar
 	 * @param cart
 	 * @return
 	 */
-	public boolean canBoost(EntityPlayer player, ItemStack crowbar,
-		EntityMinecart cart);
+	public boolean canBoost(EntityPlayer player, ItemStack crowbar, EntityMinecart cart);
 
 	/**
 	 * Callback to do damage, boosting a cart usually does more damage than
@@ -85,6 +79,5 @@ public interface IToolCrowbar
 	 * @param crowbar
 	 * @param cart
 	 */
-	public void onBoost(EntityPlayer player, ItemStack crowbar,
-		EntityMinecart cart);
+	public void onBoost(EntityPlayer player, ItemStack crowbar, EntityMinecart cart);
 }

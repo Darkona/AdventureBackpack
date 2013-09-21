@@ -1,7 +1,6 @@
 package adventurebackpack.config;
 
-public class BlockInfo
-{
+public class BlockInfo {
 
 	public static int MELONJUICE_ID = 7;
 	public static final String MELONJUICE_NAME = "melonJuice";

@@ -2,8 +2,7 @@ package forestry.api.fuels;
 
 import net.minecraft.item.ItemStack;
 
-public class FermenterFuel
-{
+public class FermenterFuel {
 	/**
 	 * Item that is a valid fuel for the fermenter (i.e. fertilizer).
 	 */
@@ -18,8 +17,7 @@ public class FermenterFuel
 	 */
 	public final int burnDuration;
 
-	public FermenterFuel(ItemStack item, int fermentPerCycle, int burnDuration)
-	{
+	public FermenterFuel(ItemStack item, int fermentPerCycle, int burnDuration) {
 		this.item = item;
 		this.fermentPerCycle = fermentPerCycle;
 		this.burnDuration = burnDuration;

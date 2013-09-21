@@ -19,24 +19,20 @@ import cpw.mods.fml.relauncher.SideOnly;
 /**
  * Easy localisation access.
  */
-public class LangUtil
-{
+public class LangUtil {
 	public static LangUtil instance = new LangUtil(null);
 
 	public String prefix;
 
-	public LangUtil(String prefix)
-	{
+	public LangUtil(String prefix) {
 		this.prefix = prefix;
 	}
 
-	public static String translateG(String s, Object... format)
-	{
+	public static String translateG(String s, Object... format) {
 		return instance.translate(s, format);
 	}
 
-	public String translate(String s, Object... format)
-	{
+	public String translate(String s, Object... format) {
 		if (prefix != null && !s.startsWith(prefix + "."))
 			s = prefix + "." + s;
 		String ret = LanguageRegistry.instance().getStringLocalization(s);
@@ -51,12 +47,9 @@ public class LangUtil
 		return ret;
 	}
 
-	public void addLangFile(InputStream resource, String lang)
-		throws IOException
-	{
+	public void addLangFile(InputStream resource, String lang) throws IOException {
 		LanguageRegistry reg = LanguageRegistry.instance();
-		BufferedReader reader =
-			new BufferedReader(new InputStreamReader(resource, "UTF-8"));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(resource, "UTF-8"));
 		while (true)
 		{
 			String read = reader.readLine();
@@ -75,29 +68,21 @@ public class LangUtil
 	}
 
 	@SideOnly(Side.CLIENT)
-	public static LangUtil loadLangDir(String domain)
-	{
-		return new LangUtil(domain).addLangDir(new ResourceLocation(domain,
-			"lang"));
+	public static LangUtil loadLangDir(String domain) {
+		return new LangUtil(domain).addLangDir(new ResourceLocation(domain, "lang"));
 	}
 
 	@SuppressWarnings("unchecked")
 	@SideOnly(Side.CLIENT)
-	public LangUtil addLangDir(ResourceLocation dir)
-	{
-		ResourceManager resManager =
-			Minecraft.getMinecraft().getResourceManager();
-		for (Language lang : (SortedSet<Language>) Minecraft.getMinecraft()
-			.getLanguageManager().getLanguages())
+	public LangUtil addLangDir(ResourceLocation dir) {
+		ResourceManager resManager = Minecraft.getMinecraft().getResourceManager();
+		for (Language lang : (SortedSet<Language>) Minecraft.getMinecraft().getLanguageManager().getLanguages())
 		{
 			String langID = lang.getLanguageCode();
 			Resource langRes;
 			try
 			{
-				langRes =
-					resManager.getResource(new ResourceLocation(dir
-						.getResourceDomain(), dir.getResourcePath() + '/'
-						+ langID + ".lang"));
+				langRes = resManager.getResource(new ResourceLocation(dir.getResourceDomain(), dir.getResourcePath() + '/' + langID + ".lang"));
 			} catch (Exception e)
 			{
 				continue;
@@ -107,8 +92,7 @@ public class LangUtil
 				addLangFile(langRes.getInputStream(), langID);
 			} catch (IOException e)
 			{
-				System.err.println("Failed to load lang resource. domain="
-					+ prefix + ", resource=" + langRes);
+				System.err.println("Failed to load lang resource. domain=" + prefix + ", resource=" + langRes);
 				e.printStackTrace();
 			}
 		}
@@ -118,8 +102,7 @@ public class LangUtil
 
 	@Deprecated
 	@SideOnly(Side.CLIENT)
-	public static void loadBaseLangDir(ResourceLocation dir)
-	{
+	public static void loadBaseLangDir(ResourceLocation dir) {
 		instance.addLangDir(dir);
 	}
 }

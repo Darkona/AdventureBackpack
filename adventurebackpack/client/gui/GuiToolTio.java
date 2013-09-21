@@ -1,6 +1,5 @@
 package adventurebackpack.client.gui;
 
-public class GuiToolTio
-{
+public class GuiToolTio {
 
 }

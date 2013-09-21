@@ -14,8 +14,7 @@ import adventurebackpack.items.ItemAdvBackpack;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
 
-public class ClientTickHandler implements ITickHandler
-{
+public class ClientTickHandler implements ITickHandler {
 	public static int dWheel;
 	public static int theSlot = -1;
 
@@ -23,15 +22,13 @@ public class ClientTickHandler implements ITickHandler
 	public static boolean isTool = false;
 
 	@Override
-	public void tickStart(EnumSet<TickType> type, Object... tickData)
-	{
+	public void tickStart(EnumSet<TickType> type, Object... tickData) {
 		dWheel = Mouse.getDWheel() / 120;
 		EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
 		if (player != null && player.isSneaking())
 		{
 			ItemStack backpack = player.getCurrentArmor(2);
-			if (backpack != null
-				&& backpack.getItem() instanceof ItemAdvBackpack)
+			if (backpack != null && backpack.getItem() instanceof ItemAdvBackpack)
 			{
 
 				Minecraft.getMinecraft().playerController.updateController();
@@ -56,8 +53,7 @@ public class ClientTickHandler implements ITickHandler
 	}
 
 	@Override
-	public void tickEnd(EnumSet<TickType> type, Object... tickData)
-	{
+	public void tickEnd(EnumSet<TickType> type, Object... tickData) {
 		EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
 		if (player != null)
 		{
@@ -67,14 +63,12 @@ public class ClientTickHandler implements ITickHandler
 				if (isHose)
 				{
 					player.inventory.currentItem = theSlot;
-					player.sendQueue.addToSendQueue(PacketHandler.makePacket(3,
-						dWheel - Mouse.getDWheel(), theSlot));
+					player.sendQueue.addToSendQueue(PacketHandler.makePacket(3, dWheel - Mouse.getDWheel(), theSlot));
 				}
 
 				if (isTool)
 				{
-					player.sendQueue.addToSendQueue(PacketHandler.makePacket(4,
-						dWheel - Mouse.getDWheel(), theSlot));
+					player.sendQueue.addToSendQueue(PacketHandler.makePacket(4, dWheel - Mouse.getDWheel(), theSlot));
 					player.inventory.currentItem = theSlot;
 				}
 
@@ -88,15 +82,13 @@ public class ClientTickHandler implements ITickHandler
 	}
 
 	@Override
-	public EnumSet<TickType> ticks()
-	{
+	public EnumSet<TickType> ticks() {
 		// TODO Auto-generated method stub
 		return EnumSet.of(TickType.CLIENT);
 	}
 
 	@Override
-	public String getLabel()
-	{
+	public String getLabel() {
 		// TODO Auto-generated method stub
 		return "AdventureBackpack: Tick!";
 	}

@@ -16,22 +16,16 @@ import codechicken.lib.render.RenderUtils;
 import codechicken.lib.vec.Cuboid6;
 import codechicken.lib.vec.Vector3;
 
-public class ModelAdvBackpackArmor extends ModelBiped
-{
-	public static final ModelAdvBackpackArmor instance =
-		new ModelAdvBackpackArmor();
+public class ModelAdvBackpackArmor extends ModelBiped {
+	public static final ModelAdvBackpackArmor instance = new ModelAdvBackpackArmor();
 
-	public ModelAdvBackpackArmor setTanks(FluidStack tankLeft,
-		FluidStack tankRight)
-	{
+	public ModelAdvBackpackArmor setTanks(FluidStack tankLeft, FluidStack tankRight) {
 		this.tankLeft = tankLeft;
 		this.tankRight = tankRight;
 		return instance;
 	}
 
-	public ModelAdvBackpackArmor setItems(ItemStack stackUp,
-		ItemStack stackBottom)
-	{
+	public ModelAdvBackpackArmor setItems(ItemStack stackUp, ItemStack stackBottom) {
 		this.stackUp = stackUp;
 		this.stackBottom = stackBottom;
 		return instance;
@@ -74,8 +68,7 @@ public class ModelAdvBackpackArmor extends ModelBiped
 	RendererStack lowerTool;
 	RendererStack upperTool;
 
-	public ModelAdvBackpackArmor()
-	{
+	public ModelAdvBackpackArmor() {
 
 		textureWidth = 128;
 		textureHeight = 64;
@@ -106,35 +99,35 @@ public class ModelAdvBackpackArmor extends ModelBiped
 		left.addBox(0F, 0F, -1F, 1, 8, 1);
 		left.setRotationPoint(3F, 9F, -3F);
 
-		tankwallright = new ModelRenderer(this, 0, 55);
+		tankwallright = new ModelRenderer(this, 0, 54);
 		tankwallright.addBox(0F, 0F, 0F, 1, 8, 1);
 		tankwallright.setRotationPoint(-6F, 11F, -2.5F);
 
-		tankwallleft = new ModelRenderer(this, 0, 55);
+		tankwallleft = new ModelRenderer(this, 0, 54);
 		tankwallleft.addBox(0F, 0F, 0F, 1, 8, 1);
 		tankwallleft.setRotationPoint(5F, 11F, -2.5F);
 
-		tankwallright2 = new ModelRenderer(this, 0, 55);
+		tankwallright2 = new ModelRenderer(this, 0, 54);
 		tankwallright2.addBox(0F, 0F, 0F, 1, 8, 1);
 		tankwallright2.setRotationPoint(-9F, 11F, -2.5F);
 
-		tankwallleft2 = new ModelRenderer(this, 0, 55);
+		tankwallleft2 = new ModelRenderer(this, 0, 54);
 		tankwallleft2.addBox(0F, 0F, 0F, 1, 8, 1);
 		tankwallleft2.setRotationPoint(5F, 11F, 0.5F);
 
-		tankwallleft3 = new ModelRenderer(this, 0, 55);
+		tankwallleft3 = new ModelRenderer(this, 0, 54);
 		tankwallleft3.addBox(0F, 0F, 0F, 1, 8, 1);
 		tankwallleft3.setRotationPoint(8F, 11F, -2.5F);
 
-		tankwallleft4 = new ModelRenderer(this, 0, 55);
+		tankwallleft4 = new ModelRenderer(this, 0, 54);
 		tankwallleft4.addBox(0F, 0F, 0F, 1, 8, 1);
 		tankwallleft4.setRotationPoint(8F, 11F, 0.5F);
 
-		tankwallright3 = new ModelRenderer(this, 0, 55);
+		tankwallright3 = new ModelRenderer(this, 0, 54);
 		tankwallright3.addBox(0F, 0F, 0F, 1, 8, 1);
 		tankwallright3.setRotationPoint(-6F, 11F, 0.5F);
 
-		tankwallright4 = new ModelRenderer(this, 0, 55);
+		tankwallright4 = new ModelRenderer(this, 0, 54);
 		tankwallright4.addBox(0F, 0F, 0F, 1, 8, 1);
 		tankwallright4.setRotationPoint(-9F, 11F, 0.5F);
 
@@ -158,54 +151,49 @@ public class ModelAdvBackpackArmor extends ModelBiped
 		bed.addBox(0F, 0F, 0F, 14, 2, 2);
 		bed.setRotationPoint(-7F, 19.1F, 2F);
 
-		bedstrapbottomright = new ModelRenderer(this, 0, 60);
+		bedstrapbottomright = new ModelRenderer(this, 0, 58);
 		bedstrapbottomright.addBox(0F, 0F, 0F, 2, 1, 3);
 		bedstrapbottomright.setRotationPoint(-5F, 20.7F, 1.3F);
 
-		bedstrapsideleft = new ModelRenderer(this, 0, 59);
+		bedstrapsideleft = new ModelRenderer(this, 0, 58);
 		bedstrapsideleft.addBox(0F, 0F, 0F, 2, 3, 1);
 		bedstrapsideleft.setRotationPoint(3F, 18.7F, 3.4F);
 
-		bedstraptopleft = new ModelRenderer(this, 0, 61);
+		bedstraptopleft = new ModelRenderer(this, 0, 58);
 		bedstraptopleft.addBox(0F, 0F, 0F, 2, 1, 2);
 		bedstraptopleft.setRotationPoint(3F, 18.7F, 2F);
 
-		bedstrapbottomleft = new ModelRenderer(this, 0, 60);
+		bedstrapbottomleft = new ModelRenderer(this, 0, 58);
 		bedstrapbottomleft.addBox(0F, 0F, 0F, 2, 1, 3);
 		bedstrapbottomleft.setRotationPoint(3F, 20.7F, 1.3F);
 
-		bedstraptopright = new ModelRenderer(this, 0, 61);
+		bedstraptopright = new ModelRenderer(this, 0, 58);
 		bedstraptopright.addBox(0F, 0F, 0F, 2, 1, 2);
 		bedstraptopright.setRotationPoint(-5F, 18.7F, 2F);
 
-		bedstrapsideright = new ModelRenderer(this, 0, 59);
+		bedstrapsideright = new ModelRenderer(this, 0, 58);
 		bedstrapsideright.addBox(0F, 0F, 0F, 2, 3, 1);
 		bedstrapsideright.setRotationPoint(-5F, 18.7F, 3.4F);
 
-		bedbuttonright = new ModelRenderer(this, 0, 62);
+		bedbuttonright = new ModelRenderer(this, 0, 58);
 		bedbuttonright.addBox(0F, 0F, 0F, 1, 1, 1);
 		bedbuttonright.setRotationPoint(-4.5F, 18.3F, 1.7F);
 
-		bedbuttonleft = new ModelRenderer(this, 0, 62);
+		bedbuttonleft = new ModelRenderer(this, 0, 58);
 		bedbuttonleft.addBox(0F, 0F, 0F, 1, 1, 1);
 		bedbuttonleft.setRotationPoint(3.5F, 18.3F, 1.7F);
 
-		bedstrapendleft = new ModelRenderer(this, 0, 62);
+		bedstrapendleft = new ModelRenderer(this, 0, 58);
 		bedstrapendleft.addBox(0F, 0F, 0F, 2, 1, 1);
 		bedstrapendleft.setRotationPoint(3F, 20F, 1.3F);
 
-		bedstrapendright = new ModelRenderer(this, 0, 62);
+		bedstrapendright = new ModelRenderer(this, 0, 58);
 		bedstrapendright.addBox(0F, 0F, 0F, 2, 1, 1);
 		bedstrapendright.setRotationPoint(-5F, 20F, 1.3F);
 
-		ModelRenderer[] meh =
-			{main, side, top, right, left, tankwallright, tankwallleft,
-				tankwallright2, tankwallleft2, tankwallleft3, tankwallleft4,
-				tankwallright3, tankwallright4, tankbottomright, tanktopright,
-				tanktopleft, tankbottomleft, bed, bedstrapbottomright,
-				bedstrapsideleft, bedstraptopleft, bedstrapbottomleft,
-				bedstraptopright, bedstrapsideright, bedbuttonright,
-				bedbuttonleft, bedstrapendleft, bedstrapendright};
+		ModelRenderer[] meh = { main, side, top, right, left, tankwallright, tankwallleft, tankwallright2, tankwallleft2, tankwallleft3, tankwallleft4,
+				tankwallright3, tankwallright4, tankbottomright, tanktopright, tanktopleft, tankbottomleft, bed, bedstrapbottomright, bedstrapsideleft,
+				bedstraptopleft, bedstrapbottomleft, bedstraptopright, bedstrapsideright, bedbuttonright, bedbuttonleft, bedstrapendleft, bedstrapendright };
 
 		try
 		{
@@ -227,9 +215,7 @@ public class ModelAdvBackpackArmor extends ModelBiped
 	}
 
 	@Override
-	public void render(Entity entity, float f, float f1, float f2, float f3,
-		float f4, float f5)
-	{
+	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 
 		upperTool.offsetY = 0.6F;
 		upperTool.offsetZ = .2F;
@@ -257,18 +243,13 @@ public class ModelAdvBackpackArmor extends ModelBiped
 		CCRenderState.pullLightmap();
 		CCRenderState.useNormals(true);
 
-		if (tankLeft != null && tankLeft.getFluid() != null
-			&& tankLeft.getFluid().getIcon() != null)
+		if (tankLeft != null && tankLeft.getFluid() != null && tankLeft.getFluid().getIcon() != null)
 		{
 
-			Vector3 victor =
-				new Vector3(
-					(bipedBody.offsetX + tankbottomleft.rotationPointX * 0.1 - 0.21),
-					(bipedBody.offsetY + tankwallleft.rotationPointY * 0.1),
-					(bipedBody.offsetZ + tankbottomleft.rotationPointZ * 0.1 + 0.125));
+			Vector3 victor = new Vector3((bipedBody.offsetX + tankbottomleft.rotationPointX * 0.1 - 0.21),
+					(bipedBody.offsetY + tankwallleft.rotationPointY * 0.1), (bipedBody.offsetZ + tankbottomleft.rotationPointZ * 0.1 + 0.125));
 
-			Cuboid6 left =
-				new Cuboid6(0, -0.205, 0.18, 0.15, -0.555, 0.02).add(victor);
+			Cuboid6 left = new Cuboid6(0, -0.205, 0.18, 0.15, -0.555, 0.02).add(victor);
 
 			if (isSneak)
 			{
@@ -279,27 +260,19 @@ public class ModelAdvBackpackArmor extends ModelBiped
 				GL11.glPushMatrix();
 				GL11.glRotatef(30F, 1, 0, 0);
 			}
-			RenderUtils.renderFluidCuboid(tankLeft, left,
-				((1.0F * tankLeft.amount) / (1.0F * Constants.tankCapacity)),
-				0.2);
+			RenderUtils.renderFluidCuboid(tankLeft, left, ((1.0F * tankLeft.amount) / (1.0F * Constants.tankCapacity)), 0.2);
 			if (isSneak)
 			{
 				GL11.glPopMatrix();
 			}
 		}
 
-		if (tankRight != null && tankRight.getFluid() != null
-			&& tankRight.getFluid().getIcon() != null)
+		if (tankRight != null && tankRight.getFluid() != null && tankRight.getFluid().getIcon() != null)
 		{
 
-			Vector3 victor =
-				new Vector3(
-					(bipedBody.offsetX + tankbottomright.rotationPointX * 0.1 + 0.5),
-					(bipedBody.offsetY + tankwallleft.rotationPointY * 0.1),
-					(bipedBody.offsetZ + tankbottomright.rotationPointZ * 0.1 + 0.125));
-			Cuboid6 right =
-				new Cuboid6(-0.04, -0.205, 0.18, 0.15, -0.555, 0.02)
-					.add(victor);
+			Vector3 victor = new Vector3((bipedBody.offsetX + tankbottomright.rotationPointX * 0.1 + 0.5),
+					(bipedBody.offsetY + tankwallleft.rotationPointY * 0.1), (bipedBody.offsetZ + tankbottomright.rotationPointZ * 0.1 + 0.125));
+			Cuboid6 right = new Cuboid6(-0.04, -0.205, 0.18, 0.15, -0.555, 0.02).add(victor);
 			if (isSneak)
 			{
 				Vector3 victoria = new Vector3(0, 0, .2);
@@ -309,9 +282,7 @@ public class ModelAdvBackpackArmor extends ModelBiped
 				GL11.glPushMatrix();
 				GL11.glRotatef(30F, 1, 0, 0);
 			}
-			RenderUtils.renderFluidCuboid(tankRight, right,
-				((1.0F * tankRight.amount) / (1.0F * Constants.tankCapacity)),
-				1);
+			RenderUtils.renderFluidCuboid(tankRight, right, ((1.0F * tankRight.amount) / (1.0F * Constants.tankCapacity)), 1);
 			if (isSneak)
 			{
 				GL11.glPopMatrix();
@@ -319,35 +290,27 @@ public class ModelAdvBackpackArmor extends ModelBiped
 		}
 	}
 
-	public void setRotation(ModelRenderer model, float x, float y, float z)
-	{
+	public void setRotation(ModelRenderer model, float x, float y, float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
 	}
 
 	@Override
-	public void setRotationAngles(float v1, float v2, float v3, float v4,
-		float v5, float v6, Entity entity)
-	{
+	public void setRotationAngles(float v1, float v2, float v3, float v4, float v5, float v6, Entity entity) {
 		// Copyboy: For some reason this is not properly updated.
-		isSneak =
-			((entity != null) ? ((EntityLivingBase) entity).isSneaking()
-				: false);
+		isSneak = ((entity != null) ? ((EntityLivingBase) entity).isSneaking() : false);
 		bipedBody.offsetZ = (isSneak) ? 0 : .3F;
 		super.setRotationAngles(v1, v2, v3, v4, v5, v6, entity);
 	}
 
 	@Override
-	public void setLivingAnimations(EntityLivingBase entity, float par2,
-		float par3, float partialTicks)
-	{
+	public void setLivingAnimations(EntityLivingBase entity, float par2, float par3, float partialTicks) {
 		float angle = 0;
 		top.rotateAngleX = (float) (angle * Math.PI / 4.0);
 	}
 
-	public ModelAdvBackpackArmor setScale(float scale)
-	{
+	public ModelAdvBackpackArmor setScale(float scale) {
 		this.scale = scale;
 		return this;
 	}

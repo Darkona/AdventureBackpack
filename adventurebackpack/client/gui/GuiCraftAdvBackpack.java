@@ -1,5 +1,7 @@
 package adventurebackpack.client.gui;
 
+import java.util.ArrayList;
+
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,8 +22,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiCraftAdvBackpack extends GuiContainer implements openGui
-{
+public class GuiCraftAdvBackpack extends GuiContainer implements IBackpackGui {
 
 	protected IAdvBackpack inventory;
 	protected boolean source;
@@ -31,20 +32,15 @@ public class GuiCraftAdvBackpack extends GuiContainer implements openGui
 	protected int Z;
 	protected EntityPlayer player;
 	/* Tanks */
-	private static GuiTank tankLeft = new GuiTank(8, 7, 64, 16,
-		GeneralInfo.GUI_TANK_RES);
-	private static GuiTank tankRight = new GuiTank(153, 7, 64, 16,
-		GeneralInfo.GUI_TANK_RES);
+	private static GuiTank tankLeft = new GuiTank(8, 7, 64, 16, GeneralInfo.GUI_TANK_RES);
+	private static GuiTank tankRight = new GuiTank(153, 7, 64, 16, GeneralInfo.GUI_TANK_RES);
 
 	/* Buttons */
-	private static GuiImageButton backButton = new GuiImageButton(114, 24, 18,
-		18);
+	private static GuiImageButton backButton = new GuiImageButton(114, 24, 18, 18);
 
-	private static final ResourceLocation texture = Textures
-		.resourceRL("textures/gui/guiBackpackCraft.png");
+	private static final ResourceLocation texture = Textures.resourceRL("textures/gui/guiBackpackCraft.png");
 
-	public GuiCraftAdvBackpack(InventoryPlayer invPlayer, TileAdvBackpack tile)
-	{
+	public GuiCraftAdvBackpack(InventoryPlayer invPlayer, TileAdvBackpack tile) {
 		super(new BackCraftContainer(invPlayer, tile));
 		this.inventory = tile;
 		this.source = true;
@@ -55,8 +51,7 @@ public class GuiCraftAdvBackpack extends GuiContainer implements openGui
 		Z = tile.zCoord;
 	}
 
-	public GuiCraftAdvBackpack(EntityPlayer player, InventoryItem item)
-	{
+	public GuiCraftAdvBackpack(EntityPlayer player, InventoryItem item) {
 		super(new BackCraftContainer(player, player.worldObj, item));
 		this.inventory = item;
 		this.source = false;
@@ -65,17 +60,14 @@ public class GuiCraftAdvBackpack extends GuiContainer implements openGui
 	}
 
 	@Override
-	public void onGuiClosed()
-	{
+	public void onGuiClosed() {
 		if (inventory != null)
 			inventory.closeChest();
 		super.onGuiClosed();
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float f, int mouseX,
-		int mouseY)
-	{
+	protected void drawGuiContainerBackgroundLayer(float f, int mouseX, int mouseY) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.mc.getTextureManager().bindTexture(texture);
 		// this.mc.func_110434_K().func_110577_a(texture);
@@ -97,52 +89,43 @@ public class GuiCraftAdvBackpack extends GuiContainer implements openGui
 	}
 
 	@Override
-	protected void drawGuiContainerForegroundLayer(int par1, int par2)
-	{
+	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
 
-		this.fontRenderer.drawString(I18n.getString("container.crafting"), 92,
-			7, 4210752);
-		GuiCraftAdvBackpack.tankLeft.draw(this, inventory.getLeftTank()
-			.getFluid());
-		GuiCraftAdvBackpack.tankRight.draw(this, inventory.getRightTank()
-			.getFluid());
+		this.fontRenderer.drawString(I18n.getString("container.crafting"), 92, 7, 4210752);
+		GuiCraftAdvBackpack.tankLeft.draw(this, inventory.getLeftTank().getFluid());
+		GuiCraftAdvBackpack.tankRight.draw(this, inventory.getRightTank().getFluid());
 	}
 
 	@Override
-	public void initGui()
-	{
+	public void initGui() {
 		super.initGui();
 	}
 
 	@Override
-	public int getLeft()
-	{
+	public int getLeft() {
 		return guiLeft;
 	}
 
 	@Override
-	public int getTop()
-	{
+	public int getTop() {
 		return guiTop;
 	}
 
 	@Override
-	public float getZLevel()
-	{
+	public float getZLevel() {
 		return this.zLevel;
 	}
 
 	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int button)
-	{
+	protected void mouseClicked(int mouseX, int mouseY, int button) {
 		if (backButton.inButton(this, mouseX, mouseY))
 		{
 			if (source)
 			{
-				PacketDispatcher.sendPacketToServer(PacketHandler.makePacket(0,
-					X, Y, Z));
+				PacketDispatcher.sendPacketToServer(PacketHandler.makePacket(0, X, Y, Z));
 			}
 		}
 		super.mouseClicked(mouseX, mouseY, button);
 	}
+
 }

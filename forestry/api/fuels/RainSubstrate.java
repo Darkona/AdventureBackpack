@@ -2,8 +2,7 @@ package forestry.api.fuels;
 
 import net.minecraft.item.ItemStack;
 
-public class RainSubstrate
-{
+public class RainSubstrate {
 	/**
 	 * Rain substrate capable of activating the rainmaker.
 	 */
@@ -20,19 +19,15 @@ public class RainSubstrate
 
 	public boolean reverse;
 
-	public RainSubstrate(ItemStack item, int duration, float speed)
-	{
+	public RainSubstrate(ItemStack item, int duration, float speed) {
 		this(item, duration, speed, false);
 	}
 
-	public RainSubstrate(ItemStack item, float speed)
-	{
+	public RainSubstrate(ItemStack item, float speed) {
 		this(item, 0, speed, true);
 	}
 
-	public RainSubstrate(ItemStack item, int duration, float speed,
-		boolean reverse)
-	{
+	public RainSubstrate(ItemStack item, int duration, float speed, boolean reverse) {
 		this.item = item;
 		this.duration = duration;
 		this.speed = speed;

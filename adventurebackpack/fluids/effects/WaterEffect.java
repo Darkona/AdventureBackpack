@@ -10,28 +10,22 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenDesert;
 import net.minecraftforge.fluids.FluidRegistry;
 
-public class WaterEffect extends FluidEffect
-{
+public class WaterEffect extends FluidEffect {
 
-	public WaterEffect()
-	{
+	public WaterEffect() {
 		super(FluidRegistry.WATER, 7);
 		msg = "Water is refreshing";
 	}
 
 	@Override
-	public void affectDrinker(World world, EntityPlayer player)
-	{
-		if (world.provider.isHellWorld
-			|| world.getBiomeGenForCoords((int) player.posX, (int) player.posZ)
-				.getIntTemperature() >= 60
-			|| world.getBiomeGenForCoords((int) player.posX, (int) player.posZ) instanceof BiomeGenDesert)
+	public void affectDrinker(World world, EntityPlayer player) {
+		if (world.provider.isHellWorld || world.getBiomeGenForCoords((int) player.posX, (int) player.posZ).getIntTemperature() >= 60
+				|| world.getBiomeGenForCoords((int) player.posX, (int) player.posZ) instanceof BiomeGenDesert)
 		{
 			Potion.heal.performEffect(player, 2);
 		}
 		player.getFoodStats().addStats(1, 0.1f);
-		player.addPotionEffect(new PotionEffect(Potion.regeneration.id,
-			time * 20, -1, false));
+		player.addPotionEffect(new PotionEffect(Potion.regeneration.id, time * 20, -1, false));
 		if (player.isBurning())
 		{
 			player.extinguish();

@@ -11,23 +11,17 @@ import adventurebackpack.blocks.tileentities.TileAdvBackpack;
 import adventurebackpack.client.models.ModelAdvBackpack;
 import adventurebackpack.common.Utils;
 
-public class RendererAdvBackpack extends TileEntitySpecialRenderer
-{
+public class RendererAdvBackpack extends TileEntitySpecialRenderer {
 
 	private final ModelAdvBackpack model;
 
-	public RendererAdvBackpack()
-	{
+	public RendererAdvBackpack() {
 		this.model = new ModelAdvBackpack();
 	}
 
 	@Override
-	public void renderTileEntityAt(TileEntity advbackpack, double x, double y,
-		double z, float par8)
-	{
-		int dir =
-			advbackpack.getWorldObj().getBlockMetadata(advbackpack.xCoord,
-				advbackpack.yCoord, advbackpack.zCoord);
+	public void renderTileEntityAt(TileEntity advbackpack, double x, double y, double z, float par8) {
+		int dir = advbackpack.getWorldObj().getBlockMetadata(advbackpack.xCoord, advbackpack.yCoord, advbackpack.zCoord);
 		if ((dir & 8) >= 8)
 			dir -= 8;
 		if ((dir & 4) >= 4)
@@ -52,8 +46,7 @@ public class RendererAdvBackpack extends TileEntitySpecialRenderer
 		if (dir % 2 == 0)
 			GL11.glRotatef(dir * (-180F), 0.0F, 1.0F, 0.0F);
 
-		model.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 1 / 20F,
-			bp.getLeftTank(), bp.getRightTank(), bp.isSBDeployed());
+		model.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 1 / 20F, bp.getLeftTank(), bp.getRightTank(), bp.isSBDeployed());
 
 		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 		GL11.glPopMatrix();
@@ -61,8 +54,7 @@ public class RendererAdvBackpack extends TileEntitySpecialRenderer
 		GL11.glPopMatrix();
 	}
 
-	public void renderAdvBackpack()
-	{
+	public void renderAdvBackpack() {
 		model.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
 	}
 }

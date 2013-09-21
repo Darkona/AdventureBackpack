@@ -18,11 +18,9 @@ import cpw.mods.fml.common.network.FMLNetworkHandler;
 import cpw.mods.fml.common.network.IPacketHandler;
 import cpw.mods.fml.common.network.Player;
 
-public class PacketHandler implements IPacketHandler
-{
+public class PacketHandler implements IPacketHandler {
 
-	public PacketHandler()
-	{
+	public PacketHandler() {
 		// NetworkRegistry.instance().registerChannel(this,
 		// ModInformation.CHANNEL);
 	}
@@ -30,14 +28,11 @@ public class PacketHandler implements IPacketHandler
 	public static int action = 0;
 
 	@Override
-	public void onPacketData(INetworkManager manager,
-		Packet250CustomPayload packet, Player player)
-	{
+	public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
 
 		if (packet.channel.equals(ModInformation.CHANNEL) && packet != null)
 		{
-			DataInputStream is =
-				new DataInputStream(new ByteArrayInputStream(packet.data));
+			DataInputStream is = new DataInputStream(new ByteArrayInputStream(packet.data));
 			try
 			{
 				int[] data = new int[is.readInt()];
@@ -66,8 +61,7 @@ public class PacketHandler implements IPacketHandler
 	 *            need
 	 * @return a brand new, 0km, Packet250CustomPayload free of charge!
 	 */
-	public static Packet250CustomPayload makePacket(int... data)
-	{
+	public static Packet250CustomPayload makePacket(int... data) {
 
 		Packet250CustomPayload packet = new Packet250CustomPayload();
 		ByteArrayOutputStream bos = new ByteArrayOutputStream(8 * data.length);
@@ -92,8 +86,7 @@ public class PacketHandler implements IPacketHandler
 	}
 
 	// This does shit depending on the incoming shit
-	private void doShit(int[] values, EntityPlayer player)
-	{
+	private void doShit(int[] values, EntityPlayer player) {
 		int playerX = (int) player.posX;
 		int playerY = (int) player.posY;
 		int playerZ = (int) player.posZ;
@@ -101,83 +94,71 @@ public class PacketHandler implements IPacketHandler
 
 		switch (values[0])
 		{
-			case 0 :
-				FMLNetworkHandler.openGui(player, AdventureBackpack.instance,
-					0, world, values[1], values[2], values[3]);
+		case 0:
+			FMLNetworkHandler.openGui(player, AdventureBackpack.instance, 0, world, values[1], values[2], values[3]);
+			break;
+		case 1:
+			if (Utils.isWearing(player))
+			{
+				FMLNetworkHandler.openGui(player, AdventureBackpack.instance, 1, world, playerX, playerY, playerZ);
+			}
+			break;
+		case 2:
+			if (Utils.isHolding(player))
+			{
+				FMLNetworkHandler.openGui(player, AdventureBackpack.instance, 2, world, playerX, playerY, playerZ);
+			}
+			break;
+		case 3:
+			Actions.switchHose(player, values[1], values[2]);
+			break;
+		case 4:
+			Actions.cycleTool(player, values[1], values[2]);
+			break;
+		case 5:
+			switch (values[1])
+			{
+			case 0:
+				Actions.deploySleepingBagFromBackpack(player, values[2], values[3], values[4]);
 				break;
-			case 1 :
-				if (Utils.isWearing(player))
+
+			case 1:
+				if (values[1] == 1 && Utils.isWearing(player))
 				{
-					FMLNetworkHandler.openGui(player,
-						AdventureBackpack.instance, 1, world, playerX, playerY,
-						playerZ);
+					Actions.deploySleepingBagFromPlayer(player); // This
+																	// is
+																	// never
+																	// used...
+																	// but
+																	// i'll
+																	// leave
+																	// it
+																	// be.
 				}
 				break;
-			case 2 :
-				if (Utils.isHolding(player))
+
+			case 2:
+				switch (values[2])
 				{
-					FMLNetworkHandler.openGui(player,
-						AdventureBackpack.instance, 2, world, playerX, playerY,
-						playerZ);
+
+				case 0:
+					FMLNetworkHandler.openGui(player, AdventureBackpack.instance, 3, world, values[3], values[4], values[5]);
+					break;
+				case 1:
+					if (Utils.isWearing(player))
+					{
+						FMLNetworkHandler.openGui(player, AdventureBackpack.instance, 4, world, playerX, playerY, playerZ);
+					} else if (Utils.isHolding(player))
+					{
+						FMLNetworkHandler.openGui(player, AdventureBackpack.instance, 5, world, playerX, playerY, playerZ);
+					}
+					break;
 				}
 				break;
-			case 3 :
-				Actions.switchHose(player, values[1], values[2]);
-				break;
-			case 4 :
-				Actions.cycleTool(player, values[1], values[2]);
-				break;
-			case 5 :
-				switch (values[1])
-				{
-					case 0 :
-						Actions.deploySleepingBagFromBackpack(player,
-							values[2], values[3], values[4]);
-						break;
-
-					case 1 :
-						if (values[1] == 1 && Utils.isWearing(player))
-						{
-							Actions.deploySleepingBagFromPlayer(player); // This
-																			// is
-																			// never
-																			// used...
-																			// but
-																			// i'll
-																			// leave
-																			// it
-																			// be.
-						}
-						break;
-
-					case 2 :
-						switch (values[2])
-						{
-
-							case 0 :
-								FMLNetworkHandler.openGui(player,
-									AdventureBackpack.instance, 3, world,
-									values[3], values[4], values[5]);
-								break;
-							case 1 :
-								if (Utils.isWearing(player))
-								{
-									FMLNetworkHandler.openGui(player,
-										AdventureBackpack.instance, 4, world,
-										playerX, playerY, playerZ);
-								} else if (Utils.isHolding(player))
-								{
-									FMLNetworkHandler.openGui(player,
-										AdventureBackpack.instance, 5, world,
-										playerX, playerY, playerZ);
-								}
-								break;
-						}
-						break;
-				}
-				break;
-			default :
-				break;
+			}
+			break;
+		default:
+			break;
 		}
 	}
 

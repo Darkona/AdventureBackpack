@@ -10,30 +10,25 @@ import copy.betterstorage.utils.RenderUtils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class RendererStack extends ModelRenderer
-{
+public class RendererStack extends ModelRenderer {
 
 	public ItemStack stack;
 	private boolean which;
 
-	public RendererStack(ModelBase modelBase, boolean which)
-	{
+	public RendererStack(ModelBase modelBase, boolean which) {
 		super(modelBase);
 		this.which = which;
 		addChild(new Thing(modelBase));
 	}
 
-	private class Thing extends ModelRenderer
-	{
-		public Thing(ModelBase modelBase)
-		{
+	private class Thing extends ModelRenderer {
+		public Thing(ModelBase modelBase) {
 			super(modelBase);
 		}
 
 		@Override
 		@SideOnly(Side.CLIENT)
-		public void render(float par1)
-		{
+		public void render(float par1) {
 			if (stack == null)
 				return;
 			GL11.glPushMatrix();
