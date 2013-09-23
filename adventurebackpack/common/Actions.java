@@ -3,10 +3,10 @@ package adventurebackpack.common;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EnumStatus;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.MovingObjectPosition;
@@ -21,6 +21,7 @@ import adventurebackpack.blocks.tileentities.TileAdvBackpack;
 import adventurebackpack.config.BlockInfo;
 import adventurebackpack.handlers.PacketHandler;
 import adventurebackpack.inventory.InventoryItem;
+import adventurebackpack.items.ItemHose;
 import adventurebackpack.items.Items;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.PacketDispatcher;
@@ -154,20 +155,20 @@ public class Actions {
 		{
 			switching = true;
 
-			ItemStack theHose = player.inventory.mainInventory[slot];
-			int newMode;
-			int currentMode = theHose.stackTagCompound.getInteger("mode");
-
+			ItemStack hose = player.inventory.mainInventory[slot];
+			NBTTagCompound tag = hose.hasTagCompound() ? hose.stackTagCompound : new NBTTagCompound();
 			if (direction < 0)
 			{
-				newMode = (currentMode + 1) % 3;
+				int mode = ItemHose.getHoseMode(hose);
+				mode = (mode + 1) % 3;
+				tag.setInteger("mode", mode);
 			} else
 			{
-				newMode = currentMode == 0 ? 2 : currentMode - 1;
+				int tank = ItemHose.getHoseTank(hose);
+				tank = (tank + 1) % 2;
+				tag.setInteger("tank", tank);
 			}
-
-			theHose.stackTagCompound.setInteger("mode", newMode);
-
+			hose.setTagCompound(tag);
 			switching = false;
 		}
 
@@ -177,7 +178,7 @@ public class Actions {
 		if (!cycling && !switching)
 		{
 			cycling = true;
-			InventoryItem backpack = getBackpackInv(player, true);
+			InventoryItem backpack = Utils.getBackpackInv(player, true);
 			ItemStack current = player.getCurrentEquippedItem();
 			if (direction < 0)
 			{
@@ -195,20 +196,6 @@ public class Actions {
 			}
 		}
 		cycling = false;
-	}
-
-	/**
-	 * Will return a backpack inventory from a backpack on the player's armor
-	 * slot if true, or from his hand if false;
-	 * 
-	 * @param player
-	 * @param wearing
-	 *            wether to take the inventory from a backpack on back or on
-	 *            hand.
-	 * @return
-	 */
-	public static InventoryItem getBackpackInv(EntityPlayer player, boolean wearing) {
-		return new InventoryItem((wearing) ? player.inventory.armorItemInSlot(2) : player.inventory.getCurrentItem());
 	}
 
 	public static String whereTheHellAmI() {

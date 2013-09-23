@@ -1,6 +1,6 @@
 package adventurebackpack.handlers;
 
-import darkona.transformation.LightningStrikeEvent;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.Event.Result;
 import net.minecraftforge.event.EventPriority;
@@ -49,12 +49,12 @@ public class EventHandler {
 		event.setResult(Result.ALLOW);
 	}
 
-	@ForgeSubscribe(priority = EventPriority.NORMAL)
-	public void transformBackpack(LightningStrikeEvent event) {
-		if (event.entityHit instanceof EntityPlayer && Utils.isWearing((EntityPlayer) event.entityHit))
-		{
-			Actions.electrify((EntityPlayer) event.entityHit);
-			event.setResult(Result.ALLOW);
-		}
-	}
+//	@ForgeSubscribe(priority = EventPriority.NORMAL)
+//	public void transformBackpack(LightningStrikeEvent event) {
+//		if (event.entityHit instanceof EntityPlayer && Utils.isWearing((EntityPlayer) event.entityHit))
+//		{
+//			Actions.electrify((EntityPlayer) event.entityHit);
+//			event.setResult(Result.ALLOW);
+//		}
+//	}
 }

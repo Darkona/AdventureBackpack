@@ -7,9 +7,9 @@ import adventurebackpack.AdventureBackpack;
 import adventurebackpack.blocks.tileentities.TileAdvBackpack;
 import adventurebackpack.client.gui.GuiAdvBackpack;
 import adventurebackpack.client.gui.GuiCraftAdvBackpack;
-import adventurebackpack.common.Actions;
 import adventurebackpack.common.BackCraftContainer;
 import adventurebackpack.common.BackpackContainer;
+import adventurebackpack.common.Utils;
 import adventurebackpack.inventory.InventoryItem;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
@@ -33,12 +33,12 @@ public class GuiHandler implements IGuiHandler {
 			}
 			break;
 		case 1:
-			InventoryItem inv = Actions.getBackpackInv(player, true);
+			InventoryItem inv = Utils.getBackpackInv(player, true);
 			if (inv.containerStack != null)
 				return new BackpackContainer(player.inventory, inv);
 			break;
 		case 2:
-			inv = Actions.getBackpackInv(player, false);
+			inv = Utils.getBackpackInv(player, false);
 			if (inv.containerStack != null)
 				return new BackpackContainer(player.inventory, inv);
 			break;
@@ -50,12 +50,12 @@ public class GuiHandler implements IGuiHandler {
 			}
 			break;
 		case 4:
-			inv = Actions.getBackpackInv(player, true);
+			inv = Utils.getBackpackInv(player, true);
 			if (inv.containerStack != null)
 				return new BackCraftContainer(player, world, inv);
 			break;
 		case 5:
-			inv = Actions.getBackpackInv(player, false);
+			inv = Utils.getBackpackInv(player, false);
 			if (inv.containerStack != null)
 				return new BackCraftContainer(player, world, inv);
 			break;
@@ -79,14 +79,14 @@ public class GuiHandler implements IGuiHandler {
 			break;
 		case 1:
 
-			inv = Actions.getBackpackInv(player, true);
+			inv = Utils.getBackpackInv(player, true);
 			if (inv.containerStack != null)
 			{
 				return new GuiAdvBackpack(player, inv);
 			}
 			break;
 		case 2:
-			inv = Actions.getBackpackInv(player, false);
+			inv = Utils.getBackpackInv(player, false);
 			if (inv.containerStack != null)
 			{
 				return new GuiAdvBackpack(player, inv);
@@ -101,14 +101,14 @@ public class GuiHandler implements IGuiHandler {
 			}
 			break;
 		case 4:
-			inv = Actions.getBackpackInv(player, true);
+			inv = Utils.getBackpackInv(player, true);
 			if (inv.containerStack != null)
 			{
 				return new GuiCraftAdvBackpack(player, inv);
 			}
 			break;
 		case 5:
-			inv = Actions.getBackpackInv(player, false);
+			inv = Utils.getBackpackInv(player, false);
 			if (inv.containerStack != null)
 			{
 				return new GuiCraftAdvBackpack(player, inv);

@@ -14,8 +14,10 @@ public class ItemInfo {
 	public static final int HOSE_DEFAULT = 25530;
 	public static final String HOSE_UNLOCALIZED_NAME = "itemHose";
 	public static final String HOSE_NAME = "Hose";
-	public static final String HOSE_ICON = "hose";
-
+	public static final String HOSE_USELESS_ICON = "item.hose";
+	public static final String HOSE_LEFT_ICON = "item.hoseLeft";
+	public static final String HOSE_RIGHT_ICON = "item.hoseRight";
+	
 	public static int BOOTS_ID;
 	public static final String BOOTS_KEY = "Jumper Boots";
 	public static final int BOOTS_DEFAULT = 25532;
@@ -39,5 +41,6 @@ public class ItemInfo {
 	public static final int BP_COMPONENT_DEFAULT = 25535;
 	public static final String BP_COMPONENT_UNLOCALIZED_NAME = "backpackComponent";
 	public static final String BP_COMPONENT_NAME = "Backpack Component";
+	
 
 }

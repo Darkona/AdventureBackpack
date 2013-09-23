@@ -1,8 +1,8 @@
 package adventurebackpack.inventory;
 
 import forestry.api.core.IToolScoop;
-import ic2.api.item.ICustomElectricItem;
-import ic2.api.item.ISpecialElectricItem;
+import buildcraft.api.tools.IToolPipette;
+import buildcraft.api.tools.IToolWrench;
 import mods.railcraft.api.core.items.IToolCrowbar;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -11,8 +11,8 @@ import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 //import tconstruct.library.tools.ToolCore;
-import buildcraft.api.tools.IToolPipette;
-import buildcraft.api.tools.IToolWrench;
+import apis.ic2.api.item.ICustomElectricItem;
+import apis.ic2.api.item.ISpecialElectricItem;
 
 @SuppressWarnings("deprecation")
 public class SlotTool extends Slot {

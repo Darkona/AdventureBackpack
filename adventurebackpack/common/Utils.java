@@ -15,6 +15,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import adventurebackpack.blocks.tileentities.TileAdvBackpack;
+import adventurebackpack.inventory.InventoryItem;
 import adventurebackpack.items.ItemAdvBackpack;
 
 public class Utils {
@@ -72,7 +73,7 @@ public class Utils {
 		try
 		{
 			// Industrialcraft cells
-			if (ic2.api.item.Items.getItem("cell").getClass().isInstance(cont.getItem()))
+			if (apis.ic2.api.item.Items.getItem("cell").getClass().isInstance(cont.getItem()))
 			{
 				valid = false;
 			}
@@ -236,5 +237,20 @@ public class Utils {
 	public static String capitalize(String s) {
 		// Character.toUpperCase(itemName.charAt(0)) + itemName.substring(1);
 		return s.substring(0, 1).toUpperCase().concat(s.substring(1));
+	}
+
+	
+	/**
+	 * Will return a backpack inventory from a backpack on the player's armor
+	 * slot if true, or from his hand if false;
+	 * 
+	 * @param player
+	 * @param wearing
+	 *            wether to take the inventory from a backpack on back or on
+	 *            hand.
+	 * @return
+	 */
+	public static InventoryItem getBackpackInv(EntityPlayer player, boolean wearing) {
+		return new InventoryItem((wearing) ? player.inventory.armorItemInSlot(2) : player.inventory.getCurrentItem());
 	}
 }

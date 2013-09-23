@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 import org.lwjgl.input.Mouse;
 
 import adventurebackpack.inventory.SlotTool;
-import adventurebackpack.items.Hose;
+import adventurebackpack.items.ItemHose;
 import adventurebackpack.items.ItemAdvBackpack;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
@@ -39,7 +39,7 @@ public class ClientTickHandler implements ITickHandler {
 						isTool = true;
 						theSlot = player.inventory.currentItem;
 					}
-					if (player.getCurrentEquippedItem().getItem() instanceof Hose)
+					if (player.getCurrentEquippedItem().getItem() instanceof ItemHose)
 					{
 						isHose = true;
 						theSlot = player.inventory.currentItem;

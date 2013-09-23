@@ -38,7 +38,6 @@ public class CommonProxy {
 		Blocks.addNames();
 		Blocks.registerTileEntities();
 		FluidEffectRegistry.init();
-
 	}
 
 	public void initFluids() {

@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 
 import org.lwjgl.opengl.GL11;
 
-import copy.betterstorage.utils.RenderUtils;
+import adventurebackpack.libs.copy.betterstorage.utils.RenderUtils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

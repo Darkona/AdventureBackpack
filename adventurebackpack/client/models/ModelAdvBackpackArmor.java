@@ -11,10 +11,10 @@ import org.lwjgl.opengl.GL11;
 
 import adventurebackpack.client.render.RendererStack;
 import adventurebackpack.common.Constants;
-import codechicken.lib.render.CCRenderState;
-import codechicken.lib.render.RenderUtils;
-import codechicken.lib.vec.Cuboid6;
-import codechicken.lib.vec.Vector3;
+import aussie.codechicken.lib.render.CCRenderState;
+import aussie.codechicken.lib.render.RenderUtils;
+import aussie.codechicken.lib.vec.Cuboid6;
+import aussie.codechicken.lib.vec.Vector3;
 
 public class ModelAdvBackpackArmor extends ModelBiped {
 	public static final ModelAdvBackpackArmor instance = new ModelAdvBackpackArmor();

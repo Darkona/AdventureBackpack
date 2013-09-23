@@ -303,7 +303,7 @@ public class InventoryItem implements IAdvBackpack {
 
 	@Override
 	public FluidTank getLeftTank() {
-		leftTank.readFromNBT(containerStack.stackTagCompound.getCompoundTag("leftTank"));
+		//leftTank.readFromNBT(containerStack.stackTagCompound.getCompoundTag("leftTank"));
 		return leftTank;
 	}
 
@@ -315,7 +315,7 @@ public class InventoryItem implements IAdvBackpack {
 
 	@Override
 	public FluidTank getRightTank() {
-		rightTank.readFromNBT(containerStack.stackTagCompound.getCompoundTag("rightTank"));
+		//rightTank.readFromNBT(containerStack.stackTagCompound.getCompoundTag("rightTank"));
 		return rightTank;
 	}
 

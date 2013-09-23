@@ -2,6 +2,7 @@ package adventurebackpack.blocks;
 
 import net.minecraft.block.Block;
 import adventurebackpack.blocks.tileentities.TileAdvBackpack;
+import adventurebackpack.blocks.tileentities.TileSleepingBag;
 import adventurebackpack.config.BlockInfo;
 import adventurebackpack.config.ItemInfo;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -29,5 +30,6 @@ public class Blocks {
 
 	public static void registerTileEntities() {
 		GameRegistry.registerTileEntity(TileAdvBackpack.class, "adventurebackpacktileentity");
+		GameRegistry.registerTileEntity(TileSleepingBag.class, "sleepingbagtileentity");
 	}
 }

@@ -86,7 +86,7 @@ public class BackpackAbilities {
 
 		if (lastDropTime <= 0 && drops > 0)
 		{
-			InventoryItem inv = Actions.getBackpackInv(player, true);
+			InventoryItem inv = Utils.getBackpackInv(player, true);
 			FluidStack raindrop = new FluidStack(FluidRegistry.WATER, drops);
 			inv.leftTank.fill(raindrop, true);
 			inv.rightTank.fill(raindrop, true);
@@ -155,7 +155,7 @@ public class BackpackAbilities {
 
 		if (lastDropTime <= 0 && drops > 0)
 		{
-			InventoryItem inv = Actions.getBackpackInv(player, true);
+			InventoryItem inv = Utils.getBackpackInv(player, true);
 			FluidStack raindrop = new FluidStack(FluidRegistry.getFluid("melonJuice"), drops);
 			inv.leftTank.fill(raindrop, true);
 			inv.rightTank.fill(raindrop, true);

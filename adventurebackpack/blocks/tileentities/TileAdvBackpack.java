@@ -111,12 +111,11 @@ public class TileAdvBackpack extends TileEntity implements IAdvBackpack {
 		int lastLumen = luminosity;
 		int left = (leftTank.getFluid() != null) ? leftTank.getFluid().getFluid().getLuminosity() : 0;
 		int right = (rightTank.getFluid() != null) ? rightTank.getFluid().getFluid().getLuminosity() : 0;
-		luminosity = (left > right) ? left : right;
+		luminosity = Math.max(left, right);
 		if (luminosity != lastLumen)
 		{
 			int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
 			worldObj.setBlock(xCoord, yCoord, zCoord, Blocks.advbackpack.blockID, meta, 3);
-			System.out.println("Luminosity changed");
 			worldObj.setLightValue(EnumSkyBlock.Block, xCoord, yCoord, zCoord, luminosity);
 		}
 		super.updateEntity();

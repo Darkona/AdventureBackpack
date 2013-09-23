@@ -6,12 +6,12 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 public class Items {
 
 	public static ItemAdvBackpack advBackpack;
-	public static Hose hose;
+	public static ItemHose hose;
 	public static ItemMachete machete;
 
 	public static void init() {
 		advBackpack = new ItemAdvBackpack(ItemInfo.AB_ID);
-		hose = new Hose(ItemInfo.HOSE_ID, 0);
+		hose = new ItemHose(ItemInfo.HOSE_ID, 0);
 		machete = new ItemMachete(ItemInfo.MACHETE_ID);
 	}
 

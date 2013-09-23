@@ -13,7 +13,6 @@ public class FluidMilk extends Fluid {
 		setViscosity(1200);
 		setUnlocalizedName("milk");
 		setLuminosity(0);
-		// setIcons((Icon)Minecraft.getMinecraft().func_110434_K().func_110581_b(Textures.resourceRL(FluidInfo.MILK_TEXTURE)));
 	}
 
 	@Override

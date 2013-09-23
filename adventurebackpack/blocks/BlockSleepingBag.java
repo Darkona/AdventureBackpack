@@ -131,14 +131,14 @@ public class BlockSleepingBag extends BlockContainer {
 						return true;
 					}
 
-					setBedOccupied(world, x, y, z, false);
+					setBedOccupied(world, x, y, z,player, false);
 				}
 
 				EnumStatus enumstatus = player.sleepInBedAt(x, y, z);
 
 				if (enumstatus == EnumStatus.OK)
 				{
-					setBedOccupied(world, x, y, z, true);
+					setBedOccupied(world, x, y, z,player, true);
 					return true;
 				} else
 				{
@@ -176,11 +176,6 @@ public class BlockSleepingBag extends BlockContainer {
 		}
 	}
 
-	private void setBedOccupied(World world, int x, int y, int z, boolean b) {
-		// TODO Auto-generated method stub
-
-	}
-
 	private boolean isBedOccupied(int meta) {
 		return (meta & 4) != 0;
 	}
@@ -196,6 +191,7 @@ public class BlockSleepingBag extends BlockContainer {
 		world.setBlockMetadataWithNotify(x, y, z, meta, 4);
 	}
 
+	
 	@Override
 	public boolean isBed(World world, int x, int y, int z, EntityLivingBase player) {
 		return true;
