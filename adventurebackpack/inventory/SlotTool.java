@@ -1,8 +1,5 @@
 package adventurebackpack.inventory;
 
-import forestry.api.core.IToolScoop;
-import buildcraft.api.tools.IToolPipette;
-import buildcraft.api.tools.IToolWrench;
 import mods.railcraft.api.core.items.IToolCrowbar;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -13,6 +10,10 @@ import net.minecraft.item.ItemTool;
 //import tconstruct.library.tools.ToolCore;
 import apis.ic2.api.item.ICustomElectricItem;
 import apis.ic2.api.item.ISpecialElectricItem;
+import buildcraft.api.tools.IToolPipette;
+import buildcraft.api.tools.IToolWrench;
+import forestry.api.core.IToolScoop;
+import forestry.api.core.ItemInterface;
 
 @SuppressWarnings("deprecation")
 public class SlotTool extends Slot {
@@ -38,44 +39,45 @@ public class SlotTool extends Slot {
 			// Vanilla
 			if (item instanceof ItemTool || item instanceof ItemHoe)
 			{
-				valid = true;
+				return true;
 			}
 			// BuildCraft
 			if (item instanceof IToolWrench || item instanceof IToolPipette)
 			{
-				valid = true;
+				return true;
 			}
 			// IndustrialCraft
 			if (item instanceof ISpecialElectricItem || item instanceof ICustomElectricItem)
 			{
-				valid = true;
+				return true;
 			}
-			// Tinker's Construct
-			try
-			{
-				if (java.lang.Class.forName("tconstruct.library.tools.ToolCore").isInstance(item))
-				{
-					valid = true;
-				}
-			} catch (ClassNotFoundException e)
-			{
-
-			}
+			
+			
+		
 			// Railcraft
 			if (item instanceof IToolCrowbar)
 			{
-				valid = true;
+				return true;
 			}
 			// Forestry
 			if (item instanceof IToolScoop)
 			{
-				valid = true;
+				return true;
 			}
+		
 			// Just for extra compatibility
-			if (name.contains("wrench") || name.contains("hammer") || name.contains("axe") || name.contains("shovel"))
+			if (name.contains("wrench") || name.contains("hammer") || name.contains("axe") || name.contains("shovel") || name.contains("grafter"))
 			{
-				valid = true;
+				return true;
 			}
+			try
+			{
+				// Tinker's Construct
+				if (java.lang.Class.forName("tconstruct.library.tools.ToolCore").isInstance(item))
+				{
+					return true;
+				}
+			} catch (Exception oops){}
 
 		}
 

@@ -15,6 +15,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
 import net.minecraftforge.fluids.FluidTank;
+import adventurebackpack.blocks.BlockSleepingBag;
 import adventurebackpack.blocks.Blocks;
 import adventurebackpack.common.BackpackAbilities;
 import adventurebackpack.common.Constants;
@@ -33,14 +34,16 @@ public class TileAdvBackpack extends TileEntity implements IAdvBackpack {
 	public boolean needsUpdate = false;
 	public boolean equipped = false;
 	public boolean sleepingBagDeployed = false;
+	private int sbdir;
 	private int sbx;
 	private int sby;
 	private int sbz;
+	private int checkTime = 0;
 	private String color;
 	private String colorName;
 	public int lastTime;
 	public int luminosity;
-
+	
 	public TileAdvBackpack() {
 		leftTank = new FluidTank(Constants.tankCapacity);
 		rightTank = new FluidTank(Constants.tankCapacity);
@@ -49,6 +52,7 @@ public class TileAdvBackpack extends TileEntity implements IAdvBackpack {
 		setColorName("Standard");
 		luminosity = 0;
 		lastTime = 0;
+		checkTime = 0;
 	}
 
 	public void setColorName(String string) {
@@ -63,32 +67,37 @@ public class TileAdvBackpack extends TileEntity implements IAdvBackpack {
 		return this.sleepingBagDeployed;
 	}
 
-	public boolean deploySleepingbag(World world, int x, int y, int z, int meta) {
-		Block bed = Blocks.sleepingbag;
+	public boolean deploySleepingBag(EntityPlayer player, World world, int x, int y, int z, int meta) {
+		Block sleepingBag = Blocks.sleepingbag;
 		if (world.setBlock(x, y, z, BlockInfo.SLEEPINGBAG_ID, meta, 3))
 		{
-			// bed.onBlockAdded(world, x, y, z);
-			// bed.onPostBlockPlaced(world, x, y, z, 8);
-			this.sleepingBagDeployed = true;
+			world.playSoundAtEntity(player, Block.soundClothFootstep.getPlaceSound(), 0.5f, 1.0f);
 			sbx = x;
 			sby = y;
 			sbz = z;
-			saveChanges();
-			return true;
+			sbdir=meta;
+			return sleepingBagDeployed = ((BlockSleepingBag) sleepingBag).placeBlock(world, x,y,z,meta);
 		}
 		return false;
 	}
 
-	public void removeSleepingBag(World world) {
+	public boolean removeSleepingBag(World world) {
 		if (sleepingBagDeployed)
 		{
-			if (world.getBlockId(sbx, sby, sbz) == BlockInfo.SLEEPINGBAG_ID)
+			if (world.getBlockId(sbx, sby, sbz) == Blocks.sleepingbag.blockID)
 			{
-				world.setBlockToAir(sbx, sby, sbz);
+				world.setBlock(sbx, sby, sbz, 0);
+				world.removeBlockTileEntity(sbx, sby, sbz);
+				// TODO play a sound here
 				this.sleepingBagDeployed = false;
 				saveChanges();
+				return true;
 			}
+		}else{
+			this.sleepingBagDeployed = false;
+			saveChanges();
 		}
+		return false;
 	}
 
 	@Override
@@ -106,17 +115,27 @@ public class TileAdvBackpack extends TileEntity implements IAdvBackpack {
 
 	@Override
 	public void updateEntity() {
-		if (!colorName.isEmpty())
-			BackpackAbilities.instance.executeAbility(null, this.worldObj, this);
-		int lastLumen = luminosity;
-		int left = (leftTank.getFluid() != null) ? leftTank.getFluid().getFluid().getLuminosity() : 0;
-		int right = (rightTank.getFluid() != null) ? rightTank.getFluid().getFluid().getLuminosity() : 0;
-		luminosity = Math.max(left, right);
-		if (luminosity != lastLumen)
-		{
-			int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
-			worldObj.setBlock(xCoord, yCoord, zCoord, Blocks.advbackpack.blockID, meta, 3);
-			worldObj.setLightValue(EnumSkyBlock.Block, xCoord, yCoord, zCoord, luminosity);
+		if(checkTime == 0){
+			if (!colorName.isEmpty())
+				BackpackAbilities.instance.executeAbility(null, this.worldObj, this);
+			int lastLumen = luminosity;
+			int left = (leftTank.getFluid() != null) ? leftTank.getFluid().getFluid().getLuminosity() : 0;
+			int right = (rightTank.getFluid() != null) ? rightTank.getFluid().getFluid().getLuminosity() : 0;
+			luminosity = Math.max(left, right);
+			if (luminosity != lastLumen)
+			{
+				int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+				worldObj.setBlock(xCoord, yCoord, zCoord, Blocks.advbackpack.blockID, meta, 3);
+				worldObj.setLightValue(EnumSkyBlock.Block, xCoord, yCoord, zCoord, luminosity);
+			}
+			if(worldObj.getBlockId(sbx, sby, sbz) != Blocks.sleepingbag.blockID)
+			{
+				sleepingBagDeployed = false;
+			}
+			checkTime = 40;
+			saveChanges();
+		}else{
+			checkTime--;
 		}
 		super.updateEntity();
 	}
@@ -136,12 +155,13 @@ public class TileAdvBackpack extends TileEntity implements IAdvBackpack {
 			return true;
 		} else
 		{
-			return drop(world, x, y, z);
+			return drop(world,player, x, y, z);
 		}
 	}
 
-	public boolean drop(World world, int x, int y, int z) {
+	public boolean drop(World world, EntityPlayer player, int x, int y, int z) {
 		removeSleepingBag(world);
+		if(player.capabilities.isCreativeMode) return true;
 		ItemStack stacky = new ItemStack(Items.advBackpack, 1);
 		stacky.stackTagCompound = this.writeToNBT();
 
@@ -267,6 +287,7 @@ public class TileAdvBackpack extends TileEntity implements IAdvBackpack {
 		sbx = compound.getInteger("sbx");
 		sby = compound.getInteger("sby");
 		sbz = compound.getInteger("sbz");
+		sbdir = compound.getInteger("sbdir");
 		luminosity = compound.getInteger("lumen");
 		loadFromNBT(compound);
 	}
@@ -295,7 +316,8 @@ public class TileAdvBackpack extends TileEntity implements IAdvBackpack {
 		compound.setInteger("sby", sby);
 		compound.setInteger("sbz", sbz);
 		compound.setInteger("lumen", luminosity);
-
+		compound.setInteger("sbdir", sbdir);
+		
 		compound.setString("color", color);
 		compound.setString("colorName", colorName);
 		compound.setCompoundTag("rightTank", rightTank.writeToNBT(tankRight));

@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EnumStatus;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.MovingObjectPosition;
@@ -355,13 +356,13 @@ public class Actions {
 	public static void deploySleepingBagFromBackpack(EntityPlayer player, int coordX, int coordY, int coordZ) {
 		World world = player.worldObj;
 		PacketDispatcher.sendPacketToPlayer(PacketHandler.makePacket(5, 0, coordX, coordY, coordZ), (Player) player);
-		TileAdvBackpack te = (TileAdvBackpack) world.getBlockTileEntity(coordX, coordY, coordZ);
-		if (!te.isSBDeployed())
+		TileEntity te = world.getBlockTileEntity(coordX, coordY, coordZ);
+		if (te instanceof TileAdvBackpack && !((TileAdvBackpack) te).isSBDeployed())
 		{
 			int can[] = canDeploySleepingBag(coordX, coordY, coordZ);
 			if (can[0] > -1)
 			{
-				if (te.deploySleepingbag(world, can[1], can[2], can[3], can[0]))
+				if (((TileAdvBackpack) te).deploySleepingBag(player, world, can[1], can[2], can[3], can[0]))
 				{
 					player.closeScreen();
 				}
@@ -371,7 +372,9 @@ public class Actions {
 			}
 		} else
 		{
-			te.removeSleepingBag(world);
+			if(te instanceof TileAdvBackpack && !((TileAdvBackpack) te).removeSleepingBag(world)){
+				player.addChatMessage("Can't deploy the sleeping bag");
+			}
 		}
 		te.updateEntity();
 		player.closeScreen();

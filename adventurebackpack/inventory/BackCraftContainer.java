@@ -1,4 +1,4 @@
-package adventurebackpack.common;
+package adventurebackpack.inventory;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.world.World;
 import adventurebackpack.blocks.tileentities.TileAdvBackpack;
-import adventurebackpack.inventory.InventoryItem;
+import adventurebackpack.common.IAdvBackpack;
 
 public class BackCraftContainer extends Container {
 

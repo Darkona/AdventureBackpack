@@ -25,12 +25,12 @@ public class RendererSleepingBag extends TileEntitySpecialRenderer {
 	@Override
 	public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
 		int dir = tileentity.getWorldObj().getBlockMetadata(tileentity.xCoord, tileentity.yCoord, tileentity.zCoord);
+		if((dir & 8) >= 8) return;
+		if((dir & 4) >= 4)dir-=4;
 
-		TileSleepingBag sb = (TileSleepingBag) tileentity;
 		GL11.glPushMatrix();
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		GL11.glTranslatef((float) x + 0.5F, (float) y + 1.1F, (float) z + 0.5F);
-
 		bindTexture(modelTexture);
 
 		GL11.glPushMatrix();

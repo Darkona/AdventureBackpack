@@ -239,6 +239,9 @@ public class Utils {
 		return s.substring(0, 1).toUpperCase().concat(s.substring(1));
 	}
 
+	public static int getOppositeCardinalFromMeta(int meta){
+		return (meta % 2 == 0) ? (meta == 0) ? 2 : 0 : ((meta + 1) % 4)+1;
+	}
 	
 	/**
 	 * Will return a backpack inventory from a backpack on the player's armor

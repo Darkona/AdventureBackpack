@@ -1,4 +1,4 @@
-package adventurebackpack.common;
+package adventurebackpack.inventory;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -6,10 +6,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import adventurebackpack.blocks.tileentities.TileAdvBackpack;
-import adventurebackpack.inventory.InventoryItem;
-import adventurebackpack.inventory.SlotBackpack;
-import adventurebackpack.inventory.SlotFluid;
-import adventurebackpack.inventory.SlotTool;
+import adventurebackpack.common.IAdvBackpack;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -86,7 +83,7 @@ public class BackpackContainer extends Container {
 
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int i) {
-		// Todo: Fix the shit don't respecting slot accepting itemstack.
+		// TODO Fix the shit don't respecting slot accepting itemstack.
 		Slot slot = getSlot(i);
 
 		if (slot != null && slot.getHasStack())
@@ -133,9 +130,94 @@ public class BackpackContainer extends Container {
 	}
 
 	@Override
-	protected boolean mergeItemStack(ItemStack par1ItemStack, int par2, int par3, boolean par4) {
+	protected boolean mergeItemStack(ItemStack stack, int minSlot, int maxSlot, boolean par4) {
+		boolean flag1 = false;
+        int slotInit = minSlot;
 
-		return super.mergeItemStack(par1ItemStack, par2, par3, par4);
+        if (par4)
+        {
+            slotInit = maxSlot - 1;
+        }
+
+        Slot slot;
+        ItemStack itemstack1;
+
+        if (stack.isStackable())
+        {
+            while (stack.stackSize > 0 && (!par4 && slotInit < maxSlot || par4 && slotInit >= minSlot))
+            {
+                slot = (Slot)this.inventorySlots.get(slotInit);
+                itemstack1 = slot.getStack();
+
+                if (itemstack1 != null && itemstack1.itemID == stack.itemID && (!stack.getHasSubtypes() || stack.getItemDamage() == itemstack1.getItemDamage()) && ItemStack.areItemStackTagsEqual(stack, itemstack1))
+                {
+                	
+                    int newStackSize = itemstack1.stackSize + stack.stackSize;
+                    
+                    if (newStackSize <= stack.getMaxStackSize())
+                    {
+                        stack.stackSize = 0;
+                        itemstack1.stackSize = newStackSize;
+                        slot.onSlotChanged();
+                        flag1 = true;
+                    }
+                    else if (itemstack1.stackSize < stack.getMaxStackSize())
+                    {
+                        stack.stackSize -= stack.getMaxStackSize() - itemstack1.stackSize;
+                        itemstack1.stackSize = stack.getMaxStackSize();
+                        slot.onSlotChanged();
+                        flag1 = true;
+                    }
+                }
+
+                if (par4)
+                {
+                    --slotInit;
+                }
+                else
+                {
+                    ++slotInit;
+                }
+            }
+        }
+
+        if (stack.stackSize > 0)
+        {
+            if (par4)
+            {
+                slotInit = maxSlot - 1;
+            }
+            else
+            {
+                slotInit = minSlot;
+            }
+
+            while (!par4 && slotInit < maxSlot || par4 && slotInit >= minSlot)
+            {
+                slot = (Slot)this.inventorySlots.get(slotInit);
+                itemstack1 = slot.getStack();
+
+                if (itemstack1 == null)
+                {
+                    slot.putStack(stack.copy());
+                    slot.onSlotChanged();
+                    stack.stackSize = 0;
+                    flag1 = true;
+                    break;
+                }
+
+                if (par4)
+                {
+                    --slotInit;
+                }
+                else
+                {
+                    ++slotInit;
+                }
+            }
+        }
+
+        return flag1;
 	}
 
 	public NBTTagCompound getCompound() {
@@ -150,4 +232,5 @@ public class BackpackContainer extends Container {
 		super.putStackInSlot(par1, par2ItemStack);
 	}
 
+	
 }

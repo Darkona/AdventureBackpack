@@ -18,6 +18,7 @@ import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
@@ -234,11 +235,11 @@ public class BlockAdvBackpack extends BlockContainer {
 
 	@Override
 	public boolean removeBlockByPlayer(World world, EntityPlayer player, int x, int y, int z) {
-		TileAdvBackpack backpack = (TileAdvBackpack) world.getBlockTileEntity(x, y, z);
+		TileEntity backpack =  world.getBlockTileEntity(x, y, z);
 
-		if (!world.isRemote)
+		if (backpack instanceof TileAdvBackpack && !world.isRemote && player != null)
 		{
-			if ((player.isSneaking()) ? backpack.equip(world, player, x, y, z) : (player.capabilities.isCreativeMode) ? true : backpack.drop(world, x, y, z))
+			if ((player.isSneaking()) ? ((TileAdvBackpack)backpack).equip(world, player, x, y, z) : ((TileAdvBackpack)backpack).drop(world, player, x, y, z))
 			{
 				return world.destroyBlock(x, y, z, false);
 			}
@@ -249,6 +250,11 @@ public class BlockAdvBackpack extends BlockContainer {
 		return false;
 	}
 
+	@Override
+	public void onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion par5Explosion) {
+		removeBlockByPlayer(world, null, x,y,z);
+	}
+	
 	@Override
 	public void breakBlock(World world, int x, int y, int z, int id, int meta) {
 		TileEntity te = world.getBlockTileEntity(x, y, z);

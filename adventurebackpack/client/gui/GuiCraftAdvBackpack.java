@@ -11,11 +11,11 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import adventurebackpack.blocks.tileentities.TileAdvBackpack;
-import adventurebackpack.common.BackCraftContainer;
 import adventurebackpack.common.IAdvBackpack;
 import adventurebackpack.common.Textures;
 import adventurebackpack.config.GeneralInfo;
 import adventurebackpack.handlers.PacketHandler;
+import adventurebackpack.inventory.BackCraftContainer;
 import adventurebackpack.inventory.InventoryItem;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.relauncher.Side;

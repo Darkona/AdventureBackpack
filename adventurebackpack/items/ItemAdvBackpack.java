@@ -22,9 +22,9 @@ import adventurebackpack.blocks.Blocks;
 import adventurebackpack.blocks.tileentities.TileAdvBackpack;
 import adventurebackpack.client.models.ModelAdvBackpackArmor;
 import adventurebackpack.common.BackpackAbilities;
-import adventurebackpack.common.BackpackContainer;
 import adventurebackpack.common.Utils;
 import adventurebackpack.handlers.PacketHandler;
+import adventurebackpack.inventory.BackpackContainer;
 import adventurebackpack.inventory.InventoryItem;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -100,7 +100,6 @@ public class ItemAdvBackpack extends ItemArmor {
 					backpack.onBlockPlacedBy(world, x, y, z, player, stack);
 					world.playSoundAtEntity(player, Block.soundClothFootstep.getPlaceSound(), 0.5f, 1.0f);
 					((TileAdvBackpack) world.getBlockTileEntity(x, y, z)).loadFromNBT(stack.stackTagCompound);
-
 					if (from)
 					{
 						player.inventory.decrStackSize(player.inventory.currentItem, 1);
