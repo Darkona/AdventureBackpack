@@ -82,6 +82,7 @@ public class RecipeBackpackDye implements IRecipe {
 		{
 			color = OreDictionary.getOreName(OreDictionary.getOreID(dyeItem)).substring(3);
 			output.stackTagCompound.setString("color", color);
+			output.stackTagCompound.setString("colorName",color);
 			return output;
 		}
 		for (Item item : Utils.items)

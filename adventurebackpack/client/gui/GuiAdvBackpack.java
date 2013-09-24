@@ -35,7 +35,9 @@ public class GuiAdvBackpack extends GuiContainer implements IBackpackGui {
 	private static GuiImageButton craftButton = new GuiImageButton(90, 15, 18, 18);
 	private static GuiTank tankLeft = new GuiTank(26, 7, 64, 16, GeneralInfo.GUI_TANK_RES);
 	private static GuiTank tankRight = new GuiTank(134, 7, 64, 16, GeneralInfo.GUI_TANK_RES);
-
+	private FluidStack lft;
+	private FluidStack rgt;
+	
 	public GuiAdvBackpack(EntityPlayer player, TileAdvBackpack tileBackpack) {
 		super(new BackpackContainer(player.inventory, tileBackpack));
 		this.inventory = tileBackpack;
@@ -101,8 +103,8 @@ public class GuiAdvBackpack extends GuiContainer implements IBackpackGui {
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		String name = " Adventure-pack";
 		fontRenderer.drawString(name, (xSize - fontRenderer.getStringWidth(name)) / 2, 4, 0x404040);
-		FluidStack lft = inventory.getLeftTank().getFluid();
-		FluidStack rgt = inventory.getRightTank().getFluid();
+		lft = inventory.getLeftTank().getFluid();
+		rgt = inventory.getRightTank().getFluid();
 
 		tankLeft.draw(this, lft);
 		tankRight.draw(this, rgt);

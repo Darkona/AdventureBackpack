@@ -78,7 +78,7 @@ public class BlockSleepingBag extends BlockContainer{
 		int newMeta = Utils.getOppositeCardinalFromMeta(meta);	
 		System.out.println("NEWMETA IS"+newMeta);
 		if(canPlaceBlockAt(world, newX, y, newZ)){
-			world.setBlock(newX, y, newZ, BlockInfo.SLEEPINGBAG_ID, newMeta|=8, 3);
+			world.setBlock(newX, y, newZ, this.blockID, newMeta|=8, 3);
 			return true;
 		}else{
 			world.setBlockToAir(x, y, z);
