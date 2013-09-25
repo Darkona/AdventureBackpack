@@ -22,8 +22,6 @@ import adventurebackpack.common.Utils;
 import adventurebackpack.config.ItemInfo;
 
 public class ItemMiningHat extends ItemArmor {
-
-	private boolean shining = true;
 	
 	public ItemMiningHat(int par1) {
 		
@@ -41,22 +39,50 @@ public class ItemMiningHat extends ItemArmor {
 	
 	@Override
 	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, int armorSlot) {
-		return ModelMiningHat.instance;
+		return ModelMiningHat.instance.setHelmetStack(itemStack);
 	}
 	
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, int layer) {
 		return Textures.resourceString("textures/items/helmetStandard.png");
 	}
-	
-	@Override
-	public void onPlayerStoppedUsing(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer, int par4) {
-		// TODO Auto-generated method stub
-		super.onPlayerStoppedUsing(par1ItemStack, par2World, par3EntityPlayer, par4);
-	}
 
 	@Override
+	public String getItemDisplayName(ItemStack helmet) {
+		if(helmet.hasTagCompound()){
+			switch(helmet.getTagCompound().getByte("mode")){
+			case 0 : return "Mining Helmet: Deactivated";
+			case 1 : return "Mining Helmet: Activated";
+			case 2 : return "Mining Helmet: Auto";
+			default: return "Mining Helmet";
+			}
+		}
+		return "Mining Helmet";
+	}
+	
+	@Override
+	public void onUpdate(ItemStack helmet, World world, Entity entity, int par4, boolean currentItem) {
+		if(entity instanceof EntityPlayer && currentItem){
+			shine(world, (EntityPlayer)entity, helmet);
+		}
+		
+	}
+	@Override
 	public void onArmorTickUpdate(World world, EntityPlayer player, ItemStack helmet) {
+			shine(world, player, helmet);
+	}
+	
+	@Override	
+	public ItemStack onItemRightClick(ItemStack helmet, World par2World, EntityPlayer par3EntityPlayer) {
+		if(!helmet.hasTagCompound()){
+			helmet.setTagCompound(new NBTTagCompound());
+		}
+		NBTTagCompound nbt = helmet.getTagCompound();
+		nbt.setByte("mode", (byte)((nbt.getByte("mode")+1) % 3));
+		return helmet;
+	}
+	
+	private void shine(World world, EntityPlayer player, ItemStack helmet){
 		MovingObjectPosition mop = Utils.getMovingObjectPositionFromPlayersHat(world, player, true, 75);
 		
 		if(!helmet.hasTagCompound()){
@@ -68,17 +94,16 @@ public class ItemMiningHat extends ItemArmor {
 		int prevY = nbt.getInteger("lightY");
 		int prevZ = nbt.getInteger("lightZ");
 		
-		//If you are outside at daytime, no need for the helmet to be on.
-		// TODO might change to being outside altogether, seems legit.
+		if(nbt.getByte("mode") == 0) return;
 		
-		if (world.canBlockSeeTheSky(
+		
+		//If you are outside at daytime, no need for the helmet to be on.
+		// TODO might change to being outside altogether, seems legit
+		
+		if (nbt.getByte("mode") == 2 && world.canBlockSeeTheSky(
 				MathHelper.floor_double(player.posX),
 				MathHelper.floor_double(player.posY),
-				MathHelper.floor_double(player.posZ)) && world.isDaytime() )
-		{
-			//nbt.setBoolean("hasLight", false);
-			return;
-		}
+				MathHelper.floor_double(player.posZ)) && world.isDaytime() ) return;
 		
 		if(mop!= null && mop.typeOfHit == EnumMovingObjectType.TILE)
 		{
@@ -139,8 +164,10 @@ public class ItemMiningHat extends ItemArmor {
 				}
 			
 		}else{
-			if(shining && world.isAirBlock(prevX, prevY, prevZ))world.setBlockToAir(prevX, prevY, prevZ);
+			if(world.isAirBlock(prevX, prevY, prevZ))world.setBlockToAir(prevX, prevY, prevZ);
 		}
 		helmet.setTagCompound(nbt);
 	}
+	
+	
 }

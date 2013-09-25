@@ -4,11 +4,18 @@ package adventurebackpack.client.models;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.ItemStack;
 
 public class ModelMiningHat extends ModelBiped
 {
-  public static ModelBiped instance = new ModelMiningHat();
+  public static ModelMiningHat instance = new ModelMiningHat();
+  
+  public ModelMiningHat setHelmetStack(ItemStack helmet){
+	  this.helmet = helmet;
+	  return (ModelMiningHat) instance;
+  };
 	//fields
+  	ItemStack helmet;
     ModelRenderer hatBottom;
     ModelRenderer hatTop;
     ModelRenderer light;
@@ -16,7 +23,9 @@ public class ModelMiningHat extends ModelBiped
     ModelRenderer lightLeft;
     ModelRenderer lightTop;
     ModelRenderer lightBottom;
-  
+	ModelRenderer lightOff;
+	ModelRenderer lightAuto;
+	
   public ModelMiningHat()
   {
     textureWidth = 64;
@@ -30,6 +39,12 @@ public class ModelMiningHat extends ModelBiped
 
       light = new ModelRenderer(this, 0, 25);
       light.addBox(-1F, -11F, -5F, 2, 2, 2);
+      
+      lightOff = new ModelRenderer(this, 8, 25);
+      lightOff.addBox(-1F, -11F, -5F, 2, 2, 2);
+      
+      lightAuto = new ModelRenderer(this, 16, 25);
+      lightAuto.addBox(-1F, -11F, -5F, 2, 2, 2);
 
       lightRight = new ModelRenderer(this, 32, 23);
       lightRight.addBox(-2F, -11F, -5F, 1, 2, 2);
@@ -42,33 +57,37 @@ public class ModelMiningHat extends ModelBiped
 
       lightBottom = new ModelRenderer(this, 12, 29);
       lightBottom.addBox(-2F, -9F, -5F, 4, 1, 2);
-
-
-
       
-      ModelRenderer[] array = {hatBottom, hatTop, light, lightRight, lightLeft, lightTop, lightBottom};
-      
-      for (ModelRenderer part : array){
-    	  bipedHeadwear.addChild(part);
-    	  setRotation(lightTop, 0F, 0F, 0F);
-    	  part.setTextureSize(64, 32);
-    	  part.setRotationPoint(0F, 0F, 0F);
+      for (Object part : this.boxList){
+    	  setRotation((ModelRenderer)part, 0F, 0F, 0F);
+    	  ((ModelRenderer)part).setTextureSize(64, 32);
+    	  ((ModelRenderer)part).setRotationPoint(0F, 0F, 0F);
+    	  ((ModelRenderer)part).offsetY += 0.1f;
       }
   }
   
   public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
   {
     setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-    ModelRenderer[] array = {hatBottom, hatTop, light, lightRight, lightLeft, lightTop, lightBottom};
-    for (ModelRenderer part : array){
-    	part.rotateAngleX = bipedHead.rotateAngleX;
-    	part.rotateAngleY= bipedHead.rotateAngleY;
-    	part.rotateAngleZ = bipedHead.rotateAngleZ;
-    	
+
+    for (Object part : this.boxList){
+    	((ModelRenderer)part).rotateAngleX = bipedHead.rotateAngleX;
+    	((ModelRenderer)part).rotateAngleY= bipedHead.rotateAngleY;
+    	((ModelRenderer)part).rotateAngleZ = bipedHead.rotateAngleZ;
     }
+    
+    if(helmet != null && helmet.hasTagCompound()){
+    	switch(helmet.getTagCompound().getByte("mode")){
+    	case 1 : light.render(f5);break;
+    	case 2 : lightAuto.render(f5);break;
+    	case 0 : default: lightOff.render(f5);break;
+    	}
+    }else{
+    	lightOff.render(f5);
+    }
+    
     hatBottom.render(f5);
     hatTop.render(f5);
-    light.render(f5);
     lightRight.render(f5);
     lightLeft.render(f5);
     lightTop.render(f5);
