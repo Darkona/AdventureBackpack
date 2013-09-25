@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 
 import org.lwjgl.input.Mouse;
 
+import adventurebackpack.common.Utils;
 import adventurebackpack.inventory.SlotTool;
 import adventurebackpack.items.ItemHose;
 import adventurebackpack.items.ItemAdvBackpack;
@@ -15,16 +16,18 @@ import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
 
 public class ClientTickHandler implements ITickHandler {
-	public static int dWheel;
-	public static int theSlot = -1;
+	private static int dWheel;
+	private static int theSlot = -1;
 
-	public static boolean isHose = false;
-	public static boolean isTool = false;
+	private static boolean isHose = false;
+	private static boolean isTool = false;
+	
+	private static boolean jump = false;
 
 	@Override
 	public void tickStart(EnumSet<TickType> type, Object... tickData) {
-		dWheel = Mouse.getDWheel() / 120;
 		EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
+		dWheel = Mouse.getDWheel() / 120;
 		if (player != null && player.isSneaking())
 		{
 			ItemStack backpack = player.getCurrentArmor(2);
@@ -49,6 +52,10 @@ public class ClientTickHandler implements ITickHandler {
 		} else
 		{
 			theSlot = -1;
+		}
+		
+		if(player != null && player.movementInput.jump && player.onGround){
+			jump = true;
 		}
 	}
 
@@ -78,18 +85,24 @@ public class ClientTickHandler implements ITickHandler {
 			isTool = false;
 
 		}
+		
+		if( player!= null && jump && Utils.isWearingBoots(player)){
+			player.playSound("tile.piston.out", 0.5F, player.getRNG().nextFloat() * 0.25F + 0.6F);
+			player.motionY += 0.35;
+			player.jumpMovementFactor += 0.2;
+			player.fallDistance = 0;
+			jump = false;
+		}
 
 	}
 
 	@Override
 	public EnumSet<TickType> ticks() {
-		// TODO Auto-generated method stub
 		return EnumSet.of(TickType.CLIENT);
 	}
 
 	@Override
 	public String getLabel() {
-		// TODO Auto-generated method stub
 		return "AdventureBackpack: Tick!";
 	}
 

@@ -35,6 +35,7 @@ public class ConfigHandler {
 			ItemInfo.HOSE_ID = config.getItem(ItemInfo.HOSE_KEY, ItemInfo.HOSE_DEFAULT).getInt() - 256;
 			ItemInfo.MACHETE_ID = config.getItem(ItemInfo.MACHETE_KEY, ItemInfo.MACHETE_DEFAULT).getInt() - 256;
 			ItemInfo.HELMET_ID = config.getItem(ItemInfo.HELMET_KEY, ItemInfo.HELMET_DEFAULT).getInt() - 256;
+			ItemInfo.BOOTS_ID = config.getItem(ItemInfo.BOOTS_KEY, ItemInfo.BOOTS_DEFAULT).getInt() - 256;
 		}
 		config.save();
 

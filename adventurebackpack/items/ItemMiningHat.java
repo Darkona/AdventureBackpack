@@ -9,17 +9,17 @@ import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import adventurebackpack.blocks.Blocks;
-import adventurebackpack.blocks.tileentities.TileKamikaze;
 import adventurebackpack.client.models.ModelMiningHat;
 import adventurebackpack.common.Textures;
 import adventurebackpack.common.Utils;
 import adventurebackpack.config.ItemInfo;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemMiningHat extends ItemArmor {
 	
@@ -38,11 +38,13 @@ public class ItemMiningHat extends ItemArmor {
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, int armorSlot) {
 		return ModelMiningHat.instance.setHelmetStack(itemStack);
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, int layer) {
 		return Textures.resourceString("textures/items/helmetStandard.png");
 	}
@@ -82,91 +84,68 @@ public class ItemMiningHat extends ItemArmor {
 		return helmet;
 	}
 	
+	@SideOnly(Side.CLIENT)
 	private void shine(World world, EntityPlayer player, ItemStack helmet){
 		MovingObjectPosition mop = Utils.getMovingObjectPositionFromPlayersHat(world, player, true, 75);
-		
+		boolean day = world.isDaytime();
 		if(!helmet.hasTagCompound()){
 			helmet.setTagCompound(new NBTTagCompound());
 		}
 		NBTTagCompound nbt = helmet.getTagCompound();
 
-		int prevX = nbt.getInteger("lightX");
-		int prevY = nbt.getInteger("lightY");
-		int prevZ = nbt.getInteger("lightZ");
-		
 		if(nbt.getByte("mode") == 0) return;
 		
-		
-		//If you are outside at daytime, no need for the helmet to be on.
 		// TODO might change to being outside altogether, seems legit
-		
+		//If you are outside at daytime, no need for the helmet to be activated.
 		if (nbt.getByte("mode") == 2 && world.canBlockSeeTheSky(
 				MathHelper.floor_double(player.posX),
 				MathHelper.floor_double(player.posY),
-				MathHelper.floor_double(player.posZ)) && world.isDaytime() ) return;
+				MathHelper.floor_double(player.posZ)) && day ) return;
 		
 		if(mop!= null && mop.typeOfHit == EnumMovingObjectType.TILE)
 		{
 			int mopX = mop.blockX;
 			int mopY = mop.blockY;
 			int mopZ = mop.blockZ;
+			switch (mop.sideHit) {
+				case 0: mopY--; break;
+				case 1: mopY++; break;
+				case 2: mopZ--; break;
+				case 3: mopZ++; break;
+				case 4: mopX--; break;
+				case 5: mopX++; break;
+			}
+		
+			//If it's already shiny, keep it shiny and move on
+			if (world.getBlockId(mopX, mopY, mopZ) == Blocks.lightblock.blockID || /*(world.canBlockSeeTheSky() && day )  ||*/ world.getBlockLightValue(mopX, mopY, mopZ) > 10) {
+				return;
+			}
 	
-				
-				switch (mop.sideHit) {
-					case 0: mopY--; break;
-					case 1: mopY++; break;
-					case 2: mopZ--; break;
-					case 3: mopZ++; break;
-					case 4: mopX--; break;
-					case 5: mopX++; break;
-				}
-				//If it's already shiny, keep it shiny and move on
-				if (world.getBlockId(mopX, mopY, mopZ) == Blocks.lightblock.blockID) {
-//					TileEntity te = world.getBlockTileEntity(mopX, mopY, mopZ);
-//					if(te instanceof TileKamikaze) ((TileKamikaze)te).keepLiving();
-					return;
-				}
-				
-				//If the point of view has moved, remove the previous shiny block, unless you put a block there or something
-//				if(shining && (prevX != mopX || prevY != mopY || prevZ != mopZ) && world.isAirBlock(prevX, prevY, prevZ)) {
-//					world.setBlockToAir(prevX, prevY, prevZ);
-//				}
-				
 				//Thanks Euclides! This gets the distance to the block that's going to shine
-				int distance = MathHelper.floor_double(Math.sqrt( Math.pow((player.posX - mopX), 2) + Math.pow((player.posY - mopY), 2) + Math.pow((player.posZ - mopZ), 2)));
+			int distance = MathHelper.floor_double(Math.sqrt( Math.pow((player.posX - mopX), 2) + Math.pow((player.posY - mopY), 2) + Math.pow((player.posZ - mopZ), 2)));
 				
 				//Look for a viable place to put the block, first try with the place you're looking at
-				if( world.isAirBlock(mopX, mopY, mopZ) && world.setBlock(mopX, mopY, mopZ, Blocks.lightblock.blockID, 15 - (distance/10), 3))//Make it bright!
-				{
-					nbt.setInteger("lightX", mopX);
-					nbt.setInteger("lightY", mopY);
-					nbt.setInteger("lightZ", mopZ);
-					nbt.setBoolean("hasLight", true);
-				}else //If that fails, try a bit around.
-				{
-					for (int i = mopX - 1; i <= mopX + 1; i++)
-					{		
-						for (int j = mopY - 1; j <= mopY + 1; j++)
+			if( world.isAirBlock(mopX, mopY, mopZ))
+			{
+				//Make it bright!
+				 world.setBlock(mopX, mopY, mopZ, Blocks.lightblock.blockID, 15 - (distance/10), 3);
+			}else //If that fails, try a bit around.
+			{
+				for (int i = mopX - 1; i <= mopX + 1; i++)
+				{		
+					for (int j = mopY - 1; j <= mopY + 1; j++)
+					{			
+						for (int k = mopZ - 1; k <= mopZ + 1; k++)
 						{			
-							for (int k = mopZ - 1; k <= mopZ + 1; k++)
-							{					
-								if( world.isAirBlock(i, j, k) && world.setBlock(i, j, k, Blocks.lightblock.blockID, 15 - (distance/10), 3))//Make it bright!
-								{
-									nbt.setInteger("lightX", i);
-									nbt.setInteger("lightY", j);
-									nbt.setInteger("lightZ", k);
-									nbt.setBoolean("hasLight", true);
-									break;
-								}
-							}
+							//Make it bright!
+							if(world.isAirBlock(i, j, k))
+								world.setBlock(i, j, k, Blocks.lightblock.blockID, 15 - (distance/10), 3);
+							
 						}
 					}
 				}
-			
-		}else{
-			if(world.isAirBlock(prevX, prevY, prevZ))world.setBlockToAir(prevX, prevY, prevZ);
+			}
 		}
-		helmet.setTagCompound(nbt);
 	}
 	
 	

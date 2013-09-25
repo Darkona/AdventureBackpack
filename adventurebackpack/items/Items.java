@@ -9,12 +9,14 @@ public class Items {
 	public static ItemHose hose;
 	public static ItemMachete machete;
 	public static ItemMiningHat miningHat;
+	public static ItemPistonBoots pistonboots;
 
 	public static void init() {
 		advBackpack = new ItemAdvBackpack(ItemInfo.AB_ID);
 		hose = new ItemHose(ItemInfo.HOSE_ID);
 		machete = new ItemMachete(ItemInfo.MACHETE_ID);
 		miningHat = new ItemMiningHat(ItemInfo.HELMET_ID);
+		pistonboots = new ItemPistonBoots(ItemInfo.BOOTS_ID);
 	}
 
 	public static void addNames() {
@@ -22,5 +24,6 @@ public class Items {
 		LanguageRegistry.addName(hose, ItemInfo.HOSE_NAME);
 		LanguageRegistry.addName(machete, ItemInfo.MACHETE_NAME);
 		LanguageRegistry.addName(miningHat, ItemInfo.HELMET_NAME);
+		LanguageRegistry.addName(pistonboots, ItemInfo.BOOTS_NAME);
 	}
 }

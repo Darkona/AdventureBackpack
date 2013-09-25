@@ -20,9 +20,14 @@ import adventurebackpack.blocks.tileentities.TileAdvBackpack;
 import adventurebackpack.inventory.InventoryItem;
 import adventurebackpack.items.ItemAdvBackpack;
 import adventurebackpack.items.ItemMiningHat;
+import adventurebackpack.items.ItemPistonBoots;
 
 public class Utils {
 
+	public static boolean isWearingHelmet(EntityPlayer player){
+		return player.inventory.armorInventory[3] != null && player.inventory.armorInventory[3].getItem() instanceof ItemMiningHat;
+	}
+	
 	public static boolean isWearingBackpack(EntityPlayer player) {
 		return player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() instanceof ItemAdvBackpack;
 	}
@@ -31,10 +36,17 @@ public class Utils {
 		return player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().getItem() instanceof ItemAdvBackpack;
 	}
 
-	public static boolean isWearingHelmet(EntityPlayer player){
-		return player.inventory.armorInventory[3] != null && player.inventory.armorInventory[3].getItem() instanceof ItemMiningHat;
+	public static boolean isWearingBoots(EntityPlayer player){
+		return player.inventory.armorInventory[0] != null && player.inventory.armorInventory[3].getItem() instanceof ItemPistonBoots;
 	}
-	public static ItemStack getWearingBackpack(EntityPlayer player) {
+	
+	
+	public static ItemStack getWearingHelmet(EntityPlayer player) {
+		if(isWearingHelmet(player))return player.inventory.armorInventory[3];
+		return null;
+	}
+	
+    public static ItemStack getWearingBackpack(EntityPlayer player) {
 		if (isWearingBackpack(player))
 			return player.inventory.armorInventory[2];
 		return null;
@@ -46,6 +58,13 @@ public class Utils {
 		return null;
 	}
 
+	public static ItemStack getWearingBoots(EntityPlayer player){
+		if(isWearingBoots(player))return player.inventory.armorInventory[0];
+		return null;
+	}
+	
+	
+	
 	/**
 	 * Analyzes the Fluid registry for matches of a fluid with a blockID equal
 	 * to the blockId provided as parameter.
@@ -292,14 +311,10 @@ public class Utils {
 	public static InventoryItem getBackpackInv(EntityPlayer player, boolean wearing) {
 		return new InventoryItem((wearing) ? player.inventory.armorItemInSlot(2) : player.inventory.getCurrentItem());
 	}
-	
 
-	public static ItemStack getWearingHelmet(EntityPlayer player) {
-		if(isWearingHelmet(player))return player.inventory.armorInventory[3];
-		return null;
-	}
-	
 	public static String printCoordinates(int x, int y, int z){
 		return "X= " + x + ", Y= " + y + ", Z= " + z;
 	}
+
+	
 }
