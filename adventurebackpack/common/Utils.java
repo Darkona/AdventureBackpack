@@ -9,7 +9,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -17,25 +19,29 @@ import net.minecraftforge.oredict.OreDictionary;
 import adventurebackpack.blocks.tileentities.TileAdvBackpack;
 import adventurebackpack.inventory.InventoryItem;
 import adventurebackpack.items.ItemAdvBackpack;
+import adventurebackpack.items.ItemMiningHat;
 
 public class Utils {
 
-	public static boolean isWearing(EntityPlayer player) {
+	public static boolean isWearingBackpack(EntityPlayer player) {
 		return player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() instanceof ItemAdvBackpack;
 	}
 
-	public static boolean isHolding(EntityPlayer player) {
+	public static boolean isHoldingBackpack(EntityPlayer player) {
 		return player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().getItem() instanceof ItemAdvBackpack;
 	}
 
+	public static boolean isWearingHelmet(EntityPlayer player){
+		return player.inventory.armorInventory[3] != null && player.inventory.armorInventory[3].getItem() instanceof ItemMiningHat;
+	}
 	public static ItemStack getWearingBackpack(EntityPlayer player) {
-		if (isWearing(player))
+		if (isWearingBackpack(player))
 			return player.inventory.armorInventory[2];
 		return null;
 	}
 
 	public static ItemStack getHoldingBackpack(EntityPlayer player) {
-		if (isHolding(player))
+		if (isHoldingBackpack(player))
 			return player.inventory.getCurrentItem();
 		return null;
 	}
@@ -243,6 +249,36 @@ public class Utils {
 		return (meta % 2 == 0) ? (meta == 0) ? 2 : 0 : ((meta + 1) % 4)+1;
 	}
 	
+	//This is some magic that gives a block or entity as far as the argument reach goes.
+	public static MovingObjectPosition getMovingObjectPositionFromPlayersHat(World world,EntityPlayer player, boolean flag, double reach) {
+			float f = 1.0F;
+			float playerPitch = player.prevRotationPitch
+					+ (player.rotationPitch - player.prevRotationPitch) * f;
+			float playerYaw = player.prevRotationYaw
+					+ (player.rotationYaw - player.prevRotationYaw) * f;
+			double playerPosX = player.prevPosX + (player.posX - player.prevPosX)
+					* f;
+			double playerPosY = (player.prevPosY + (player.posY - player.prevPosY)
+					* f + 1.6200000000000001D)
+					- player.yOffset;
+			double playerPosZ = player.prevPosZ + (player.posZ - player.prevPosZ)
+					* f;
+			Vec3 vecPlayer = Vec3.createVectorHelper(playerPosX, playerPosY,
+					playerPosZ);
+			float cosYaw = (float) Math.cos(-playerYaw * 0.01745329F - 3.141593F);
+			float sinYaw = (float) Math.sin(-playerYaw * 0.01745329F - 3.141593F);
+			float cosPitch = (float) -Math.cos(-playerPitch * 0.01745329F);
+			float sinPitch = (float) Math.sin(-playerPitch * 0.01745329F);
+			float pointX = sinYaw * cosPitch;
+			float pointY = sinPitch;
+			float pointZ = cosYaw * cosPitch;
+			Vec3 vecPoint = vecPlayer.addVector(pointX * reach, pointY * reach,
+					pointZ * reach);
+			MovingObjectPosition movingobjectposition = world.rayTraceBlocks_do_do(
+					vecPlayer, vecPoint, flag, !flag);
+			return movingobjectposition;
+		}
+	
 	/**
 	 * Will return a backpack inventory from a backpack on the player's armor
 	 * slot if true, or from his hand if false;
@@ -255,5 +291,15 @@ public class Utils {
 	 */
 	public static InventoryItem getBackpackInv(EntityPlayer player, boolean wearing) {
 		return new InventoryItem((wearing) ? player.inventory.armorItemInSlot(2) : player.inventory.getCurrentItem());
+	}
+	
+
+	public static ItemStack getWearingHelmet(EntityPlayer player) {
+		if(isWearingHelmet(player))return player.inventory.armorInventory[3];
+		return null;
+	}
+	
+	public static String printCoordinates(int x, int y, int z){
+		return "X= " + x + ", Y= " + y + ", Z= " + z;
 	}
 }

@@ -8,7 +8,6 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import adventurebackpack.blocks.tileentities.TileSleepingBag;
 import adventurebackpack.client.models.ModelSleepingBag;
 import adventurebackpack.common.Textures;
 
@@ -21,7 +20,6 @@ public class RendererSleepingBag extends TileEntitySpecialRenderer {
 		model = new ModelSleepingBag();
 	}
 
-	@SuppressWarnings("unused")
 	@Override
 	public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
 		int dir = tileentity.getWorldObj().getBlockMetadata(tileentity.xCoord, tileentity.yCoord, tileentity.zCoord);

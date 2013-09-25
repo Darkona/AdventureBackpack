@@ -1,7 +1,5 @@
 package adventurebackpack.client.gui;
 
-import java.util.ArrayList;
-
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;

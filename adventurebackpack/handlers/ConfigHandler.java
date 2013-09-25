@@ -16,15 +16,17 @@ public class ConfigHandler {
 
 		config.load();
 		/*
-		 * ======================================= ITEMS
+		 * ======================================= BLOCKS
 		 * =======================================
 		 */
 		{
 			config.addCustomCategoryComment(Configuration.CATEGORY_BLOCK, BLOCK_COMMENT);
 			BlockInfo.ADVBACKPACK_ID = config.getBlock(BlockInfo.ADVBACKPACK_KEY, BlockInfo.ADVBACKPACK_DEFAULT).getInt();
+			BlockInfo.SLEEPINGBAG_ID = config.getBlock(BlockInfo.SLEEPINGBAG_KEY, BlockInfo.SLEEPINGBAG_DEFAULT).getInt();
+			BlockInfo.LIGHTBLOCK_ID = config.getBlock(BlockInfo.LIGHTBLOCK_KEY, BlockInfo.LIGHTBLOCK_DEFAULT).getInt();
 		}
 		/*
-		 * ======================================= BLOCKS
+		 * ======================================= ITEMS
 		 * =======================================
 		 */
 		{
@@ -32,6 +34,7 @@ public class ConfigHandler {
 			ItemInfo.AB_ID = config.getItem(ItemInfo.AB_KEY, ItemInfo.AB_DEFAULT).getInt() - 256;
 			ItemInfo.HOSE_ID = config.getItem(ItemInfo.HOSE_KEY, ItemInfo.HOSE_DEFAULT).getInt() - 256;
 			ItemInfo.MACHETE_ID = config.getItem(ItemInfo.MACHETE_KEY, ItemInfo.MACHETE_DEFAULT).getInt() - 256;
+			ItemInfo.HELMET_ID = config.getItem(ItemInfo.HELMET_KEY, ItemInfo.HELMET_DEFAULT).getInt() - 256;
 		}
 		config.save();
 

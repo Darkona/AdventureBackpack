@@ -25,7 +25,6 @@ import adventurebackpack.config.BlockInfo;
 import adventurebackpack.items.ItemAdvBackpack;
 import adventurebackpack.items.Items;
 
-@SuppressWarnings("unused")
 public class TileAdvBackpack extends TileEntity implements IAdvBackpack {
 
 	public ItemStack[] inventory;

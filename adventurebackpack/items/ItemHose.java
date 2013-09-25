@@ -39,8 +39,8 @@ public class ItemHose extends ItemBucket {
 	Icon leftIcon;
 	Icon rightIcon;
 	
-	public ItemHose(int par1, int par2) {
-		super(par1, par2);
+	public ItemHose(int par1) {
+		super(par1, 0);
 		setMaxStackSize(1).setFull3D().setCreativeTab(CreativeTabs.tabTools).setNoRepair().setUnlocalizedName(ItemInfo.HOSE_UNLOCALIZED_NAME);
 	}	
 
@@ -155,9 +155,7 @@ public class ItemHose extends ItemBucket {
 	@Override
 	public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
 		return true;
-	}
-	
-	
+	}	
 	
 	public static int getHoseMode(ItemStack hose) {
 		return hose.stackTagCompound != null ? hose.stackTagCompound.getInteger("mode") : -1;

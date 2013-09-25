@@ -98,13 +98,13 @@ public class PacketHandler implements IPacketHandler {
 			FMLNetworkHandler.openGui(player, AdventureBackpack.instance, 0, world, values[1], values[2], values[3]);
 			break;
 		case 1:
-			if (Utils.isWearing(player))
+			if (Utils.isWearingBackpack(player))
 			{
 				FMLNetworkHandler.openGui(player, AdventureBackpack.instance, 1, world, playerX, playerY, playerZ);
 			}
 			break;
 		case 2:
-			if (Utils.isHolding(player))
+			if (Utils.isHoldingBackpack(player))
 			{
 				FMLNetworkHandler.openGui(player, AdventureBackpack.instance, 2, world, playerX, playerY, playerZ);
 			}
@@ -123,7 +123,7 @@ public class PacketHandler implements IPacketHandler {
 				break;
 
 			case 1:
-				if (values[1] == 1 && Utils.isWearing(player))
+				if (values[1] == 1 && Utils.isWearingBackpack(player))
 				{
 					Actions.deploySleepingBagFromPlayer(player); // This
 																	// is
@@ -145,10 +145,10 @@ public class PacketHandler implements IPacketHandler {
 					FMLNetworkHandler.openGui(player, AdventureBackpack.instance, 3, world, values[3], values[4], values[5]);
 					break;
 				case 1:
-					if (Utils.isWearing(player))
+					if (Utils.isWearingBackpack(player))
 					{
 						FMLNetworkHandler.openGui(player, AdventureBackpack.instance, 4, world, playerX, playerY, playerZ);
-					} else if (Utils.isHolding(player))
+					} else if (Utils.isHoldingBackpack(player))
 					{
 						FMLNetworkHandler.openGui(player, AdventureBackpack.instance, 5, world, playerX, playerY, playerZ);
 					}

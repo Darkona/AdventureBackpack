@@ -407,7 +407,7 @@ public class Actions {
 		return false;
 	}
 
-	private static ChunkCoordinates getNearestEmptyChunkCoordinates(World world, int x, int y, int z, int radius, boolean except) {
+	public static ChunkCoordinates getNearestEmptyChunkCoordinates(World world, int x, int y, int z, int radius, boolean except) {
 
 		for (int i = x; i <= x + radius; ++i)
 		{
@@ -446,6 +446,15 @@ public class Actions {
 				player.inventory.armorInventory[2].stackTagCompound.setString("color", "Electric");
 				stack.stackTagCompound.setString("colorName", "Electric");
 			}
+		}
+	}
+
+	public static void eliminateLight(EntityPlayer player) {
+		ItemStack helmet = Utils.getWearingHelmet(player);
+		if(helmet.hasTagCompound()){
+			NBTTagCompound nbt = helmet.getTagCompound();
+			if(nbt.getBoolean("hasLight"))
+			player.worldObj.setBlockToAir(nbt.getInteger("lightX"), nbt.getInteger("lightY"), nbt.getInteger("lightZ"));
 		}
 	}
 

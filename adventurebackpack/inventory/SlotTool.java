@@ -13,7 +13,6 @@ import apis.ic2.api.item.ISpecialElectricItem;
 import buildcraft.api.tools.IToolPipette;
 import buildcraft.api.tools.IToolWrench;
 import forestry.api.core.IToolScoop;
-import forestry.api.core.ItemInterface;
 
 @SuppressWarnings("deprecation")
 public class SlotTool extends Slot {

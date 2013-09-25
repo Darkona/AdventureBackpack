@@ -130,7 +130,7 @@ public class BackpackAbilities {
 
 	public void itemChicken(EntityPlayer player, World world, ItemStack backpack) {
 
-		if (Utils.isWearing(player))
+		if (Utils.isWearingBackpack(player))
 		{
 			int eggTime = backpack.stackTagCompound.hasKey("lastTime") ? backpack.stackTagCompound.getInteger("lastTime") - 1 : ticks(300);
 			if (eggTime <= 0)

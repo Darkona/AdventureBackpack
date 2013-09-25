@@ -2,16 +2,16 @@ package aussie.codechicken.lib.render;
 
 import java.util.ArrayList;
 
-import aussie.codechicken.lib.render.SpriteSheetManager.SpriteSheet;
-import aussie.codechicken.lib.render.TextureUtils.IIconRegister;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.resources.ResourceManager;
 import net.minecraft.util.ResourceLocation;
+import aussie.codechicken.lib.render.SpriteSheetManager.SpriteSheet;
+import aussie.codechicken.lib.render.TextureUtils.IIconRegister;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class TextureSpecial extends TextureAtlasSprite implements IIconRegister
@@ -75,7 +75,8 @@ public class TextureSpecial extends TextureAtlasSprite implements IIconRegister
         }
     }
     
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public boolean load(ResourceManager manager, ResourceLocation location)
     {
         if(baseTextures != null)

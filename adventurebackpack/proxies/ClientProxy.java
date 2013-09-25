@@ -8,8 +8,6 @@ import adventurebackpack.client.render.RendererAdvBackpack;
 import adventurebackpack.client.render.RendererHose;
 import adventurebackpack.client.render.RendererItemAdvBackpack;
 import adventurebackpack.client.render.RendererSleepingBag;
-import adventurebackpack.config.BlockInfo;
-import adventurebackpack.config.ItemInfo;
 import adventurebackpack.handlers.ClientTickHandler;
 import adventurebackpack.handlers.KeyBindHandler;
 import adventurebackpack.items.Items;
