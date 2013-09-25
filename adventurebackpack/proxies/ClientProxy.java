@@ -7,6 +7,7 @@ import adventurebackpack.blocks.tileentities.TileSleepingBag;
 import adventurebackpack.client.render.RendererAdvBackpack;
 import adventurebackpack.client.render.RendererHose;
 import adventurebackpack.client.render.RendererItemAdvBackpack;
+import adventurebackpack.client.render.RendererMiningHat;
 import adventurebackpack.client.render.RendererSleepingBag;
 import adventurebackpack.handlers.ClientTickHandler;
 import adventurebackpack.handlers.KeyBindHandler;
@@ -46,6 +47,7 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAdvBackpack.class, new RendererAdvBackpack());
 		MinecraftForgeClient.registerItemRenderer(Items.hose.itemID, new RendererHose());
 		MinecraftForgeClient.registerItemRenderer(Items.advBackpack.itemID, new RendererItemAdvBackpack());
+		MinecraftForgeClient.registerItemRenderer(Items.miningHat.itemID, new RendererMiningHat());
 		MinecraftForgeClient.registerItemRenderer(Blocks.advbackpack.blockID, new RendererItemAdvBackpack());
 	}
 

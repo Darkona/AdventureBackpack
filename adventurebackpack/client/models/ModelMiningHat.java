@@ -75,23 +75,34 @@ public class ModelMiningHat extends ModelBiped
     	((ModelRenderer)part).rotateAngleY= bipedHead.rotateAngleY;
     	((ModelRenderer)part).rotateAngleZ = bipedHead.rotateAngleZ;
     }
-    
-    if(helmet != null && helmet.hasTagCompound()){
-    	switch(helmet.getTagCompound().getByte("mode")){
+    if(helmet != null && helmet.hasTagCompound()){ 
+    	doRender(f5, helmet.getTagCompound().getByte("mode"));
+    }
+    else doRender(f5,(byte)0);
+  }
+  
+  public void render2(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, ItemStack helmet){
+	  setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+	  if(helmet.hasTagCompound()){ 
+	    	doRender(f5, helmet.getTagCompound().getByte("mode"));
+	  }else{
+	  doRender(f5, (byte) 0);
+	  }
+  }
+  
+  private void doRender(float f5, byte mode){
+	  
+    	switch(mode){
     	case 1 : light.render(f5);break;
     	case 2 : lightAuto.render(f5);break;
     	case 0 : default: lightOff.render(f5);break;
     	}
-    }else{
-    	lightOff.render(f5);
-    }
-    
-    hatBottom.render(f5);
-    hatTop.render(f5);
-    lightRight.render(f5);
-    lightLeft.render(f5);
-    lightTop.render(f5);
-    lightTop.render(f5);
+	    hatBottom.render(f5);
+	    hatTop.render(f5);
+	    lightRight.render(f5);
+	    lightLeft.render(f5);
+	    lightTop.render(f5);
+	    lightTop.render(f5);
   }
   
   private void setRotation(ModelRenderer model, float x, float y, float z)
