@@ -8,14 +8,14 @@ public class Items {
 	public static ItemAdvBackpack advBackpack;
 	public static ItemHose hose;
 	public static ItemMachete machete;
-	public static ItemMiningHat miningHat;
+	public static ItemMiningHelmet miningHat;
 	public static ItemPistonBoots pistonboots;
 
 	public static void init() {
 		advBackpack = new ItemAdvBackpack(ItemInfo.AB_ID);
 		hose = new ItemHose(ItemInfo.HOSE_ID);
 		machete = new ItemMachete(ItemInfo.MACHETE_ID);
-		miningHat = new ItemMiningHat(ItemInfo.HELMET_ID);
+		miningHat = new ItemMiningHelmet(ItemInfo.HELMET_ID);
 		pistonboots = new ItemPistonBoots(ItemInfo.BOOTS_ID);
 	}
 

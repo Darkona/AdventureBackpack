@@ -19,13 +19,13 @@ import net.minecraftforge.oredict.OreDictionary;
 import adventurebackpack.blocks.tileentities.TileAdvBackpack;
 import adventurebackpack.inventory.InventoryItem;
 import adventurebackpack.items.ItemAdvBackpack;
-import adventurebackpack.items.ItemMiningHat;
+import adventurebackpack.items.ItemMiningHelmet;
 import adventurebackpack.items.ItemPistonBoots;
 
 public class Utils {
 
 	public static boolean isWearingHelmet(EntityPlayer player){
-		return player.inventory.armorInventory[3] != null && player.inventory.armorInventory[3].getItem() instanceof ItemMiningHat;
+		return player.inventory.armorInventory[3] != null && player.inventory.armorInventory[3].getItem() instanceof ItemMiningHelmet;
 	}
 	
 	public static boolean isWearingBackpack(EntityPlayer player) {

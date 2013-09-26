@@ -21,9 +21,9 @@ import adventurebackpack.config.ItemInfo;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemMiningHat extends ItemArmor {
+public class ItemMiningHelmet extends ItemArmor {
 	
-	public ItemMiningHat(int par1) {
+	public ItemMiningHelmet(int par1) {
 		
 		super(par1, EnumArmorMaterial.IRON, 2, 1);
 		setCreativeTab(CreativeTabs.tabCombat);
@@ -117,7 +117,7 @@ public class ItemMiningHat extends ItemArmor {
 			}
 		
 			//If it's already shiny, keep it shiny and move on
-			if (world.getBlockId(mopX, mopY, mopZ) == Blocks.lightblock.blockID || /*(world.canBlockSeeTheSky() && day )  ||*/ world.getBlockLightValue(mopX, mopY, mopZ) > 10) {
+			if (world.getBlockId(mopX, mopY, mopZ) == Blocks.lightblock.blockID || /*(world.canBlockSeeTheSky() && day )  ||*/ world.getBlockLightValue(mopX, mopY, mopZ) > 6) {
 				return;
 			}
 	

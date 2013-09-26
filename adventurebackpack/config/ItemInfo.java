@@ -29,13 +29,15 @@ public class ItemInfo {
 	public static final int HELMET_DEFAULT = 25533;
 	public static final String HELMET_UNLOCALIZED_NAME = "minerHelmet";
 	public static final String HELMET_NAME = "Miner Helmet";
+	
 
 	public static int MACHETE_ID;
 	public static final String MACHETE_KEY = "Jungle Machete";
 	public static final int MACHETE_DEFAULT = 25534;
 	public static final String MACHETE_UNLOCALIZED_NAME = "jungleMachete";
 	public static final String MACHETE_NAME = "Jungle Machete";
-
+	public static final String MACHETE_ICON = "item.machete";
+	
 	public static int BACKPACKCOMPONENT_ID;
 	public static final String BP_COMPONENT_KEY = "Backpack Component";
 	public static final int BP_COMPONENT_DEFAULT = 25535;
