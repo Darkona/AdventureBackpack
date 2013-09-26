@@ -11,13 +11,13 @@ import net.minecraft.item.ItemStack;
  * disabled by a config setting, so it's recommended to check if they're null
  * first.
  * 
- * Getting the associated Block/Item for an ItemStack x: Blocks:
- * Block.blocksList[x.itemID] Items: x.getItem()
+ * Getting the associated Block/Item for an ItemStack x: ABPBlocks:
+ * Block.blocksList[x.itemID] ABPItems: x.getItem()
  */
 public final class Items {
 	/**
 	 * Get an ItemStack for a specific item name, example:
-	 * Items.getItem("resin") See the list below for item names. Make sure to
+	 * ABPItems.getItem("resin") See the list below for item names. Make sure to
 	 * copy() the ItemStack if you want to modify it.
 	 * 
 	 * @param name

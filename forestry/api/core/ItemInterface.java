@@ -9,7 +9,7 @@ public class ItemInterface {
 	/**
 	 * Get items here!
 	 * 
-	 * Blocks currently not supported.
+	 * ABPBlocks currently not supported.
 	 * 
 	 * @param ident
 	 * @return ItemStack representing the item, null if not found.

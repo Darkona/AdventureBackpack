@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class FuelManager {
 	/**
 	 * Add new fuels for the fermenter here (i.e. fertilizer). Will accept
-	 * Items, ItemStacks and Strings (Ore Dictionary)
+	 * ABPItems, ItemStacks and Strings (Ore Dictionary)
 	 */
 	public static HashMap<Object, FermenterFuel> fermenterFuel;
 	/**
