@@ -1,7 +1,7 @@
 package com.darkona.adventurebackpack.items;
 
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.creativetab.CreativeTabs;
+//import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,6 +14,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
+import com.darkona.adventurebackpack.AdventureBackpack;
 import com.darkona.adventurebackpack.blocks.ABPBlocks;
 import com.darkona.adventurebackpack.client.models.ModelMiningHat;
 import com.darkona.adventurebackpack.common.Textures;
@@ -28,10 +29,11 @@ public class ItemMiningHelmet extends ItemArmor {
 	public ItemMiningHelmet(int par1) {
 		
 		super(par1, EnumArmorMaterial.IRON, 2, 0);
-		setCreativeTab(CreativeTabs.tabCombat);
+		//setCreativeTab(CreativeTabs.tabCombat);
 		setFull3D();
 		setMaxStackSize(1);
 		setUnlocalizedName(ItemInfo.HELMET_UNLOCALIZED_NAME);
+		setCreativeTab(AdventureBackpack.AdvBackpackTab);
 	}
 
 	@Override

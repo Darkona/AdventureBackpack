@@ -3,13 +3,14 @@ package com.darkona.adventurebackpack.items;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.darkona.adventurebackpack.AdventureBackpack;
 import com.darkona.adventurebackpack.common.Textures;
 import com.darkona.adventurebackpack.config.ItemInfo;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.creativetab.CreativeTabs;
+//import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -34,12 +35,13 @@ public class ItemMachete extends ItemSword {
 	
 	public ItemMachete(int par1) {
 		super(par1, EnumToolMaterial.IRON);
-		setCreativeTab(CreativeTabs.tabCombat);
+		//setCreativeTab(CreativeTabs.tabCombat);
 		setMaxDamage(Item.swordIron.getMaxDamage()+100);
 		setUnlocalizedName(ItemInfo.MACHETE_UNLOCALIZED_NAME);
 		setFull3D();
 		setMaxStackSize(1);
 		toolMaterial = EnumToolMaterial.IRON;
+		setCreativeTab(AdventureBackpack.AdvBackpackTab);
 	}
 	
 	@Override

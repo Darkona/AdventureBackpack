@@ -1,10 +1,11 @@
 package com.darkona.adventurebackpack.items;
 
+import com.darkona.adventurebackpack.AdventureBackpack;
 import com.darkona.adventurebackpack.common.Textures;
 import com.darkona.adventurebackpack.config.ItemInfo;
 
 import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.creativetab.CreativeTabs;
+//import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumArmorMaterial;
@@ -19,7 +20,8 @@ public class ItemPistonBoots extends ItemArmor {
 
 	public ItemPistonBoots(int par1) {
 		super(par1, EnumArmorMaterial.CLOTH, 0, 3);
-		setCreativeTab(CreativeTabs.tabCombat);
+		//setCreativeTab(CreativeTabs.tabCombat);
+		setCreativeTab(AdventureBackpack.AdvBackpackTab);
 	}
 
 

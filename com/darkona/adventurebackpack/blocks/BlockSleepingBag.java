@@ -2,6 +2,7 @@ package com.darkona.adventurebackpack.blocks;
 
 import java.util.Iterator;
 
+import com.darkona.adventurebackpack.AdventureBackpack;
 import com.darkona.adventurebackpack.blocks.tileentities.TileSleepingBag;
 import com.darkona.adventurebackpack.common.Utils;
 import com.darkona.adventurebackpack.config.BlockInfo;
@@ -9,7 +10,7 @@ import com.darkona.adventurebackpack.config.BlockInfo;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
+//import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -31,10 +32,11 @@ public class BlockSleepingBag extends BlockContainer{
 
 	public BlockSleepingBag(int par1) {
 		super(par1, Material.cloth);
-		setCreativeTab(CreativeTabs.tabTools);
+		setCreativeTab(AdventureBackpack.AdvBackpackTab);
 		setLightValue(0.1F);
 		setHardness(0.5f);
 		setUnlocalizedName(BlockInfo.SLEEPINGBAG_NAME);
+
 	}
 
 	public static int[][] footBlockToHeadBlockMap = new int[][] { { 0, 1 }, { -1, 0 }, { 0, -1 }, { 1, 0 } };

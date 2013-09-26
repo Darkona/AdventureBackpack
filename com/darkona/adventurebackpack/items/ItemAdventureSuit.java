@@ -2,7 +2,7 @@ package com.darkona.adventurebackpack.items;
 
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.creativetab.CreativeTabs;
+//import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,6 +11,7 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 
+import com.darkona.adventurebackpack.AdventureBackpack;
 import com.darkona.adventurebackpack.client.models.FullArmorModel;
 import com.darkona.adventurebackpack.common.Textures;
 import com.darkona.adventurebackpack.config.ItemInfo;
@@ -23,9 +24,10 @@ public class ItemAdventureSuit extends ItemArmor {
 	public ItemAdventureSuit(int par1) {
 		super(par1, EnumArmorMaterial.CLOTH, 0, 2);
 		setFull3D();
-		setCreativeTab(CreativeTabs.tabCombat);
+		//setCreativeTab(CreativeTabs.tabCombat);
 		setUnlocalizedName(ItemInfo.SUIT_UNLOCALIZED_NAME);
 		setMaxStackSize(1);
+		setCreativeTab(AdventureBackpack.AdvBackpackTab);
 	}
 	
 	@Override

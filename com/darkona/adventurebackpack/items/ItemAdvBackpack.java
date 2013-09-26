@@ -2,6 +2,7 @@ package com.darkona.adventurebackpack.items;
 
 import java.util.List;
 
+import com.darkona.adventurebackpack.AdventureBackpack;
 import com.darkona.adventurebackpack.blocks.ABPBlocks;
 import com.darkona.adventurebackpack.blocks.tileentities.TileAdvBackpack;
 import com.darkona.adventurebackpack.client.models.ModelAdvBackpackArmor;
@@ -14,7 +15,7 @@ import com.darkona.adventurebackpack.inventory.InventoryItem;
 import net.minecraft.block.Block;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.creativetab.CreativeTabs;
+//import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,12 +34,13 @@ public class ItemAdvBackpack extends ItemArmor {
 
 	public ItemAdvBackpack(int id) {
 		super(id, EnumArmorMaterial.CHAIN, 0, 1);
-		setCreativeTab(CreativeTabs.tabTools);
+		//setCreativeTab(CreativeTabs.tabTools);
 		setMaxDamage(Item.plateLeather.getMaxDamage());
 		setUnlocalizedName("adventureBackpack");
 		setFull3D();
 		setMaxStackSize(1);
 		this.BlockID = ABPBlocks.advbackpack.blockID;
+		setCreativeTab(AdventureBackpack.AdvBackpackTab);
 	}
 
 	public final int armorType = 1;

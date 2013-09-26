@@ -1,5 +1,6 @@
 package com.darkona.adventurebackpack.items;
 
+import com.darkona.adventurebackpack.AdventureBackpack;
 import com.darkona.adventurebackpack.common.Actions;
 import com.darkona.adventurebackpack.common.Constants;
 import com.darkona.adventurebackpack.common.Textures;
@@ -12,7 +13,7 @@ import com.darkona.adventurebackpack.inventory.InventoryItem;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.creativetab.CreativeTabs;
+//import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityCow;
@@ -42,7 +43,10 @@ public class ItemHose extends ItemBucket {
 	
 	public ItemHose(int par1) {
 		super(par1, 0);
-		setMaxStackSize(1).setFull3D().setCreativeTab(CreativeTabs.tabTools).setNoRepair().setUnlocalizedName(ItemInfo.HOSE_UNLOCALIZED_NAME);
+		setMaxStackSize(1).setFull3D()
+		//.setCreativeTab(CreativeTabs.tabTools)
+		.setNoRepair().setUnlocalizedName(ItemInfo.HOSE_UNLOCALIZED_NAME);
+		setCreativeTab(AdventureBackpack.AdvBackpackTab);
 	}	
 
 	@Override
