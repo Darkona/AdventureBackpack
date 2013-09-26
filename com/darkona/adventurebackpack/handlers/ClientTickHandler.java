@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import org.lwjgl.input.Mouse;
 
 import com.darkona.adventurebackpack.common.Utils;
+import com.darkona.adventurebackpack.entity.EntityRideableSpider;
 import com.darkona.adventurebackpack.inventory.SlotTool;
 import com.darkona.adventurebackpack.items.ItemAdvBackpack;
 import com.darkona.adventurebackpack.items.ItemHose;
@@ -55,8 +56,14 @@ public class ClientTickHandler implements ITickHandler {
 			theSlot = -1;
 		}
 		
-		if(player != null && player.movementInput.jump && player.onGround){
-			jump = true;
+		if(player != null && player.movementInput.jump){
+			
+			if(player.isRiding() && player.ridingEntity instanceof EntityRideableSpider && player.ridingEntity.onGround){
+				((EntityRideableSpider)player.ridingEntity).spiderJump();
+			}else {
+				if(player.onGround)
+				jump = true;
+			}
 		}
 	}
 

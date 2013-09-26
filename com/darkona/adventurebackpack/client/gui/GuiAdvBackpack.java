@@ -72,6 +72,9 @@ public class GuiAdvBackpack extends GuiContainer implements IBackpackGui {
 	protected void drawGuiContainerBackgroundLayer(float f, int mouseX, int mouseY) {
 		GL11.glColor4f(1, 1, 1, 1);
 
+
+		
+		
 		this.mc.getTextureManager().bindTexture(texture);
 		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 
@@ -102,8 +105,14 @@ public class GuiAdvBackpack extends GuiContainer implements IBackpackGui {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+		
+		
+		GL11.glPushMatrix();
+		GL11.glScalef(0.8f, 0.8f, 0.8f);
 		String name = " Adventure-pack";
 		fontRenderer.drawString(name, (xSize - fontRenderer.getStringWidth(name)) / 2, 4, 0x404040);
+		GL11.glPopMatrix();
+		inventory.openChest();
 		lft = inventory.getLeftTank().getFluid();
 		rgt = inventory.getRightTank().getFluid();
 

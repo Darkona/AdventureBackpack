@@ -2,19 +2,18 @@ package com.darkona.adventurebackpack.blocks;
 
 import java.util.Random;
 
-import com.darkona.adventurebackpack.blocks.tileentities.TileKamikaze;
-import com.darkona.adventurebackpack.common.Textures;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import com.darkona.adventurebackpack.common.Textures;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -27,10 +26,19 @@ public class BlockLight extends Block {
 	@Override
 	public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random) {
 		par1World.setBlockToAir(par2, par3, par4);
-		super.updateTick(par1World, par2, par3, par4, par5Random);
 	}
 
+	@Override
+	public boolean isBlockNormalCube(World world, int x, int y, int z) {
+		return false;
+	}
 		
+	@Override
+	public int tickRate(World par1World) {
+		return 2;
+	}
+	
+	
 	@Override
 	public int getLightOpacity(World world, int x, int y, int z) {
 		return 0;
@@ -108,7 +116,7 @@ public class BlockLight extends Block {
 	
 	@Override
 	public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5) {
-		
+		 par1World.setBlockToAir(par2, par3, par4);
 	}
 	
 	@Override
@@ -117,10 +125,6 @@ public class BlockLight extends Block {
 	        return null;
 	    }
 
-	
-	public static void onBlockRemoved(World world, int prevX, int prevY, int prevZ) {
-		
-	}
 
 //	@Override
 //	public TileEntity createNewTileEntity(World world) {

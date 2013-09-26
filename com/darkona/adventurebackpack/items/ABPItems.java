@@ -11,6 +11,7 @@ public class ABPItems {
 	public static ItemMachete machete;
 	public static ItemMiningHelmet miningHat;
 	public static ItemPistonBoots pistonboots;
+	public static ItemAdventureSuit advsuit;
 
 	public static void init() {
 		advBackpack = new ItemAdvBackpack(ItemInfo.AB_ID);
@@ -18,6 +19,7 @@ public class ABPItems {
 		machete = new ItemMachete(ItemInfo.MACHETE_ID);
 		miningHat = new ItemMiningHelmet(ItemInfo.HELMET_ID);
 		pistonboots = new ItemPistonBoots(ItemInfo.BOOTS_ID);
+		advsuit = new ItemAdventureSuit(ItemInfo.SUIT_ID);
 	}
 
 	public static void addNames() {
@@ -26,5 +28,6 @@ public class ABPItems {
 		LanguageRegistry.addName(machete, ItemInfo.MACHETE_NAME);
 		LanguageRegistry.addName(miningHat, ItemInfo.HELMET_NAME);
 		LanguageRegistry.addName(pistonboots, ItemInfo.BOOTS_NAME);
+		LanguageRegistry.addName(advsuit, ItemInfo.SUIT_NAME);
 	}
 }

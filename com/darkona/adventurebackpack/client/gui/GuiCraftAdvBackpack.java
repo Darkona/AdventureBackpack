@@ -83,8 +83,6 @@ public class GuiCraftAdvBackpack extends GuiContainer implements IBackpackGui {
 		{
 			backButton.draw(this, srcX, srcY);
 		}
-		// drawTexturedModalRect(par1, par2, par3, par4, par5, par6);
-		// drawTexturedModelRectFromIcon(par1, par2, par3Icon, par4, par5);
 	}
 
 	@Override

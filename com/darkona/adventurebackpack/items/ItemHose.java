@@ -48,8 +48,8 @@ public class ItemHose extends ItemBucket {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister register) {	
-		leftIcon = 	register.registerIcon(Textures.TEXTURE_LOCATION + ":" + ItemInfo.HOSE_LEFT_ICON);
-		rightIcon = register.registerIcon(Textures.TEXTURE_LOCATION + ":" + ItemInfo.HOSE_RIGHT_ICON);
+		leftIcon = 	register.registerIcon(Textures.resourceString(ItemInfo.HOSE_LEFT_ICON));
+		rightIcon = register.registerIcon(Textures.resourceString(ItemInfo.HOSE_RIGHT_ICON));
 		itemIcon = 	register.registerIcon(Textures.resourceString(ItemInfo.HOSE_USELESS_ICON));
 	}
 

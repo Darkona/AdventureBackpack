@@ -1,13 +1,16 @@
 package com.darkona.adventurebackpack.items;
 
 import com.darkona.adventurebackpack.common.Textures;
+import com.darkona.adventurebackpack.config.ItemInfo;
 
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -19,11 +22,18 @@ public class ItemPistonBoots extends ItemArmor {
 		setCreativeTab(CreativeTabs.tabCombat);
 	}
 
-//	@Override
-//	@SideOnly(Side.CLIENT)
-//	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack boots, int armorSlot) {
-//		return Boots.instance;
-//	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister register) {	
+		itemIcon = 	register.registerIcon(Textures.resourceString(ItemInfo.PISTON_BOOTS_ICON));
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public Icon getIcon(ItemStack stack, int pass) {
+		return itemIcon;
+	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)

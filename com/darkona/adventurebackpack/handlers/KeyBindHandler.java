@@ -43,13 +43,6 @@ public class KeyBindHandler extends KeyHandler {
 		{
 			keyHasBeenPressed = true;
 
-			// World world = Minecraft.getMinecraft().theWorld;
-			//
-			// if (Minecraft.getMinecraft().inGameHasFocus) {
-			// player.openGui(AdventureBackpack.instance, 1, world, 0, 0, 0);
-			// player.sendQueue.addToSendQueue(PacketHandler.makePacket(1));
-			// }
-
 		}
 
 	}

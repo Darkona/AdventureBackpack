@@ -27,7 +27,7 @@ public class ItemMiningHelmet extends ItemArmor {
 	
 	public ItemMiningHelmet(int par1) {
 		
-		super(par1, EnumArmorMaterial.IRON, 2, 1);
+		super(par1, EnumArmorMaterial.IRON, 2, 0);
 		setCreativeTab(CreativeTabs.tabCombat);
 		setFull3D();
 		setMaxStackSize(1);
@@ -187,8 +187,10 @@ public class ItemMiningHelmet extends ItemArmor {
 				}
 			}
 			
-			
-			
+		}// MOP == NULL or entity, looking at nothing
+		if(nbt.getBoolean("mustRemove")){
+			if(world.getBlockId(prevX, prevY, prevZ) == ABPBlocks.lightblock.blockID)world.setBlockToAir(prevX, prevY, prevZ);
+			nbt.setBoolean("mustRemove", false);
 		}
 	}
 	
