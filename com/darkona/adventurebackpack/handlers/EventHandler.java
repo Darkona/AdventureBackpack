@@ -79,7 +79,7 @@ public class EventHandler {
             	EntityRideableSpider pet = new EntityRideableSpider(event.target.worldObj);
             	pet.setLocationAndAngles(event.target.posX, event.target.posY, event.target.posZ, event.target.rotationYaw, event.target.rotationPitch);
             	event.target.worldObj.spawnEntityInWorld(pet);
-            	event.target.setAir(1);
+            	event.target.setDead();
             	event.entityPlayer.mountEntity(pet);
             }
 			
