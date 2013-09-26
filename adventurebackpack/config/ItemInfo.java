@@ -19,10 +19,10 @@ public class ItemInfo {
 	public static final String HOSE_RIGHT_ICON = "item.hoseRight";
 	
 	public static int BOOTS_ID;
-	public static final String BOOTS_KEY = "Jumper Boots";
+	public static final String BOOTS_KEY = "Piston Boots";
 	public static final int BOOTS_DEFAULT = 25532;
-	public static final String BOOTS_UNLOCALIZED_NAME = "jumperBoots";
-	public static final String BOOTS_NAME = "Jumper Boots";
+	public static final String BOOTS_UNLOCALIZED_NAME = "pistonBoots";
+	public static final String BOOTS_NAME = "Piston Boots";
 
 	public static int HELMET_ID;
 	public static final String HELMET_KEY = "Miner Helmet";

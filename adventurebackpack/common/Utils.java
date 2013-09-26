@@ -37,7 +37,7 @@ public class Utils {
 	}
 
 	public static boolean isWearingBoots(EntityPlayer player){
-		return player.inventory.armorInventory[0] != null && player.inventory.armorInventory[3].getItem() instanceof ItemPistonBoots;
+		return player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].getItem() instanceof ItemPistonBoots;
 	}
 	
 	
@@ -59,11 +59,8 @@ public class Utils {
 	}
 
 	public static ItemStack getWearingBoots(EntityPlayer player){
-		if(isWearingBoots(player))return player.inventory.armorInventory[0];
-		return null;
+		return isWearingBoots(player) ? player.inventory.armorInventory[0] : null ;
 	}
-	
-	
 	
 	/**
 	 * Analyzes the Fluid registry for matches of a fluid with a blockID equal

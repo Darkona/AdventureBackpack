@@ -24,13 +24,13 @@ public class ModelMachete extends ModelBase {
 		blade.addBox(0F, 0F, 0F, 0, 67, 9);
 		blade.setRotationPoint(-1.5F, 2.5F, -46F);
 		blade.setTextureSize(512, 256);
-		blade.mirror = true;
+		
 		setRotation(blade, 1.53589F, 0F, 0F);
 		handle = new ModelRenderer(this, 42, 0);
 		handle.addBox(0F, 0F, 0F, 10, 32, 16);
 		handle.setRotationPoint(-6.5F, 10F, 20F);
 		handle.setTextureSize(512, 256);
-		handle.mirror = true;
+		
 		setRotation(handle, 1.570796F, 0F, 0F);
 	}
 
