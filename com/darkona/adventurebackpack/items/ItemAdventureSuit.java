@@ -68,10 +68,6 @@ public class ItemAdventureSuit extends ItemArmor {
 	
 	@Override
 	public ModelBiped getArmorModel(EntityLivingBase entity, ItemStack itemStack, int armorSlot) {
-		
-		if(entity instanceof EntityPlayer){
-		return new FullArmorModel((EntityPlayer)entity);
-		}
-		return new ModelBiped();
+		return entity instanceof EntityPlayer ?  FullArmorModel.instance.setPlayer(((EntityPlayer)entity)) : null;
 	}
 }
