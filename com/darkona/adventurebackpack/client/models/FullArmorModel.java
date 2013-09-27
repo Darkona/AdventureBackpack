@@ -6,15 +6,21 @@ import net.minecraft.item.ItemBow;
 
 public class FullArmorModel extends ModelBiped {
 
-	public FullArmorModel(EntityPlayer player) {
+	public static FullArmorModel instance = new FullArmorModel();
+	
+	public FullArmorModel() {
 		super(0.0F);
+		
+	}
+
+	public FullArmorModel setPlayer(EntityPlayer player){
 		this.isSneak = player.isSneaking();
 		this.aimedBow = player.isUsingItem() && player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() instanceof ItemBow;
 		this.onGround = (player.onGround) ? 1 : 1;
 		this.heldItemRight = (player.getCurrentEquippedItem() != null) ? 1: 0;
 		this.isRiding = player.isRiding();
+		return this;
 	}
-
 	
 	
 	public FullArmorModel(float par1) {

@@ -79,11 +79,11 @@ public class ItemMachete extends ItemSword {
 	@Override
 	public float getStrVsBlock(ItemStack stack, Block block) {
 		Material material = block.blockMaterial;
-		if(material == Material.wood) return 3;
-		if(block.blockID == Block.melon.blockID) return 4.0F;
-		if (block.blockID == Block.web.blockID) return 25.0F;
+		if(material == Material.wood) return 3F;
+		if(block.blockID == Block.melon.blockID) return 4F;
+		if (block.blockID == Block.web.blockID) return 25F;
 		for(ItemStack stacky : OreDictionary.getOres("treeLeaves")){
-			if (stacky.itemID == block.blockID) return 50;
+			if (stacky.itemID == block.blockID) return 50F;
 		}
         return material == Material.plants || material == Material.vine || material == Material.coral || material == Material.pumpkin ? 4.0F : 0.5F;
     
@@ -117,7 +117,7 @@ public class ItemMachete extends ItemSword {
 			if (stacky.itemID == id) return false;
 		}
         
-        if (Block.blocksList[id] instanceof IShearable)
+        if (Block.blocksList[id] instanceof IShearable )
         {
             IShearable target = (IShearable)Block.blocksList[id];
             if (target.isShearable(itemstack, player.worldObj, x, y, z))
