@@ -41,6 +41,7 @@ public class BlockAdvBackpack extends BlockContainer {
 		setResistance(2);
 		setUnlocalizedName("Adventure Backpack");
 		setCreativeTab(AdventureBackpack.AdvBackpackTab);
+		
 	}
 
 	@Override

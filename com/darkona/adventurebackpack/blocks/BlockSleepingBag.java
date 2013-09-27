@@ -46,6 +46,7 @@ public class BlockSleepingBag extends BlockContainer{
 		return false;
 	}
 	
+	
 	@Override
 	public Icon getIcon(int par1, int par2) {
 
