@@ -35,7 +35,6 @@ public class ItemAdventureSuit extends ItemArmor {
 		return armorType == 2;
 	}
 	
-
 	@Override
 	public void registerIcons(IconRegister register) {
 		itemIcon = register.registerIcon(Textures.resourceString(ItemInfo.SUIT_ICON));
@@ -46,25 +45,15 @@ public class ItemAdventureSuit extends ItemArmor {
 	public Icon getIcon(ItemStack stack, int pass) {
 		return itemIcon;
 	}
-	
-	
-	
+
 	@Override
 	public String getItemDisplayName(ItemStack helmet) {
 		return ItemInfo.SUIT_NAME;
 	}
 
-//	
-//	@Override
-//	@SideOnly(Side.CLIENT)
-//	public String getArmorTexture(ItemStack stack, Entity entity, int slot, int layer) {
-//		return Textures.resourceString("textures/items/item.adventurerSuit.png");
-//	}
-	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
-		// TODO Auto-generated method stub
 		return Textures.resourceString("textures/items/item.adventurerSuit.png");
 	}
 	

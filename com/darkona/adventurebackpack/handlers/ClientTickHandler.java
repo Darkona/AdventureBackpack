@@ -57,9 +57,9 @@ public class ClientTickHandler implements ITickHandler {
 		}
 		
 		if(player != null && player.movementInput.jump){
-			
+			player.sendQueue.addToSendQueue(PacketHandler.makePacket(6));
 			if(player.isRiding() && player.ridingEntity instanceof EntityRideableSpider && player.ridingEntity.onGround){
-				((EntityRideableSpider)player.ridingEntity).spiderJump();
+				
 			}else {
 				if(player.onGround)
 				jump = true;

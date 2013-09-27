@@ -196,5 +196,8 @@ public class ItemMiningHelmet extends ItemArmor {
 		}
 	}
 	
+	private void placeTorch(World world, EntityPlayer player, ItemStack helmet){
+		
+	}
 	
 }

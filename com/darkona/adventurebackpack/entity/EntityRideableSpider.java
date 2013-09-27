@@ -41,22 +41,24 @@ public class EntityRideableSpider extends EntitySpider {
 	
 	public void spiderJump()
     {
-        this.motionY = 0.41999998688697815D;
-
-        if (this.isPotionActive(Potion.jump))
-        {
-            this.motionY += (this.getActivePotionEffect(Potion.jump).getAmplifier() + 1) * 0.1F;
-        }
-
-        if (this.isSprinting())
-        {
-            float f = this.rotationYaw * 0.017453292F;
-            this.motionX -= (MathHelper.sin(f) * 0.2F);
-            this.motionZ += (MathHelper.cos(f) * 0.2F);
-        }
-
-        this.isAirBorne = true;
-        ForgeHooks.onLivingJump(this);
+		if(this.onGround){
+	        this.motionY = 0.41999998688697815;
+	
+	        if (this.isPotionActive(Potion.jump))
+	        {
+	            this.motionY += (this.getActivePotionEffect(Potion.jump).getAmplifier() + 1) * 0.1;
+	        }
+	
+	        if (this.isSprinting())
+	        {
+	            float f = this.rotationYaw * 0.017453292F;
+	            this.motionX -= (MathHelper.sin(f) * 0.2F);
+	            this.motionZ += (MathHelper.cos(f) * 0.2F);
+	        }
+	
+	        this.isAirBorne = true;
+	        ForgeHooks.onLivingJump(this);
+		}
     }
 	
 	public boolean shouldRiderFaceForward(EntityPlayer player)

@@ -46,7 +46,7 @@ public class ClassTransformer implements net.minecraft.launchwrapper.IClassTrans
 		toInject.add(new LabelNode());
 		toInject.add(new VarInsnNode(Opcodes.ALOAD, 0));
 		toInject.add(new VarInsnNode(Opcodes.ALOAD, 1));
-		toInject.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "darkona/transformation/LightningStrikeEvent", "postMe", "(Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/effect/EntityLightningBolt;)V"));
+		toInject.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "com/darkona/darkonacore/LightningStrikeEvent", "postMe", "(Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/effect/EntityLightningBolt;)V"));
 			
 		for(MethodNode method : classNode.methods){
 			if(method.name.equals(target)){

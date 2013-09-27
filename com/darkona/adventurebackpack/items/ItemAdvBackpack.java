@@ -2,6 +2,23 @@ package com.darkona.adventurebackpack.items;
 
 import java.util.List;
 
+import net.minecraft.block.Block;
+import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.client.model.ModelBiped;
+//import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumArmorMaterial;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumMovingObjectType;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.world.World;
+
 import com.darkona.adventurebackpack.AdventureBackpack;
 import com.darkona.adventurebackpack.blocks.ABPBlocks;
 import com.darkona.adventurebackpack.blocks.tileentities.TileAdvBackpack;
@@ -12,21 +29,6 @@ import com.darkona.adventurebackpack.handlers.PacketHandler;
 import com.darkona.adventurebackpack.inventory.BackpackContainer;
 import com.darkona.adventurebackpack.inventory.InventoryItem;
 
-import net.minecraft.block.Block;
-import net.minecraft.client.entity.EntityClientPlayerMP;
-import net.minecraft.client.model.ModelBiped;
-//import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumArmorMaterial;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumMovingObjectType;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -56,13 +58,23 @@ public class ItemAdvBackpack extends ItemArmor {
 	public void onCreated(ItemStack stack, World par2World, EntityPlayer par3EntityPlayer) {
 
 		super.onCreated(stack, par2World, par3EntityPlayer);
-		if (stack.stackTagCompound == null)
-			stack.stackTagCompound = new NBTTagCompound();
+		if (!stack.hasTagCompound()) stack.setTagCompound(new NBTTagCompound());
 		if (!stack.stackTagCompound.hasKey("color") || stack.stackTagCompound.getString("color").isEmpty())
+		{
 			stack.stackTagCompound.setString("color", "Standard");
+			stack.stackTagCompound.setString("colorName","Standard");
+		}
 	}
 
 	public boolean placeBackpack(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, boolean from) {
+		if (!stack.hasTagCompound()) stack.setTagCompound(new NBTTagCompound());
+		if (!stack.stackTagCompound.hasKey("color") || stack.stackTagCompound.getString("color").isEmpty())
+		{
+			stack.stackTagCompound.setString("color", "Standard");
+			stack.stackTagCompound.setString("colorName","Standard");
+		}
+		
+		world.spawnEntityInWorld(new EntityLightningBolt(world,x,y, z));world.spawnEntityInWorld(new EntityLightningBolt(world,x,y, z));
 		Block backpack = ABPBlocks.advbackpack;
 		
 		if (y <= 0 || y >= 255)

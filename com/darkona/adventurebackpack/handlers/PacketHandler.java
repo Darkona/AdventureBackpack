@@ -158,6 +158,8 @@ public class PacketHandler implements IPacketHandler {
 				break;
 			}
 			break;
+		case 6: 
+			Actions.makeSpiderJump(player);
 		default:
 			break;
 		}

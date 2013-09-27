@@ -4,6 +4,7 @@ import com.darkona.adventurebackpack.api.FluidEffect;
 import com.darkona.adventurebackpack.api.FluidEffectRegistry;
 import com.darkona.adventurebackpack.blocks.tileentities.TileAdvBackpack;
 import com.darkona.adventurebackpack.config.BlockInfo;
+import com.darkona.adventurebackpack.entity.EntityRideableSpider;
 import com.darkona.adventurebackpack.handlers.PacketHandler;
 import com.darkona.adventurebackpack.inventory.InventoryItem;
 import com.darkona.adventurebackpack.items.ItemHose;
@@ -457,6 +458,14 @@ public class Actions {
 			if(nbt.getBoolean("hasLight"))
 			player.worldObj.setBlockToAir(nbt.getInteger("lightX"), nbt.getInteger("lightY"), nbt.getInteger("lightZ"));
 		}
+	}
+
+	
+	public static void makeSpiderJump(EntityPlayer player) {
+		if(player.isRiding() && player.ridingEntity instanceof EntityRideableSpider){
+			((EntityRideableSpider)player.ridingEntity).spiderJump();
+		}
+		
 	}
 
 }
