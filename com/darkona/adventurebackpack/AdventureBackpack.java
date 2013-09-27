@@ -60,18 +60,15 @@ public class AdventureBackpack {
 		proxy.registerRecipes();
 		proxy.registerEntities();
 		proxy.registerPacketHandling();
-		
-		
+
 		LanguageRegistry.instance().addStringLocalization(AdvBackpackTab.getTranslatedTabLabel(), "Adventure Backpack");
-
-
 
 	}
 	
-	
-
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		proxy.interoperabilityWithOtherMods();
 	}
+	
+	
 }
