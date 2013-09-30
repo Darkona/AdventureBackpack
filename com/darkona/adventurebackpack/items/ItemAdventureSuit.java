@@ -24,7 +24,6 @@ public class ItemAdventureSuit extends ItemArmor {
 	public ItemAdventureSuit(int par1) {
 		super(par1, EnumArmorMaterial.CLOTH, 0, 2);
 		setFull3D();
-		//setCreativeTab(CreativeTabs.tabCombat);
 		setUnlocalizedName(ItemInfo.SUIT_UNLOCALIZED_NAME);
 		setMaxStackSize(1);
 		setCreativeTab(AdventureBackpack.AdvBackpackTab);
@@ -58,6 +57,7 @@ public class ItemAdventureSuit extends ItemArmor {
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public ModelBiped getArmorModel(EntityLivingBase entity, ItemStack itemStack, int armorSlot) {
 		return entity instanceof EntityPlayer ?  FullArmorModel.instance.setPlayer(((EntityPlayer)entity)) : null;
 	}

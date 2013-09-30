@@ -1,9 +1,11 @@
 package com.darkona.adventurebackpack.items;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelBiped;
 //import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.ItemArmor;
@@ -29,7 +31,6 @@ public class ItemMiningHelmet extends ItemArmor {
 	public ItemMiningHelmet(int par1) {
 		
 		super(par1, EnumArmorMaterial.IRON, 2, 0);
-		//setCreativeTab(CreativeTabs.tabCombat);
 		setFull3D();
 		setMaxStackSize(1);
 		setUnlocalizedName(ItemInfo.HELMET_UNLOCALIZED_NAME);
@@ -76,16 +77,37 @@ public class ItemMiningHelmet extends ItemArmor {
 			int prevX = nbt.getInteger("prevX");
 			int prevY = nbt.getInteger("prevY");
 			int prevZ = nbt.getInteger("prevZ");
-			if(nbt.getBoolean("mustRemove") && world.getBlockId(prevX, prevY, prevZ) == ABPBlocks.lightblock.blockID){
+			if(world.getBlockId(prevX, prevY, prevZ) == ABPBlocks.lightblock.blockID){
 				world.setBlockToAir(prevX, prevY, prevZ);
 				nbt.setBoolean("mustRemove", false);
+				helmet.setTagCompound(nbt);
 			}
 		}
 		
 	}
+	
+	@Override
+	public boolean onEntityItemUpdate(EntityItem entityItem) {
+		ItemStack helmet = entityItem.getEntityItem();
+		World world = entityItem.worldObj;
+		if(helmet.hasTagCompound()){
+			NBTTagCompound nbt = helmet.getTagCompound();
+			int prevX = nbt.getInteger("prevX");
+			int prevY = nbt.getInteger("prevY");
+			int prevZ = nbt.getInteger("prevZ");
+			if(world.getBlockId(prevX, prevY, prevZ) == ABPBlocks.lightblock.blockID){
+				world.setBlockToAir(prevX, prevY, prevZ);
+				nbt.setBoolean("mustRemove", false);
+				helmet.setTagCompound(nbt);
+			}
+		}
+		return super.onEntityItemUpdate(entityItem);
+	}
+	
 	@Override
 	public void onArmorTickUpdate(World world, EntityPlayer player, ItemStack helmet) {
-			shine(world, player, helmet);
+		shine(world, player, helmet);
+		//checkDirectionAndPlaceTorch(world, player, helmet);
 	}
 	
 	@Override	
@@ -98,7 +120,12 @@ public class ItemMiningHelmet extends ItemArmor {
 		return helmet;
 	}
 	
-	@SideOnly(Side.CLIENT)
+	private void removeLight(World world, int x, int y, int z){
+		if(world.getBlockId(x, y, z) == ABPBlocks.lightblock.blockID){
+			world.setBlockToAir(x, y, z);
+		}
+	}
+	
 	private void shine(World world, EntityPlayer player, ItemStack helmet){
 		MovingObjectPosition mop = Utils.getMovingObjectPositionFromPlayersHat(world, player, true, 75);
 		boolean day = world.isDaytime();
@@ -107,11 +134,14 @@ public class ItemMiningHelmet extends ItemArmor {
 		}
 		NBTTagCompound nbt = helmet.getTagCompound();
 
-		if(nbt.getByte("mode") == 0) return;
+		
 		int prevX = nbt.getInteger("prevX");
 		int prevY = nbt.getInteger("prevY");
 		int prevZ = nbt.getInteger("prevZ");
-		
+		if(nbt.getByte("mode") == 0) {
+			removeLight(world, prevX,prevY,prevZ);
+			return;
+		}
 		
 		// TODO might change to being outside altogether, seems legit
 		//If you are outside at daytime, no need for the helmet to be activated.
@@ -122,12 +152,11 @@ public class ItemMiningHelmet extends ItemArmor {
 		
 		if(mop!= null && mop.typeOfHit == EnumMovingObjectType.TILE)
 		{
+			
 			int mopX = mop.blockX;
 			int mopY = mop.blockY;
 			int mopZ = mop.blockZ;
-			
-			
-			
+
 			switch (mop.sideHit) {
 				case 0: mopY--; break;
 				case 1: mopY++; break;
@@ -139,7 +168,11 @@ public class ItemMiningHelmet extends ItemArmor {
 		
 			//Grrrrr
 			if(mopX != prevX || mopY != prevY || mopZ != prevZ && nbt.getBoolean("mustRemove")){
-				if(world.getBlockId(prevX, prevY, prevZ) == ABPBlocks.lightblock.blockID)world.setBlockToAir(prevX, prevY, prevZ);
+						removeLight(world,prevX,prevY,prevZ);
+					 nbt.setBoolean("mustRemove", false);
+					 helmet.setTagCompound(nbt);
+				
+				
 			}
 			
 			//If it's already shiny, keep it shiny and move on
@@ -196,8 +229,81 @@ public class ItemMiningHelmet extends ItemArmor {
 		}
 	}
 	
-	private void placeTorch(World world, EntityPlayer player, ItemStack helmet){
+	private void tryPlaceTorch(World world, int x, int y, int z, boolean coord, boolean sign, EntityPlayer player){
+		int torchSlot = hasTorches(player);
+		if(torchSlot == -1) return; 
+		if(coord){
+			if (sign){
+				for (int i = x+2; i >= x; i--){
+					if( placeTorch(world,i,y+1,z) || placeTorch(world,i,y,z) ){
+						discountTorch(player, torchSlot);
+						return;
+					}
+				}
+			}else{
+				for (int i = x-2; i <= x; i++){
+					if(placeTorch(world,i,y+1,z) || placeTorch(world,i,y,z)){
+						discountTorch(player, torchSlot);
+						return;
+					}
+				}
+			}
+		}else{
+			if (sign){
+				for (int i = z+2; i >= z; i--){
+					
+					if(placeTorch(world,x,y+1,i) || placeTorch(world,x,y,i)){
+						discountTorch(player, torchSlot);
+						return;
+					}
+				}
+			}else{
+				for (int i = z-2; i <= z; i++){
+					if(placeTorch(world,x,y+1,i) || placeTorch(world,x,y,i)){
+						discountTorch(player, torchSlot);
+						return;
+					}
+				}
+			}
+		}
 		
+	}
+	
+	private void discountTorch(EntityPlayer player, int slot) {
+		player.inventory.decrStackSize(slot, 1);
+	}
+
+	private int hasTorches(EntityPlayer player) {
+		for(int i = 0; i < player.inventory.mainInventory.length; i++){
+			if(player.inventory.getStackInSlot(i)!=null && player.inventory.getStackInSlot(i).itemID == Block.torchWood.blockID){
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	private boolean placeTorch(World world, int x, int y, int z) {
+		return
+				world.getBlockLightValue( x, y, z) < 7 &&
+				Block.torchWood.canPlaceBlockAt(world, x, y, z) &&
+				world.isAirBlock(x, y, z) &&
+				!world.canBlockSeeTheSky(x, y, z) &&
+				world.setBlock(x, y, z, Block.torchWood.blockID);
+				
+	}
+
+	private void checkDirectionAndPlaceTorch(World world, EntityPlayer player, ItemStack helmet){
+		int torchX = MathHelper.floor_double(player.posX);
+		int torchY = MathHelper.floor_double(player.posY);
+		int torchZ = MathHelper.floor_double(player.posZ);
+		int dir = MathHelper.floor_double((player.rotationYaw * 4F) / 360F + 0.5D) & 3;
+		if(world.canBlockSeeTheSky(torchX,torchY,torchZ))return;
+		switch(dir){
+		case 0:/* torchX --;*/ torchZ--;tryPlaceTorch(world, torchX, torchY, torchZ, true, false, player);break;
+		case 1: /*torchZ --;*/ torchX--;tryPlaceTorch(world, torchX, torchY, torchZ, false, false, player);break;
+		case 2: /*torchX ++;*/ torchZ++;tryPlaceTorch(world, torchX, torchY, torchZ, true, true, player);break;
+		case 3: /*torchZ ++;*/ torchX++;tryPlaceTorch(world, torchX, torchY, torchZ, false, true, player);break;
+		}
 	}
 	
 }

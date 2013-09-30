@@ -1,15 +1,5 @@
 package com.darkona.adventurebackpack.common;
 
-import com.darkona.adventurebackpack.api.FluidEffect;
-import com.darkona.adventurebackpack.api.FluidEffectRegistry;
-import com.darkona.adventurebackpack.blocks.tileentities.TileAdvBackpack;
-import com.darkona.adventurebackpack.config.BlockInfo;
-import com.darkona.adventurebackpack.entity.EntityRideableSpider;
-import com.darkona.adventurebackpack.handlers.PacketHandler;
-import com.darkona.adventurebackpack.inventory.InventoryItem;
-import com.darkona.adventurebackpack.items.ItemHose;
-import com.darkona.adventurebackpack.items.ABPItems;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -26,6 +16,17 @@ import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
+
+import com.darkona.adventurebackpack.api.FluidEffect;
+import com.darkona.adventurebackpack.api.FluidEffectRegistry;
+import com.darkona.adventurebackpack.blocks.tileentities.TileAdvBackpack;
+import com.darkona.adventurebackpack.config.BlockInfo;
+import com.darkona.adventurebackpack.entity.EntityRideableSpider;
+import com.darkona.adventurebackpack.handlers.PacketHandler;
+import com.darkona.adventurebackpack.inventory.InventoryItem;
+import com.darkona.adventurebackpack.items.ABPItems;
+import com.darkona.adventurebackpack.items.ItemHose;
+
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.network.Player;
@@ -460,11 +461,19 @@ public class Actions {
 		}
 	}
 
-	
-	public static void makeSpiderJump(EntityPlayer player) {
-		if(player.isRiding() && player.ridingEntity instanceof EntityRideableSpider){
-			((EntityRideableSpider)player.ridingEntity).spiderJump();
+	public static void pistonBootsJump(EntityPlayer player) {
+		
+		if(player.fallDistance < 8){
+			player.playSound("tile.piston.out", 0.5F, player.getRNG().nextFloat() * 0.25F + 0.6F);
+			player.motionY += 0.35;
+			player.jumpMovementFactor += 0.2;
+			player.fallDistance = 0;
 		}
+	}
+
+	
+	public static void makeSpiderJump(int i) {
+		((EntityRideableSpider)Minecraft.getMinecraft().theWorld.getEntityByID(i)).spiderJump();
 		
 	}
 

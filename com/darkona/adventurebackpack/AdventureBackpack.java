@@ -23,33 +23,22 @@ import cpw.mods.fml.relauncher.SideOnly;
 @NetworkMod(channels = { ModInformation.CHANNEL }, clientSideRequired = true, serverSideRequired = true, packetHandler = com.darkona.adventurebackpack.handlers.PacketHandler.class)
 public class AdventureBackpack {
 
-	public static CreativeTabs AdvBackpackTab;
-	
 	@Instance(ModInformation.ID)
 	public static AdventureBackpack instance;
 
 	@SidedProxy(clientSide = "com.darkona.adventurebackpack.proxies.ClientProxy", serverSide = "com.darkona.adventurebackpack.proxies.CommonProxy")
 	public static CommonProxy proxy;
 	
-	@EventHandler
-	public void load(FMLInitializationEvent e) {
-		AdvBackpackTab = new CreativeTabs("AdventureBackpack"){
-			@SideOnly(Side.CLIENT)
-			public int getTabIconItemIndex(){
-				return ABPItems.advBackpack.BlockID; 
-			}
-		};
-	}
-
+	public static CreativeTabs AdvBackpackTab;
+	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		ConfigHandler.init(event.getSuggestedConfigurationFile());
 	}
 
-	
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-
+		registerCreativeTab();
 		proxy.initFluids();
 		proxy.initBlocks();
 		proxy.registerItems();
@@ -60,9 +49,9 @@ public class AdventureBackpack {
 		proxy.registerRecipes();
 		proxy.registerEntities();
 		proxy.registerPacketHandling();
-
-		LanguageRegistry.instance().addStringLocalization(AdvBackpackTab.getTranslatedTabLabel(), "Adventure Backpack");
-
+		proxy.initCreativeTab();
+		proxy.registerCreativeTabLabel();
+		
 	}
 	
 	@EventHandler
@@ -70,5 +59,15 @@ public class AdventureBackpack {
 		proxy.interoperabilityWithOtherMods();
 	}
 	
+	//@SideOnly(Side.CLIENT)
+	private void registerCreativeTab(){
+		AdvBackpackTab = new CreativeTabs(CreativeTabs.getNextID(), ModInformation.NAME){
+			
+			@SideOnly(Side.CLIENT)
+			public int getTabIconItemIndex(){
+				return ABPItems.advBackpack.BlockID; 
+			}	
+		};
+	}
 	
 }

@@ -59,7 +59,7 @@ public class RendererItemAdvBackpack implements IItemRenderer {
 	@Override
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
 		InventoryItem inv = new InventoryItem(item);
-		ResourceLocation modelTexture = Utils.getBackpackColor(item);
+		ResourceLocation modelTexture = Utils.getBackpackColorResourceLocation(item);
 		switch (type)
 		{
 

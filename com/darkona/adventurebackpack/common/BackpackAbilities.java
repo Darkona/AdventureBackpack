@@ -1,15 +1,24 @@
 package com.darkona.adventurebackpack.common;
 
-import com.darkona.adventurebackpack.blocks.tileentities.TileAdvBackpack;
-import com.darkona.adventurebackpack.inventory.InventoryItem;
+import java.util.Iterator;
+import java.util.List;
 
+import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.ai.EntityAITaskEntry;
+import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+
+import com.darkona.adventurebackpack.blocks.tileentities.TileAdvBackpack;
+import com.darkona.adventurebackpack.entity.ai.EntityAIAvoidPlayerWithBackpack;
+import com.darkona.adventurebackpack.inventory.InventoryItem;
 
 public class BackpackAbilities {
 
@@ -61,7 +70,7 @@ public class BackpackAbilities {
 		}
 	}
 
-	private static String[] validWearingBackpacks = { "Cactus", "Cow", "Pig", "Dragon", "Slime", "Chicken", };
+	private static String[] validWearingBackpacks = { "Cactus", "Cow", "Pig", "Dragon", "Slime", "Chicken", "Wolf", "Ocelot"};
 
 	private static String[] validTileBackpacks = { "Cactus" };
 
@@ -137,8 +146,7 @@ public class BackpackAbilities {
 			if (eggTime <= 0)
 			{
 				player.playSound("mob.chicken.plop", 1.0F, (world.rand.nextFloat() - world.rand.nextFloat()) * 0.3F + 1.0F);
-				if (!world.isRemote)
-					player.dropItem(Item.egg.itemID, 1);
+				if (!world.isRemote)player.dropItem(Item.egg.itemID, 1);
 				eggTime = ticks(world.rand.nextInt(301) + 300);
 			}
 			backpack.stackTagCompound.setInteger("lastTime", eggTime);
@@ -177,7 +185,81 @@ public class BackpackAbilities {
 	public void itemCow(EntityPlayer player, World world, ItemStack backpack) {
 
 	}
+	
+	@SuppressWarnings("unchecked")
+	public void itemWolf(EntityPlayer player, World world, ItemStack backpack){
+		int lastCheckTime = (backpack.getTagCompound().hasKey("lastTime")) ? backpack.getTagCompound().getInteger("lastTime") - 1 : 20;
+		
+		if(lastCheckTime <= 0)
+		{
+			List<EntityWolf> wolves = player.worldObj.getEntitiesWithinAABB(
+					EntityWolf.class,
+					AxisAlignedBB
+							.getAABBPool()
+							.getAABB(player.posX, player.posY, player.posZ,
+									player.posX + 1.0D, player.posY + 1.0D,
+									player.posZ + 1.0D).expand(16.0D, 4.0D, 16.0D));
+			if (wolves.isEmpty())return;
 
+			for(EntityWolf wolf : wolves)
+			{
+				if(wolf.isAngry() && wolf.getAttackTarget() == player)
+				{
+					wolf.setAngry (wolf.isAngry() ? false : false); 
+					wolf.setAttackTarget(null);
+					wolf.setRevengeTarget(null);
+					Iterator<?> i2 = wolf.targetTasks.taskEntries.iterator();
+					while (i2.hasNext())
+					{
+						((EntityAIBase)i2.next()).resetTask();
+					}
+				}
+			}
+			lastCheckTime = 20;
+		}else{
+			lastCheckTime--;
+		}
+		backpack.getTagCompound().setInteger("lastTime", lastCheckTime);
+	}
+
+	public void itemBlaze(EntityPlayer player, World world, ItemStack backpack){
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void itemOcelot(EntityPlayer player, World world, ItemStack backpack){
+		int lastCheckTime = (backpack.getTagCompound().hasKey("lastTime")) ? backpack.getTagCompound().getInteger("lastTime") - 1 : 20;
+		
+		if(lastCheckTime <= 0)
+		{
+			List<EntityCreeper> creepers = player.worldObj.getEntitiesWithinAABB(
+					EntityCreeper.class,
+					AxisAlignedBB
+							.getAABBPool()
+							.getAABB(player.posX, player.posY, player.posZ,
+									player.posX + 1.0D, player.posY + 1.0D,
+									player.posZ + 1.0D).expand(16.0D, 4.0D, 16.0D));
+			
+			for(EntityCreeper creeper : creepers)
+			{
+				boolean set = true;
+				EntityAIAvoidPlayerWithBackpack task = new EntityAIAvoidPlayerWithBackpack(creeper, EntityPlayer.class, 10.0F, 1.0, 1.3,"Ocelot");
+				
+				for(Object entry : creeper.tasks.taskEntries){
+					if(((EntityAITaskEntry)entry).action instanceof EntityAIAvoidPlayerWithBackpack ){
+						set = false;
+					}
+				}
+		
+				if(set){
+					//System.out.println("Found creeper who doesn't know to fear the backpack, making it a pussy now");
+					creeper.tasks.addTask(3, task );
+				}
+			}
+			lastCheckTime = 20;
+		}
+		backpack.getTagCompound().setInteger("lastTime", lastCheckTime);
+	}
 	/* ==================================== TILE ABILITIES ==========================================*/
 
 	public void tileCactus(World world, TileAdvBackpack backpack) {

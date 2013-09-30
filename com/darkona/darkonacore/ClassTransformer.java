@@ -37,7 +37,7 @@ public class ClassTransformer implements net.minecraft.launchwrapper.IClassTrans
 			System.out.println("[DarkonaCore] Injecting poison in unobfuscated environment >"+className+"<");
 		}
 		
-		
+		String classname = LightningStrikeEvent.class.getName().replace(".", "/");
 		ClassNode classNode = new ClassNode();
 		ClassReader classReader = new ClassReader(bytes);
 		classReader.accept(classNode, 0);
@@ -46,7 +46,7 @@ public class ClassTransformer implements net.minecraft.launchwrapper.IClassTrans
 		toInject.add(new LabelNode());
 		toInject.add(new VarInsnNode(Opcodes.ALOAD, 0));
 		toInject.add(new VarInsnNode(Opcodes.ALOAD, 1));
-		toInject.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "com/darkona/darkonacore/LightningStrikeEvent", "postMe", "(Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/effect/EntityLightningBolt;)V"));
+		toInject.add(new MethodInsnNode(Opcodes.INVOKESTATIC, classname, "postMe", "(Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/effect/EntityLightningBolt;)V"));
 			
 		for(MethodNode method : classNode.methods){
 			if(method.name.equals(target)){

@@ -1,5 +1,8 @@
 package com.darkona.adventurebackpack.proxies;
 
+import net.minecraftforge.client.MinecraftForgeClient;
+
+import com.darkona.adventurebackpack.ModInformation;
 import com.darkona.adventurebackpack.blocks.ABPBlocks;
 import com.darkona.adventurebackpack.blocks.tileentities.TileAdvBackpack;
 import com.darkona.adventurebackpack.blocks.tileentities.TileSleepingBag;
@@ -12,9 +15,9 @@ import com.darkona.adventurebackpack.handlers.ClientTickHandler;
 import com.darkona.adventurebackpack.handlers.KeyBindHandler;
 import com.darkona.adventurebackpack.items.ABPItems;
 
-import net.minecraftforge.client.MinecraftForgeClient;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
@@ -52,4 +55,9 @@ public class ClientProxy extends CommonProxy {
 		MinecraftForgeClient.registerItemRenderer(ABPBlocks.advbackpack.blockID, new RendererItemAdvBackpack());
 	}
 
+	
+	
+	public void registerCreativeTabLabel(){
+		LanguageRegistry.instance().addStringLocalization("itemGroup." + ModInformation.NAME, "en_US", ModInformation.NAME);
+	}
 }

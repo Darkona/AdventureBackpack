@@ -51,5 +51,7 @@ public class ItemPistonBoots extends ItemArmor {
 		}else{
 			player.stepHeight = 0.5001F;
 		}
+		
+		
 	}
 }

@@ -114,7 +114,20 @@ public class Utils {
 		return valid;
 	}
 
-	public static ResourceLocation getBackpackColor(ItemStack item) {
+	public static String getBackpackColorName(ItemStack item){
+		if (item == null)return "";
+		if (item.stackTagCompound == null)
+		{
+			item.stackTagCompound = new NBTTagCompound();
+		}
+		if (!item.stackTagCompound.hasKey("color") || item.stackTagCompound.getString("color").isEmpty())
+		{
+			item.stackTagCompound.setString("colorName", "Standard");
+		}
+		return item.stackTagCompound.getString("colorName");
+	}
+	
+	public static ResourceLocation getBackpackColorResourceLocation(ItemStack item) {
 		ResourceLocation color;
 		if (item.stackTagCompound == null)
 		{
@@ -157,34 +170,56 @@ public class Utils {
 		return false;
 	}
 
-	public static Block blockies[] = { Block.melon, Block.cactus, Block.glowStone, Block.blockRedstone, Block.snow, Block.sponge, Block.obsidian,
-			Block.sandStone, Block.chest, Block.coalBlock, Block.hay, Block.pumpkin, Block.blockNetherQuartz, Block.blockEmerald, Block.blockDiamond,
-			Block.blockIron, Block.blockSnow, Block.bookShelf, Block.blockGold, Block.cloth, Block.dragonEgg, Block.enchantmentTable, Block.mushroomRed,
-			Block.mushroomBrown, Block.blockLapis };
+	public static Block blockies[] = { 
+		Block.melon, 
+		Block.cactus, 
+		Block.glowStone, 
+		Block.blockRedstone, 
+		Block.snow, 
+		Block.sponge, 
+		Block.obsidian,
+		Block.sandStone, 
+		Block.chest, 
+		Block.coalBlock, 
+		Block.hay, 
+		Block.pumpkin, 
+		Block.blockNetherQuartz, 
+		Block.blockEmerald, 
+		Block.blockDiamond,
+		Block.blockIron, 
+		Block.blockSnow, 
+		Block.bookShelf, 
+		Block.blockGold, 
+		Block.cloth, 
+		Block.dragonEgg, 
+		Block.enchantmentTable, 
+		Block.mushroomRed,
+		Block.mushroomBrown, 
+		Block.blockLapis
+	};
 
 	public static Item[] items = {
-
-	Item.blazeRod, 
-	Item.eyeOfEnder, 
-	Item.feather, 
-	Item.spiderEye, 
-	Item.slimeBall, 
-	Item.egg, 
-	Item.cake, 
-	Item.leather, 
-	Item.skull, 
-	Item.beefRaw, 
-	Item.porkRaw,
-	Item.cookie, 
-	Item.enderPearl, 
-	Item.magmaCream, 
-	Item.netherStar, 
-	Item.bone, 
-	Item.fishRaw, 
-	Item.ghastTear, 
-	Item.bowlSoup, 
-	Item.netherStalkSeeds,
-	Item.recordCat
+		Item.blazeRod, 
+		Item.eyeOfEnder, 
+		Item.feather, 
+		Item.spiderEye, 
+		Item.slimeBall, 
+		Item.egg, 
+		Item.cake, 
+		Item.leather, 
+		Item.skull, 
+		Item.beefRaw, 
+		Item.porkRaw,
+		Item.cookie, 
+		Item.enderPearl, 
+		Item.magmaCream, 
+		Item.netherStar, 
+		Item.bone, 
+		Item.fishRaw, 
+		Item.ghastTear, 
+		Item.bowlSoup, 
+		Item.netherStalkSeeds,
+		Item.recordCat
 	};
 
 	@SuppressWarnings("serial")

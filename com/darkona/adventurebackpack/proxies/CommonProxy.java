@@ -1,22 +1,24 @@
 package com.darkona.adventurebackpack.proxies;
 
+import net.minecraftforge.common.MinecraftForge;
+
 import com.darkona.adventurebackpack.api.FluidEffectRegistry;
 import com.darkona.adventurebackpack.blocks.ABPBlocks;
 import com.darkona.adventurebackpack.blocks.tileentities.TileAdvBackpack;
 import com.darkona.adventurebackpack.entity.ABPEntities;
+import com.darkona.adventurebackpack.entity.EntityRideableSpider;
 import com.darkona.adventurebackpack.fluids.Fluids;
 import com.darkona.adventurebackpack.handlers.EventHandler;
 import com.darkona.adventurebackpack.handlers.PacketHandler;
+import com.darkona.adventurebackpack.handlers.RecipeHandler;
 import com.darkona.adventurebackpack.items.ABPItems;
-import com.darkona.adventurebackpack.items.recipes.RecipeBackpackDye;
 
-import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.event.FMLInterModComms;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CommonProxy {
 
 	public static PacketHandler packethandler;
+	
 	
 	public void initSounds() {
 
@@ -51,14 +53,28 @@ public class CommonProxy {
 	}
 
 	public void registerRecipes() {
-		GameRegistry.addRecipe(new RecipeBackpackDye());
+		RecipeHandler.init();
+		
 	}
 
 	public void registerEntities(){
 		ABPEntities.init();
 	}
 	
+	public void initCreativeTab(){
+		
+	
+	}
+	
+	public void registerCreativeTabLabel(){}
+	
 	public void interoperabilityWithOtherMods() {
 		FMLInterModComms.sendMessage("AppliedEnergistics", "moveabletile", TileAdvBackpack.class.getName());
+		
+		//Don't morph into this thing if you have Morph. It's pointless.
+		try {
+			Class.forName("morph.common.core.ApiHandler").getDeclaredMethod("blacklistEntity", Class.class).invoke(null, EntityRideableSpider.class);
+		} catch (Exception e) {
+		}
 	}
 }

@@ -74,7 +74,7 @@ public class ItemAdvBackpack extends ItemArmor {
 			stack.stackTagCompound.setString("colorName","Standard");
 		}
 		
-		world.spawnEntityInWorld(new EntityLightningBolt(world,x,y, z));world.spawnEntityInWorld(new EntityLightningBolt(world,x,y, z));
+		world.spawnEntityInWorld(new EntityLightningBolt(world,x,y, z));
 		Block backpack = ABPBlocks.advbackpack;
 		
 		if (y <= 0 || y >= 255)
@@ -166,17 +166,10 @@ public class ItemAdvBackpack extends ItemArmor {
 					}
 				}
 			}
+			
 		}
 
-		// if(PacketHandler.action == 2){
-		// if(Minecraft.getMinecraft().inGameHasFocus){
-		// FMLNetworkHandler.openGui(player,AdventureBackpack.instance, 2,
-		// world, (int) player.posX, (int) player.posY, (int) player.posZ);
-		// }
-		// player.openGui(AdventureBackpack.instance, 2, world, (int)
-		// player.posX, (int) player.posY, (int) player.posZ);
-		// PacketHandler.action = 0;
-		// }
+		
 	}
 
 	@Override
@@ -202,6 +195,8 @@ public class ItemAdvBackpack extends ItemArmor {
 		{
 			BackpackAbilities.instance.executeAbility(player, world, stack);
 		}
+		
+		
 	}
 
 	@Override
@@ -225,7 +220,7 @@ public class ItemAdvBackpack extends ItemArmor {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
-		return Utils.getBackpackColor(stack).toString();
+		return Utils.getBackpackColorResourceLocation(stack).toString();
 	}
 
 	public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ,

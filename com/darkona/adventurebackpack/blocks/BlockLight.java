@@ -37,8 +37,7 @@ public class BlockLight extends Block {
 	public int tickRate(World par1World) {
 		return 2;
 	}
-	
-	
+
 	@Override
 	public int getLightOpacity(World world, int x, int y, int z) {
 		return 0;
@@ -99,6 +98,11 @@ public class BlockLight extends Block {
 	}
 	
 	@Override
+	public void onBlockDestroyedByPlayer(World par1World, int par2, int par3, int par4, int par5) {
+		par1World.setBlockToAir(par2, par3, par4);
+	}
+	
+	@Override
 	public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4) {
 		// TODO Auto-generated method stub
 		return (par1World.isAirBlock(par2, par3, par4));
@@ -124,12 +128,5 @@ public class BlockLight extends Block {
 	    {
 	        return null;
 	    }
-
-
-//	@Override
-//	public TileEntity createNewTileEntity(World world) {
-//		return new TileKamikaze();
-//	}
-
 
 }

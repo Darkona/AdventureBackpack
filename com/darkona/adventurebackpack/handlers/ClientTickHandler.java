@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 
 import org.lwjgl.input.Mouse;
 
+import com.darkona.adventurebackpack.common.Actions;
 import com.darkona.adventurebackpack.common.Utils;
 import com.darkona.adventurebackpack.entity.EntityRideableSpider;
 import com.darkona.adventurebackpack.inventory.SlotTool;
@@ -30,39 +31,42 @@ public class ClientTickHandler implements ITickHandler {
 	public void tickStart(EnumSet<TickType> type, Object... tickData) {
 		EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
 		dWheel = Mouse.getDWheel() / 120;
-		if (player != null && player.isSneaking())
+		if(player != null)
 		{
-			ItemStack backpack = player.getCurrentArmor(2);
-			if (backpack != null && backpack.getItem() instanceof ItemAdvBackpack)
+			if (player.isSneaking())
 			{
-
-				Minecraft.getMinecraft().playerController.updateController();
-				if (player.getCurrentEquippedItem() != null)
+				ItemStack backpack = player.getCurrentArmor(2);
+				if (backpack != null && backpack.getItem() instanceof ItemAdvBackpack)
 				{
-					if (SlotTool.isValidTool(player.getCurrentEquippedItem()))
+
+					Minecraft.getMinecraft().playerController.updateController();
+					if (player.getCurrentEquippedItem() != null)
 					{
-						isTool = true;
-						theSlot = player.inventory.currentItem;
-					}
-					if (player.getCurrentEquippedItem().getItem() instanceof ItemHose)
-					{
-						isHose = true;
-						theSlot = player.inventory.currentItem;
+						if (SlotTool.isValidTool(player.getCurrentEquippedItem()))
+						{
+							isTool = true;
+							theSlot = player.inventory.currentItem;
+						}
+						if (player.getCurrentEquippedItem().getItem() instanceof ItemHose)
+						{
+							isHose = true;
+							theSlot = player.inventory.currentItem;
+						}
 					}
 				}
+			} else
+			{
+				theSlot = -1;
 			}
-		} else
-		{
-			theSlot = -1;
-		}
-		
-		if(player != null && player.movementInput.jump){
-			player.sendQueue.addToSendQueue(PacketHandler.makePacket(6));
-			if(player.isRiding() && player.ridingEntity instanceof EntityRideableSpider && player.ridingEntity.onGround){
-				
-			}else {
-				if(player.onGround)
-				jump = true;
+			
+			
+			if(player.movementInput.jump){
+				if(player.onGround && Utils.isWearingBoots(player)){
+					jump = true;
+				}
+				if(player.ridingEntity instanceof EntityRideableSpider){
+					// TODO make the spider jump
+				}
 			}
 		}
 	}
@@ -88,20 +92,18 @@ public class ClientTickHandler implements ITickHandler {
 				}
 
 			}
-			theSlot = -1;
-			isHose = false;
-			isTool = false;
+			
 
 		}
 		
-		if( player!= null && jump && Utils.isWearingBoots(player)){
-			player.playSound("tile.piston.out", 0.5F, player.getRNG().nextFloat() * 0.25F + 0.6F);
-			player.motionY += 0.35;
-			player.jumpMovementFactor += 0.2;
-			player.fallDistance = 0;
-			jump = false;
+		if(jump){
+			Actions.pistonBootsJump(player);
 		}
-
+		
+		theSlot = -1;
+		isHose = false;
+		isTool = false;
+		jump = false;
 	}
 
 	@Override

@@ -22,15 +22,10 @@ import cpw.mods.fml.common.network.Player;
 public class PacketHandler implements IPacketHandler {
 
 	public PacketHandler() {
-		// NetworkRegistry.instance().registerChannel(this,
-		// ModInformation.CHANNEL);
 	}
-
-	public static int action = 0;
 
 	@Override
 	public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
-
 		if (packet.channel.equals(ModInformation.CHANNEL) && packet != null)
 		{
 			DataInputStream is = new DataInputStream(new ByteArrayInputStream(packet.data));
@@ -126,15 +121,7 @@ public class PacketHandler implements IPacketHandler {
 			case 1:
 				if (values[1] == 1 && Utils.isWearingBackpack(player))
 				{
-					Actions.deploySleepingBagFromPlayer(player); // This
-																	// is
-																	// never
-																	// used...
-																	// but
-																	// i'll
-																	// leave
-																	// it
-																	// be.
+					Actions.deploySleepingBagFromPlayer(player); 
 				}
 				break;
 
@@ -159,7 +146,10 @@ public class PacketHandler implements IPacketHandler {
 			}
 			break;
 		case 6: 
-			Actions.makeSpiderJump(player);
+			Actions.makeSpiderJump(values[1]);
+			break;
+		case 7: 
+			break;
 		default:
 			break;
 		}

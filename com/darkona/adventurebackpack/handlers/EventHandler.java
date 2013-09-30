@@ -1,6 +1,5 @@
 package com.darkona.adventurebackpack.handlers;
 
-
 import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.Event.Result;
@@ -63,44 +62,36 @@ public class EventHandler {
 			event.setResult(Result.ALLOW);
 		}
 	}
-	
+
 	@ForgeSubscribe(priority = EventPriority.NORMAL)
-	public void rideSpider(EntityInteractEvent event){
-		if(		event.target instanceof EntitySpider && 
-				Utils.isWearingBackpack(event.entityPlayer) && 
-				Utils.getWearingBackpack(event.entityPlayer).hasTagCompound() && 
-				Utils.getWearingBackpack(event.entityPlayer).getTagCompound().getString("colorName").equals("Spider"))
+	public void rideSpider(EntityInteractEvent event) {
+		if (!event.entityPlayer.worldObj.isRemote && Utils.getBackpackColorName(Utils.getWearingBackpack(event.entityPlayer)).equals("Spider")
+				&& !(event.entityPlayer.ridingEntity instanceof EntityRideableSpider))
 		{
-//			EntityPigZombie entitypigzombie = new EntityPigZombie(this.worldObj);
-//            entitypigzombie.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch);
-//            this.worldObj.spawnEntityInWorld(entitypigzombie);
-//            this.setDead();
-            if(!event.entityPlayer.worldObj.isRemote){
-            	EntityRideableSpider pet = new EntityRideableSpider(event.target.worldObj);
-            	pet.setLocationAndAngles(event.target.posX, event.target.posY, event.target.posZ, event.target.rotationYaw, event.target.rotationPitch);
-            	event.target.worldObj.spawnEntityInWorld(pet);
-            	event.target.setDead();
-            	event.entityPlayer.mountEntity(pet);
-            }
-			
-//			pet.posX = event.target.posX;
-//			pet.posY = event.target.posY;
-//			pet.posZ = event.target.posZ;
-//			pet.rotationYaw = event.target.rotationYaw;
-//			event.target.worldObj.spawnEntityInWorld(pet);		
-//			System.out.println("huh");
-//			event.target.setDead();
-//			event.entityPlayer.mountEntity(event.target);
+			if (event.target instanceof EntityRideableSpider)
+			{
+				event.entityPlayer.mountEntity(event.target);
+			} else if (event.target instanceof EntitySpider)
+			{
+				EntityRideableSpider pet = new EntityRideableSpider(event.target.worldObj);
+				pet.setLocationAndAngles(event.target.posX, event.target.posY, event.target.posZ, event.target.rotationYaw, event.target.rotationPitch);
+				event.target.setDead();
+				event.target.worldObj.spawnEntityInWorld(pet);
+				event.entityPlayer.mountEntity(pet);
+				event.entityPlayer.eyeHeight -= 1;
+			}
 		}
+		event.setResult(Result.ALLOW);
 	}
-	
+
 	@ForgeSubscribe(priority = EventPriority.HIGH)
-	public void fall(LivingFallEvent event){
-		
-		
-		if(event.entityLiving instanceof EntityPlayer){
-			EntityPlayer player = (EntityPlayer)event.entityLiving;
-			if (event.distance > 4) player.playSound("tile.piston.in", 0.5F, player.getRNG().nextFloat() * 0.25F + 0.6F);
+	public void fall(LivingFallEvent event) {
+
+		if (event.entityLiving instanceof EntityPlayer)
+		{
+			EntityPlayer player = (EntityPlayer) event.entityLiving;
+			if (event.distance > 4)
+				player.playSound("tile.piston.in", 0.5F, player.getRNG().nextFloat() * 0.25F + 0.6F);
 			event.distance *= (event.distance > 6) ? (Utils.isWearingBoots(player) ? 0.6 : 1) : 0;
 		}
 		event.setResult(Result.ALLOW);
