@@ -50,8 +50,9 @@ public class ItemInfo {
 	public static final int BP_COMPONENT_DEFAULT = 25536;
 	public static final String BP_COMPONENT_UNLOCALIZED_NAME = "backpackComponent";
 	public static final String BP_COMPONENT_NAME = "Backpack Component";
-	
-	
-	
+	public static final String HOSE_HEAD_ICON = "item.hoseHead";
+	public static final String SLEEPING_BAG_ICON = "item.sleepingBag";
+	public static final String MACHETE_HANDLE_ICON = "item.macheteHandle";
+	public static final String BACKPACK_TANK_ICON = "item.backpackTank";
 
 }

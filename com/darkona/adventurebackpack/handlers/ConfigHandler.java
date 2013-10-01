@@ -38,6 +38,7 @@ public class ConfigHandler {
 			ItemInfo.HELMET_ID = config.getItem(ItemInfo.HELMET_KEY, ItemInfo.HELMET_DEFAULT).getInt() - 256;
 			ItemInfo.BOOTS_ID = config.getItem(ItemInfo.BOOTS_KEY, ItemInfo.BOOTS_DEFAULT).getInt() - 256;
 			ItemInfo.SUIT_ID = config.getItem(ItemInfo.SUIT_KEY, ItemInfo.SUIT_DEFAULT).getInt() - 256;
+			ItemInfo.BACKPACKCOMPONENT_ID = config.getItem(ItemInfo.BP_COMPONENT_KEY, ItemInfo.BP_COMPONENT_DEFAULT).getInt() - 256;
 		}
 		config.save();
 

@@ -12,6 +12,7 @@ public class ABPItems {
 	public static ItemMiningHelmet miningHat;
 	public static ItemPistonBoots pistonboots;
 	public static ItemAdventureSuit advsuit;
+	public static ItemBackpackComponent bpcomponent;
 
 	public static void init() {
 		advBackpack = new ItemAdvBackpack(ItemInfo.AB_ID);
@@ -20,6 +21,7 @@ public class ABPItems {
 		miningHat = new ItemMiningHelmet(ItemInfo.HELMET_ID);
 		pistonboots = new ItemPistonBoots(ItemInfo.BOOTS_ID);
 		advsuit = new ItemAdventureSuit(ItemInfo.SUIT_ID);
+		bpcomponent = new ItemBackpackComponent(ItemInfo.BACKPACKCOMPONENT_ID);
 	}
 
 	public static void addNames() {
@@ -29,5 +31,8 @@ public class ABPItems {
 		LanguageRegistry.addName(miningHat, ItemInfo.HELMET_NAME);
 		LanguageRegistry.addName(pistonboots, ItemInfo.BOOTS_NAME);
 		LanguageRegistry.addName(advsuit, ItemInfo.SUIT_NAME);
+		LanguageRegistry.addName(bpcomponent, ItemInfo.BP_COMPONENT_NAME);
 	}
+	
+	
 }
