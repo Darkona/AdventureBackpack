@@ -41,7 +41,6 @@ public class Utils {
 		return player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].getItem() instanceof ItemPistonBoots;
 	}
 	
-	
 	public static ItemStack getWearingHelmet(EntityPlayer player) {
 		if(isWearingHelmet(player))return player.inventory.armorInventory[3];
 		return null;
@@ -122,6 +121,7 @@ public class Utils {
 		}
 		if (!item.stackTagCompound.hasKey("color") || item.stackTagCompound.getString("color").isEmpty())
 		{
+			item.stackTagCompound.setString("color", "Standard");
 			item.stackTagCompound.setString("colorName", "Standard");
 		}
 		return item.stackTagCompound.getString("colorName");
@@ -222,6 +222,16 @@ public class Utils {
 		Item.recordCat
 	};
 
+	public static String[] backpackNames = {
+		"BeefRaw","Black","BlazeRod","BlockCoal","BlockDiamond","BlockEmerald","BlockGold","BlockIron","BlockLapis",
+		"BlockRedstone","Blue","Bone","BookShelf","Brown","Cactus","Cake","Chest","Cloth","Cookie","Cyan", "DragonEgg",
+		"Egg","Electric", "EnchantmentTable", "EnderPearl","EyeOfEnder", "Feather", "FishRaw", "GhastTear","Gray","Green","HayBlock",
+		"Leather","LightBlue","Lightgem","LightGray","Lime","Magenta","MagmaCream","Melon","MushroomBrown","MushroomRed","MushroomStew",
+		"NetherStalkSeeds","NetherStar","Obsidian","Orange","Pigman","Pink","PorkchopRaw","Pumpkin","Purple","QuartzBlock","Rainbow","Red",
+		"Sandstone","Silver","Skull.creeper","Skull.skeleton","Skull.wither","Skull.zombie","SlimeBall","Snow","SpiderEye","Sponge","Standard",
+		"White","Yellow"
+	};
+	
 	@SuppressWarnings("serial")
 	public static HashMap<String, String> itemNames = new HashMap<String, String>() {
 		{

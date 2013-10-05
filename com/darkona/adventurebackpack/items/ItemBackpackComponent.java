@@ -1,10 +1,13 @@
 package com.darkona.adventurebackpack.items;
 
+import java.util.List;
+
 import com.darkona.adventurebackpack.AdventureBackpack;
 import com.darkona.adventurebackpack.common.Textures;
 import com.darkona.adventurebackpack.config.ItemInfo;
 
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
@@ -17,7 +20,7 @@ public class ItemBackpackComponent extends Item {
 		super(par1);
 		setFull3D();
 		setNoRepair();
-		setUnlocalizedName(ItemInfo.BP_COMPONENT_UNLOCALIZED_NAME);
+		setHasSubtypes(true);
 		setCreativeTab(AdventureBackpack.AdvBackpackTab);
 	}
 
@@ -59,5 +62,30 @@ public class ItemBackpackComponent extends Item {
 		}
 		return itemIcon;
 	}
+	
+	@Override
+	public Item setUnlocalizedName(String par1Str) {
+		
+		return super.setUnlocalizedName(par1Str);
+	}
+	
+	@Override
+	public String getUnlocalizedName(ItemStack stack) {
+		switch(getDamage(stack)){
+		case 1: return "sleepingBag";
+		case 2: return "backpackTank";
+		case 3: return "hoseHead";
+		case 4: return "macheteHandle";
+		}
+		return "Backpack Component";
+	}
+	
+	@Override
+	public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List subItems) {
+		for(int i = 1; i <= 4; i++){
+			subItems.add(new ItemStack(this,1,i));
+		}
+	}
+	
 	
 }

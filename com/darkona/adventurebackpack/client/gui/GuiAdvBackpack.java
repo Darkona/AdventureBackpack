@@ -24,6 +24,7 @@ public class GuiAdvBackpack extends GuiContainer implements IBackpackGui {
 
 	protected IAdvBackpack inventory;
 	protected boolean source;
+	private boolean wearing;
 	protected boolean sbstatus;
 	protected int X;
 	protected int Y;
@@ -52,9 +53,10 @@ public class GuiAdvBackpack extends GuiContainer implements IBackpackGui {
 		this.player = player;
 	}
 
-	public GuiAdvBackpack(EntityPlayer player, InventoryItem item) {
+	public GuiAdvBackpack(EntityPlayer player, InventoryItem item, boolean wearing) {
 		super(new BackpackContainer(player.inventory, item));
 		this.inventory = item;
+		this.wearing = wearing;
 		this.source = false;
 		xSize = 176;
 		ySize = 166;
@@ -170,7 +172,7 @@ public class GuiAdvBackpack extends GuiContainer implements IBackpackGui {
 				PacketDispatcher.sendPacketToServer(PacketHandler.makePacket(5, 2, 0, X, Y, Z));
 			} else
 			{
-				PacketDispatcher.sendPacketToServer(PacketHandler.makePacket(5, 2, 1));
+				PacketDispatcher.sendPacketToServer(PacketHandler.makePacket(5, 2, wearing ? 1 : 2));
 			}
 
 		}

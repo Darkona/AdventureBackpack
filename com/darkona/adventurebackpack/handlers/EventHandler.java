@@ -2,9 +2,11 @@ package com.darkona.adventurebackpack.handlers;
 
 import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.Event.Result;
 import net.minecraftforge.event.EventPriority;
 import net.minecraftforge.event.ForgeSubscribe;
+import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
@@ -15,7 +17,6 @@ import com.darkona.adventurebackpack.common.Utils;
 import com.darkona.adventurebackpack.common.events.HoseSpillEvent;
 import com.darkona.adventurebackpack.common.events.HoseSuckEvent;
 import com.darkona.adventurebackpack.entity.EntityRideableSpider;
-import com.darkona.darkonacore.LightningStrikeEvent;
 
 public class EventHandler {
 
@@ -54,13 +55,22 @@ public class EventHandler {
 		event.setResult(Result.ALLOW);
 	}
 
-	@ForgeSubscribe(priority = EventPriority.NORMAL)
-	public void transformBackpack(LightningStrikeEvent event) {
-		if (event.entityHit instanceof EntityPlayer && Utils.isWearingBackpack((EntityPlayer) event.entityHit))
+	@ForgeSubscribe(priority = EventPriority.HIGHEST)
+	public void transformBackpack(EntityStruckByLightningEvent event) {
+		if (event.entity instanceof EntityPlayer)
 		{
-			Actions.electrify((EntityPlayer) event.entityHit);
-			event.setResult(Result.ALLOW);
+			ItemStack bp = Utils.getWearingBackpack((EntityPlayer)event.entity);
+			if(bp != null){
+				if(!Utils.getBackpackColorName(bp).equals("Electric")){
+					Actions.electrify((EntityPlayer) event.entity);
+					event.setResult(Result.ALLOW);
+				}else
+				{
+					event.setResult(Result.DENY);
+				}
+			}
 		}
+		
 	}
 
 	@ForgeSubscribe(priority = EventPriority.NORMAL)

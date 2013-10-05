@@ -47,7 +47,7 @@ public class GuiHandler implements IGuiHandler {
 			te = world.getBlockTileEntity(x, y, z);
 			if (te != null && te instanceof TileAdvBackpack)
 			{
-				return new BackCraftContainer(player.inventory, (TileAdvBackpack) te);
+				return new BackCraftContainer(player, (TileAdvBackpack) te);
 			}
 			break;
 		case 4:
@@ -69,10 +69,11 @@ public class GuiHandler implements IGuiHandler {
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		InventoryItem inv;
+		TileEntity te;
 		switch (ID)
 		{
 		case 0:
-			TileEntity te = world.getBlockTileEntity(x, y, z);
+			te = world.getBlockTileEntity(x, y, z);
 			if (te != null && te instanceof TileAdvBackpack)
 			{
 				return new GuiAdvBackpack(player, (TileAdvBackpack) te);
@@ -83,14 +84,14 @@ public class GuiHandler implements IGuiHandler {
 			inv = Utils.getBackpackInv(player, true);
 			if (inv.containerStack != null)
 			{
-				return new GuiAdvBackpack(player, inv);
+				return new GuiAdvBackpack(player, inv, true);
 			}
 			break;
 		case 2:
 			inv = Utils.getBackpackInv(player, false);
 			if (inv.containerStack != null)
 			{
-				return new GuiAdvBackpack(player, inv);
+				return new GuiAdvBackpack(player, inv, false);
 			}
 			break;
 
@@ -98,21 +99,21 @@ public class GuiHandler implements IGuiHandler {
 			te = world.getBlockTileEntity(x, y, z);
 			if (te != null && te instanceof TileAdvBackpack)
 			{
-				return new GuiCraftAdvBackpack(player.inventory, (TileAdvBackpack) te);
+				return new GuiCraftAdvBackpack(player, (TileAdvBackpack) te);
 			}
 			break;
 		case 4:
 			inv = Utils.getBackpackInv(player, true);
 			if (inv.containerStack != null)
 			{
-				return new GuiCraftAdvBackpack(player, inv);
+				return new GuiCraftAdvBackpack(player, inv, true);
 			}
 			break;
 		case 5:
 			inv = Utils.getBackpackInv(player, false);
 			if (inv.containerStack != null)
 			{
-				return new GuiCraftAdvBackpack(player, inv);
+				return new GuiCraftAdvBackpack(player, inv, false);
 			}
 			break;
 		}

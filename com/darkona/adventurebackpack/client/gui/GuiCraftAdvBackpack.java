@@ -1,9 +1,10 @@
 package com.darkona.adventurebackpack.client.gui;
 
+import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
@@ -25,7 +26,7 @@ public class GuiCraftAdvBackpack extends GuiContainer implements IBackpackGui {
 
 	protected IAdvBackpack inventory;
 	protected boolean source;
-	protected boolean sbstatus;
+	private boolean wearing;
 	protected int X;
 	protected int Y;
 	protected int Z;
@@ -39,8 +40,8 @@ public class GuiCraftAdvBackpack extends GuiContainer implements IBackpackGui {
 
 	private static final ResourceLocation texture = Textures.resourceRL("textures/gui/guiBackpackCraft.png");
 
-	public GuiCraftAdvBackpack(InventoryPlayer invPlayer, TileAdvBackpack tile) {
-		super(new BackCraftContainer(invPlayer, tile));
+	public GuiCraftAdvBackpack(EntityPlayer player, TileAdvBackpack tile) {
+		super(new BackCraftContainer(player, tile));
 		this.inventory = tile;
 		this.source = true;
 		xSize = 176;
@@ -50,9 +51,11 @@ public class GuiCraftAdvBackpack extends GuiContainer implements IBackpackGui {
 		Z = tile.zCoord;
 	}
 
-	public GuiCraftAdvBackpack(EntityPlayer player, InventoryItem item) {
+	public GuiCraftAdvBackpack(EntityPlayer player, InventoryItem item, boolean wearing) {
 		super(new BackCraftContainer(player, player.worldObj, item));
 		this.inventory = item;
+		this.player = player;
+		this.wearing = wearing;
 		this.source = false;
 		xSize = 176;
 		ySize = 166;
@@ -117,9 +120,10 @@ public class GuiCraftAdvBackpack extends GuiContainer implements IBackpackGui {
 	protected void mouseClicked(int mouseX, int mouseY, int button) {
 		if (backButton.inButton(this, mouseX, mouseY))
 		{
-			if (source)
-			{
+			if(source){
 				PacketDispatcher.sendPacketToServer(PacketHandler.makePacket(0, X, Y, Z));
+			} else{
+				((EntityClientPlayerMP) player).sendQueue.addToSendQueue(PacketHandler.makePacket(wearing ? 1 : 2));
 			}
 		}
 		super.mouseClicked(mouseX, mouseY, button);

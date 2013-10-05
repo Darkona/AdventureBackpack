@@ -115,9 +115,9 @@ public class TileAdvBackpack extends TileEntity implements IAdvBackpack {
 
 	@Override
 	public void updateEntity() {
+		if (!colorName.isEmpty())
+			BackpackAbilities.instance.executeAbility(null, this.worldObj, this);
 		if(checkTime == 0){
-			if (!colorName.isEmpty())
-				BackpackAbilities.instance.executeAbility(null, this.worldObj, this);
 			int lastLumen = luminosity;
 			int left = (leftTank.getFluid() != null) ? leftTank.getFluid().getFluid().getLuminosity() : 0;
 			int right = (rightTank.getFluid() != null) ? rightTank.getFluid().getFluid().getLuminosity() : 0;

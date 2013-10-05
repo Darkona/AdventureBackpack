@@ -32,7 +32,7 @@ public class BlockSleepingBag extends BlockContainer{
 
 	public BlockSleepingBag(int par1) {
 		super(par1, Material.cloth);
-		setCreativeTab(AdventureBackpack.AdvBackpackTab);
+		//setCreativeTab(AdventureBackpack.AdvBackpackTab);
 		setLightValue(0.1F);
 		setHardness(0.5f);
 		setUnlocalizedName(BlockInfo.SLEEPINGBAG_NAME);

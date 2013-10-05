@@ -56,15 +56,15 @@ public class ItemMiningHelmet extends ItemArmor {
 
 	@Override
 	public String getItemDisplayName(ItemStack helmet) {
+		String name = ItemInfo.HELMET_NAME;
 		if(helmet.hasTagCompound()){
 			switch(helmet.getTagCompound().getByte("mode")){
-			case 0 : return "Mining Helmet: Deactivated";
-			case 1 : return "Mining Helmet: Activated";
-			case 2 : return "Mining Helmet: Auto";
-			default: return "Mining Helmet";
+			case 0 : name += ": Deactivated";
+			case 1 : name += ": Activated";
+			case 2 : name += ": Auto";
 			}
 		}
-		return "Mining Helmet";
+		return name;
 	}
 	
 	@Override

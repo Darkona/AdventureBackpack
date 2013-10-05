@@ -7,6 +7,7 @@ import com.darkona.adventurebackpack.blocks.ABPBlocks;
 import com.darkona.adventurebackpack.blocks.tileentities.TileAdvBackpack;
 import com.darkona.adventurebackpack.blocks.tileentities.TileSleepingBag;
 import com.darkona.adventurebackpack.client.render.RendererAdvBackpack;
+import com.darkona.adventurebackpack.client.render.RendererAdventureHat;
 import com.darkona.adventurebackpack.client.render.RendererHose;
 import com.darkona.adventurebackpack.client.render.RendererItemAdvBackpack;
 import com.darkona.adventurebackpack.client.render.RendererMiningHat;
@@ -52,6 +53,7 @@ public class ClientProxy extends CommonProxy {
 		MinecraftForgeClient.registerItemRenderer(ABPItems.hose.itemID, new RendererHose());
 		MinecraftForgeClient.registerItemRenderer(ABPItems.advBackpack.itemID, new RendererItemAdvBackpack());
 		MinecraftForgeClient.registerItemRenderer(ABPItems.miningHat.itemID, new RendererMiningHat());
+		MinecraftForgeClient.registerItemRenderer(ABPItems.advhat.itemID, new RendererAdventureHat());
 		MinecraftForgeClient.registerItemRenderer(ABPBlocks.advbackpack.blockID, new RendererItemAdvBackpack());
 	}
 

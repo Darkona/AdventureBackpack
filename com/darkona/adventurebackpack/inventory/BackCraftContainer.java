@@ -24,10 +24,10 @@ public class BackCraftContainer extends Container {
 	public IInventory craftResult = new InventoryCraftResult();
 	private World world;
 
-	public BackCraftContainer(InventoryPlayer invPlayer, TileAdvBackpack te) {
+	public BackCraftContainer(EntityPlayer player, TileAdvBackpack te) {
 		needsUpdate = false;
 		inventory = te;
-		makeSlots(invPlayer);
+		makeSlots(player.inventory);
 		source = true;
 		world = te.worldObj;
 	}

@@ -3,6 +3,7 @@ package com.darkona.adventurebackpack.handlers;
 import java.io.File;
 
 import com.darkona.adventurebackpack.config.BlockInfo;
+import com.darkona.adventurebackpack.config.GeneralInfo;
 import com.darkona.adventurebackpack.config.ItemInfo;
 
 import net.minecraftforge.common.Configuration;
@@ -39,6 +40,12 @@ public class ConfigHandler {
 			ItemInfo.BOOTS_ID = config.getItem(ItemInfo.BOOTS_KEY, ItemInfo.BOOTS_DEFAULT).getInt() - 256;
 			ItemInfo.SUIT_ID = config.getItem(ItemInfo.SUIT_KEY, ItemInfo.SUIT_DEFAULT).getInt() - 256;
 			ItemInfo.BACKPACKCOMPONENT_ID = config.getItem(ItemInfo.BP_COMPONENT_KEY, ItemInfo.BP_COMPONENT_DEFAULT).getInt() - 256;
+			ItemInfo.HAT_ID = config.getItem(ItemInfo.HAT_KEY, ItemInfo.HAT_DEFAULT).getInt() - 256;
+		}
+		
+		{
+			GeneralInfo.GUI_TANK_RENDER = config.get(config.CATEGORY_GENERAL, "Gui Fluid Rendering", GeneralInfo.GUI_TANK_RENDER_DEFAULT).getInt();
+			
 		}
 		config.save();
 

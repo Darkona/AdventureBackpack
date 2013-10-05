@@ -30,24 +30,30 @@ public class ItemInfo {
 	public static final String HELMET_UNLOCALIZED_NAME = "minerHelmet";
 	public static final String HELMET_NAME = "Miner Helmet";
 	
+	public static int HAT_ID;
+	public static final String HAT_KEY = "Adventurer's Hat";
+	public static final int HAT_DEFAULT = 25534;
+	public static final String HAT_UNLOCALIZED_NAME = "adventureHat";
+	public static final String HAT_NAME = "Adventurer's Fedora";
+	
 	
 	public static int SUIT_ID;
 	public static final String SUIT_KEY = "Adventurer's Suit";
-	public static final int SUIT_DEFAULT = 25534;
+	public static final int SUIT_DEFAULT = 25535;
 	public static final String SUIT_UNLOCALIZED_NAME = "adventuresSuit";
 	public static final String SUIT_NAME = "Adventurer's Suit";
 	public static final String SUIT_ICON = "item.pants";
 
 	public static int MACHETE_ID;
 	public static final String MACHETE_KEY = "Jungle Machete";
-	public static final int MACHETE_DEFAULT = 25535;
+	public static final int MACHETE_DEFAULT = 25536;
 	public static final String MACHETE_UNLOCALIZED_NAME = "jungleMachete";
 	public static final String MACHETE_NAME = "Jungle Machete";
 	public static final String MACHETE_ICON = "item.machete";
 	
 	public static int BACKPACKCOMPONENT_ID;
 	public static final String BP_COMPONENT_KEY = "Backpack Component";
-	public static final int BP_COMPONENT_DEFAULT = 25536;
+	public static final int BP_COMPONENT_DEFAULT = 25537;
 	public static final String BP_COMPONENT_UNLOCALIZED_NAME = "backpackComponent";
 	public static final String BP_COMPONENT_NAME = "Backpack Component";
 	public static final String HOSE_HEAD_ICON = "item.hoseHead";
@@ -55,4 +61,6 @@ public class ItemInfo {
 	public static final String MACHETE_HANDLE_ICON = "item.macheteHandle";
 	public static final String BACKPACK_TANK_ICON = "item.backpackTank";
 
+	
+	
 }

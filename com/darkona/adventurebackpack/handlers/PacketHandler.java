@@ -133,13 +133,10 @@ public class PacketHandler implements IPacketHandler {
 					FMLNetworkHandler.openGui(player, AdventureBackpack.instance, 3, world, values[3], values[4], values[5]);
 					break;
 				case 1:
-					if (Utils.isWearingBackpack(player))
-					{
-						FMLNetworkHandler.openGui(player, AdventureBackpack.instance, 4, world, playerX, playerY, playerZ);
-					} else if (Utils.isHoldingBackpack(player))
-					{
-						FMLNetworkHandler.openGui(player, AdventureBackpack.instance, 5, world, playerX, playerY, playerZ);
-					}
+					FMLNetworkHandler.openGui(player, AdventureBackpack.instance,  4, world, playerX, playerY, playerZ);
+					break;
+				case 2:
+					FMLNetworkHandler.openGui(player, AdventureBackpack.instance,  5, world, playerX, playerY, playerZ);
 					break;
 				}
 				break;

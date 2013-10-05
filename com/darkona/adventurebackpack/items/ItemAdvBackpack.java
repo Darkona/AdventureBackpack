@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.model.ModelBiped;
+import net.minecraft.creativetab.CreativeTabs;
 //import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -18,6 +19,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import net.minecraftforge.oredict.OreDictionary;
 
 import com.darkona.adventurebackpack.AdventureBackpack;
 import com.darkona.adventurebackpack.blocks.ABPBlocks;
@@ -243,4 +245,19 @@ public class ItemAdvBackpack extends ItemArmor {
 		}
 		super.addInformation(stack, player, list, par4);
 	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List subItems) {
+		for (String name : Utils.backpackNames){
+			ItemStack bp = new ItemStack(this,1,0);
+			NBTTagCompound c = new NBTTagCompound();
+			c.setString("color", name);
+			c.setString("colorName",Utils.getDisplayNameForColor(name));
+			bp.setTagCompound(c);
+			subItems.add(bp);
+		}
+	}
+
 }
